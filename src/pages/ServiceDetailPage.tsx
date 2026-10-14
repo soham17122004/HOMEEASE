@@ -15,10 +15,13 @@ import {
   MapPin,
   Lock,
   Camera,
+  Play,
+  Film,
 } from 'lucide-react';
 import { BRAND_CONFIG } from '../config/brand';
 import { useStoreData, DataStore } from '../lib/store';
 import { RatingStars } from '../components/common/RatingStars';
+import { ServiceVideoPlayer } from '../components/common/ServiceVideoPlayer';
 import {
   ServiceCustomizerStudio,
   CustomizedServiceConfig,
@@ -39,6 +42,7 @@ export const ServiceDetailPage: React.FC = () => {
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [mediaMode, setMediaMode] = useState<'video' | 'photos'>(service?.videoUrl ? 'video' : 'photos');
 
   // Dynamic customization state from Studio
   const [customConfig, setCustomConfig] = useState<CustomizedServiceConfig | null>(null);
@@ -123,86 +127,193 @@ export const ServiceDetailPage: React.FC = () => {
           {/* LEFT COLUMN: Gallery, Customizer Studio & Service Details */}
           <div className="lg:col-span-8 space-y-6">
             
-            {/* Premium Realistic Service Banner & Gallery Card */}
-            <div className="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-xs">
-              <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-xl overflow-hidden bg-slate-100 group">
-                <img
-                  src={gallery[activeImageIndex]}
-                  alt={`${service.title} - Real Service In Action`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
-                />
-
-                {/* Subtle contrast gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
-
-                {/* Top Badges */}
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none">
-                  <div className="flex items-center gap-2">
-                    {service.isPopular && (
-                      <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-slate-900/90 text-white shadow-xs backdrop-blur-xs flex items-center gap-1">
-                        <Sparkles size={11} className="text-amber-400" />
-                        <span>Popular Choice</span>
+            {/* Premium Realistic Service Media Card: Video & Photography Showcase */}
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-xs">
+              
+              {/* Media Switcher Tab Header */}
+              <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-100">
+                <div className="flex items-center gap-2">
+                  {service.videoUrl && (
+                    <button
+                      type="button"
+                      onClick={() => setMediaMode('video')}
+                      className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-2xs ${
+                        mediaMode === 'video'
+                          ? 'bg-[#176B52] text-white shadow-xs'
+                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      }`}
+                    >
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-300"></span>
                       </span>
-                    )}
-                    <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-white/95 text-slate-900 border border-white/40 shadow-xs backdrop-blur-xs flex items-center gap-1">
-                      <Clock size={11} className="text-emerald-700" />
-                      <span>{service.durationMinutes} mins</span>
-                    </span>
-                  </div>
+                      <Play size={12} className="fill-current" />
+                      <span>Real Service Video</span>
+                    </button>
+                  )}
 
-                  <span className="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-black/40 text-white/95 backdrop-blur-md border border-white/20 shadow-xs hidden sm:flex items-center gap-1">
-                    <ShieldCheck size={12} className="text-emerald-400" />
-                    <span>Junagadh Verified</span>
-                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setMediaMode('photos')}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                      mediaMode === 'photos'
+                        ? 'bg-[#176B52] text-white shadow-xs'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    <Camera size={13} />
+                    <span>Real Photos ({gallery.length})</span>
+                  </button>
                 </div>
 
-                {/* Bottom Realistic Caption & Watermark */}
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs pointer-events-none">
-                  <div className="flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/15">
-                    <Camera size={12} className="text-emerald-400" />
-                    <span className="font-semibold text-[11px]">Real Service Photography</span>
-                    <span className="text-white/60 text-[10px] hidden sm:inline">• Certified Technician At Work</span>
-                  </div>
-
-                  <div className="text-[11px] font-medium text-white/80 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10">
-                    {activeImageIndex + 1} / {gallery.length}
-                  </div>
+                <div className="hidden sm:flex items-center gap-1 text-[11px] font-semibold text-slate-500">
+                  <ShieldCheck size={13} className="text-[#176B52]" />
+                  <span>Junagadh Doorstep Verified</span>
                 </div>
               </div>
 
-              {/* Thumbnails */}
-              {gallery.length > 1 && (
-                <div className="flex items-center gap-2.5 mt-3 pt-2 border-t border-slate-100">
-                  {gallery.map((img: string, idx: number) => {
-                    const captions = [
-                      'Overview & Prep',
-                      'Service in Action',
-                      'Pristine Result',
-                    ];
-                    return (
+              {/* MEDIA CONTAINER: Video Player OR Photo Viewer */}
+              {mediaMode === 'video' && service.videoUrl ? (
+                <div className="space-y-3">
+                  <ServiceVideoPlayer
+                    videoUrl={service.videoUrl}
+                    posterUrl={service.videoPosterUrl || service.imageUrl}
+                    title={service.videoTitle || `${service.title} - Real Service In Action`}
+                    technicianName="Specialist Rajesh V."
+                    technicianRole="Senior Service Professional"
+                    autoPlay={false}
+                  />
+
+                  {/* Video Caption & Verification Note */}
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2">
+                      <Film size={14} className="text-[#176B52] shrink-0" />
+                      <span className="font-semibold text-slate-900 text-[11px] sm:text-xs">
+                        {service.videoTitle || 'Real Service Demonstration with Certified Specialist'}
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 shrink-0">
+                      Standardized SOP
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-xl overflow-hidden bg-slate-100 group">
+                    <img
+                      src={gallery[activeImageIndex]}
+                      alt={`${service.title} - Real Service In Action`}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
+                    />
+
+                    {/* Subtle contrast gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+
+                    {/* Top Badges */}
+                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2 pointer-events-none">
+                        {service.isPopular && (
+                          <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-slate-900/90 text-white shadow-xs backdrop-blur-xs flex items-center gap-1">
+                            <Sparkles size={11} className="text-amber-400" />
+                            <span>Popular Choice</span>
+                          </span>
+                        )}
+                        <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-white/95 text-slate-900 border border-white/40 shadow-xs backdrop-blur-xs flex items-center gap-1">
+                          <Clock size={11} className="text-[#176B52]" />
+                          <span>{service.durationMinutes} mins</span>
+                        </span>
+                      </div>
+
+                      {/* Play Video Quick Trigger */}
+                      {service.videoUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setMediaMode('video')}
+                          className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs flex items-center gap-1 transition-all hover:scale-105"
+                        >
+                          <Play size={11} className="fill-white" />
+                          <span>Watch Video Demo</span>
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Bottom Realistic Caption & Watermark */}
+                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs pointer-events-none">
+                      <div className="flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/15">
+                        <Camera size={12} className="text-emerald-400" />
+                        <span className="font-semibold text-[11px]">Real Service Photography</span>
+                        <span className="text-white/60 text-[10px] hidden sm:inline">• Certified Technician At Work</span>
+                      </div>
+
+                      <div className="text-[11px] font-medium text-white/80 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10">
+                        {activeImageIndex + 1} / {gallery.length}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Thumbnails */}
+                  <div className="flex items-center gap-2.5 mt-3 pt-2 border-t border-slate-100 overflow-x-auto pb-1">
+                    {/* Video Quick Thumbnail */}
+                    {service.videoUrl && (
                       <button
-                        key={idx}
                         type="button"
-                        onClick={() => setActiveImageIndex(idx)}
+                        onClick={() => setMediaMode('video')}
                         className={`group relative flex-1 sm:flex-initial sm:w-28 rounded-lg overflow-hidden border transition-all text-left ${
-                          activeImageIndex === idx
+                          mediaMode === 'video'
                             ? 'border-emerald-700 ring-2 ring-emerald-700/20'
-                            : 'border-slate-200 opacity-70 hover:opacity-100 hover:border-slate-300'
+                            : 'border-slate-200 hover:border-emerald-700'
                         }`}
                       >
-                        <div className="aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                        <div className="aspect-[16/10] w-full overflow-hidden bg-slate-900 relative flex items-center justify-center">
                           <img
-                            src={img}
-                            alt={`Photo ${idx + 1}`}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            src={service.videoPosterUrl || service.imageUrl}
+                            alt="Video Thumbnail"
+                            className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-300"
                           />
+                          <div className="absolute w-8 h-8 rounded-full bg-white text-slate-900 flex items-center justify-center shadow-lg group-hover:bg-[#176B52] group-hover:text-white transition-colors">
+                            <Play size={14} className="fill-current ml-0.5" />
+                          </div>
                         </div>
-                        <div className="p-1 px-1.5 bg-white text-[10px] font-semibold text-slate-700 truncate border-t border-slate-100">
-                          {captions[idx] || `Snapshot ${idx + 1}`}
+                        <div className="p-1 px-1.5 bg-slate-900 text-[10px] font-bold text-white truncate text-center">
+                          ▶ Video Demo
                         </div>
                       </button>
-                    );
-                  })}
+                    )}
+
+                    {gallery.map((img: string, idx: number) => {
+                      const captions = [
+                        'Overview & Prep',
+                        'Service in Action',
+                        'Pristine Result',
+                      ];
+                      return (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => {
+                            setMediaMode('photos');
+                            setActiveImageIndex(idx);
+                          }}
+                          className={`group relative flex-1 sm:flex-initial sm:w-28 rounded-lg overflow-hidden border transition-all text-left ${
+                            mediaMode === 'photos' && activeImageIndex === idx
+                              ? 'border-emerald-700 ring-2 ring-emerald-700/20'
+                              : 'border-slate-200 opacity-70 hover:opacity-100 hover:border-slate-300'
+                          }`}
+                        >
+                          <div className="aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                            <img
+                              src={img}
+                              alt={`Photo ${idx + 1}`}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                          </div>
+                          <div className="p-1 px-1.5 bg-white text-[10px] font-semibold text-slate-700 truncate border-t border-slate-100">
+                            {captions[idx] || `Snapshot ${idx + 1}`}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </div>

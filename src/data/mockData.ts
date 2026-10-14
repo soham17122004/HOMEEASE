@@ -103,6 +103,9 @@ export const INITIAL_SERVICES: Service[] = [
       'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1540518614846-7ede433c4b4f?auto=format&fit=crop&w=1200&q=80'
     ],
+    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Industrial_vacuum_cleaner_in_operation.webm',
+    videoTitle: 'Certified Specialist: Deep Foam Injection & Vacuum Extraction on Fabric Sofa',
+    videoPosterUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80',
     isPopular: true,
     isActive: true,
     includedItems: [
@@ -151,6 +154,9 @@ export const INITIAL_SERVICES: Service[] = [
       'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'
     ],
+    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Sweeping.webm',
+    videoTitle: 'Professional Cleaning Crew: Floor Buffing, Dusting & Deep Sanitization',
+    videoPosterUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80',
     isPopular: true,
     isActive: true,
     includedItems: [
@@ -199,6 +205,9 @@ export const INITIAL_SERVICES: Service[] = [
       'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1590486803833-1c5dc8ddd4c8?auto=format&fit=crop&w=1200&q=80'
     ],
+    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Industrial_vacuum_cleaner_in_operation.webm',
+    videoTitle: 'HVAC Technician: High-Pressure Power Jet Flush & Coil Descaling In Action',
+    videoPosterUrl: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1200&q=80',
     isPopular: true,
     isActive: true,
     includedItems: [
@@ -247,6 +256,9 @@ export const INITIAL_SERVICES: Service[] = [
       'https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=1200&q=80'
     ],
+    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Sweeping.webm',
+    videoTitle: 'Appliance Specialist: Drum Descaling, Filter Clearance & Motor Spin Diagnostics',
+    videoPosterUrl: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=1200&q=80',
     isPopular: true,
     isActive: true,
     includedItems: [
@@ -289,6 +301,9 @@ export const INITIAL_SERVICES: Service[] = [
       'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1200&q=80'
     ],
+    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Industrial_vacuum_cleaner_in_operation.webm',
+    videoTitle: 'Bathroom Specialist: Tile Descaling & High-Shine Chrome Polish',
+    videoPosterUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80',
     isPopular: true,
     isActive: true,
     includedItems: [
@@ -330,6 +345,9 @@ export const INITIAL_SERVICES: Service[] = [
       'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=80'
     ],
+    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Sweeping.webm',
+    videoTitle: 'Kitchen Technician: Chemical Immersion Degreasing of Baffle Filters',
+    videoPosterUrl: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1200&q=80',
     isPopular: false,
     isActive: true,
     includedItems: [
@@ -367,6 +385,9 @@ export const INITIAL_SERVICES: Service[] = [
       'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80'
     ],
+    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Industrial_vacuum_cleaner_in_operation.webm',
+    videoTitle: 'Licensed Electrician: Circuit Breaker Testing & Switchboard Diagnostics',
+    videoPosterUrl: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1200&q=80',
     isPopular: false,
     isActive: true,
     includedItems: [

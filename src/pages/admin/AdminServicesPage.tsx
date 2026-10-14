@@ -34,6 +34,8 @@ export const AdminServicesPage: React.FC = () => {
     shortDescription: '',
     description: '',
     imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80',
+    videoUrl: '',
+    videoTitle: '',
     isPopular: false,
     isActive: true,
     includedItems: 'Thorough inspection\nDeep vacuuming\nHygiene mist spray',
@@ -56,6 +58,8 @@ export const AdminServicesPage: React.FC = () => {
       shortDescription: '',
       description: '',
       imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80',
+      videoUrl: '',
+      videoTitle: '',
       isPopular: false,
       isActive: true,
       includedItems: 'Thorough inspection\nDeep vacuuming\nHygiene mist spray',
@@ -75,6 +79,8 @@ export const AdminServicesPage: React.FC = () => {
       shortDescription: service.shortDescription,
       description: service.description,
       imageUrl: service.imageUrl,
+      videoUrl: service.videoUrl || '',
+      videoTitle: service.videoTitle || '',
       isPopular: service.isPopular || false,
       isActive: service.isActive !== false,
       includedItems: service.includedItems?.join('\n') || '',
@@ -116,6 +122,8 @@ export const AdminServicesPage: React.FC = () => {
         shortDescription: formData.shortDescription,
         description: formData.description,
         imageUrl: formData.imageUrl,
+        videoUrl: formData.videoUrl.trim() || undefined,
+        videoTitle: formData.videoTitle.trim() || undefined,
         isPopular: formData.isPopular,
         isActive: formData.isActive,
         includedItems: includedList,
@@ -132,6 +140,8 @@ export const AdminServicesPage: React.FC = () => {
         shortDescription: formData.shortDescription,
         description: formData.description,
         imageUrl: formData.imageUrl,
+        videoUrl: formData.videoUrl.trim() || undefined,
+        videoTitle: formData.videoTitle.trim() || undefined,
         rating: 4.85,
         reviewCount: 0,
         isPopular: formData.isPopular,
@@ -387,6 +397,33 @@ export const AdminServicesPage: React.FC = () => {
                     required
                     value={formData.imageUrl}
                     onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                  />
+                </div>
+
+                <div className="sm:col-span-2">
+                  <label className="font-semibold text-slate-700 block mb-1">
+                    Real Service Video URL (MP4, WebM, or YouTube)
+                  </label>
+                  <input
+                    type="url"
+                    value={formData.videoUrl}
+                    onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
+                    placeholder="e.g. https://upload.wikimedia.org/...webm or https://youtube.com/watch?v=..."
+                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                  />
+                  <span className="text-[10px] text-slate-400 mt-0.5 block">
+                    Real video showing the technician actively cleaning the sofa, servicing the AC, or doing maintenance.
+                  </span>
+                </div>
+
+                <div className="sm:col-span-2">
+                  <label className="font-semibold text-slate-700 block mb-1">Video Title / Action Description</label>
+                  <input
+                    type="text"
+                    value={formData.videoTitle}
+                    onChange={(e) => setFormData({ ...formData, videoTitle: e.target.value })}
+                    placeholder="e.g. Certified Specialist performing sofa deep foam wash & extraction"
                     className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   />
                 </div>

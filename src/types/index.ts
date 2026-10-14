@@ -45,6 +45,9 @@ export interface Service {
   reviewCount: number;
   imageUrl: string;
   galleryUrls?: string[];
+  videoUrl?: string;
+  videoTitle?: string;
+  videoPosterUrl?: string;
   isPopular?: boolean;
   isActive: boolean;
   includedItems: string[];

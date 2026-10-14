@@ -15,10 +15,30 @@ import {
   Wrench,
   Wind,
   Check,
+  Play,
+  Film,
 } from 'lucide-react';
 import { BRAND_CONFIG } from '../config/brand';
 import { useStoreData, DataStore } from '../lib/store';
 import { ServiceCard } from '../components/common/ServiceCard';
+import { AnimatedStats } from '../components/common/AnimatedStats';
+import { ServiceVideoModal } from '../components/common/ServiceVideoModal';
+import { Service } from '../types';
+
+const SEARCH_PLACEHOLDERS = [
+  "Search for 'sofa cleaning'...",
+  "Search for 'AC power jet wash'...",
+  "Search for '2 BHK full deep cleaning'...",
+  "Search for 'washing machine repair'...",
+  "Search for 'kitchen degreasing & bath descaling'...",
+];
+
+const LIVE_ACTIVITIES = [
+  { area: 'Zanzarda Road, Junagadh', service: 'Sofa Deep Cleaning', time: '3m ago' },
+  { area: 'Joshipura, Junagadh', service: 'AC Power Jet Servicing', time: '9m ago' },
+  { area: 'Moti Baug, Junagadh', service: '2 BHK Home Deep Cleaning', time: '16m ago' },
+  { area: 'Kalva Chowk, Junagadh', service: 'Washing Machine Repair', time: '22m ago' },
+];
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -26,9 +46,25 @@ export const HomePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [activityIndex, setActivityIndex] = useState(0);
+  const [selectedVideoService, setSelectedVideoService] = useState<Service | null>(null);
 
   useEffect(() => {
     DataStore.syncWithBackend();
+
+    const pTimer = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % SEARCH_PLACEHOLDERS.length);
+    }, 3200);
+
+    const aTimer = setInterval(() => {
+      setActivityIndex((prev) => (prev + 1) % LIVE_ACTIVITIES.length);
+    }, 4500);
+
+    return () => {
+      clearInterval(pTimer);
+      clearInterval(aTimer);
+    };
   }, []);
 
   // Suggestions for live search
@@ -113,31 +149,48 @@ export const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       
-      {/* 1. URBAN COMPANY STYLE LIGHT HERO SECTION */}
-      <section className="bg-white border-b border-slate-200 py-10 md:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 1. URBAN COMPANY STYLE DYNAMIC HERO SECTION */}
+      <section className="bg-white border-b border-slate-200 py-10 md:py-16 ambient-hero-mesh relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
             {/* Left Column: Heading, Search & Category Pillars (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
               
-              {/* Region Pill */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-slate-100 border border-slate-200 text-slate-800 text-xs font-semibold">
-                <MapPin size={13} className="text-emerald-700" />
-                <span>Operating in {selectedCity} & across Gujarat</span>
+              {/* Dynamic Live Activity & Region Ticker */}
+              <div className="flex flex-wrap items-center gap-2.5">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-slate-100 border border-slate-200 text-slate-800 text-xs font-semibold">
+                  <MapPin size={13} className="text-[#176B52]" />
+                  <span>Operating in {selectedCity} & across Gujarat</span>
+                </div>
+
+                {/* Dynamic Real-time Dispatch Beacon */}
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md glass-pill text-[11px] font-medium text-slate-700 shadow-xs transition-all duration-300">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+                  </span>
+                  <span className="font-bold text-slate-900">{LIVE_ACTIVITIES[activityIndex].service}</span>
+                  <span className="text-slate-400">•</span>
+                  <span className="text-slate-600 truncate max-w-[150px]">{LIVE_ACTIVITIES[activityIndex].area}</span>
+                  <span className="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-100/80">
+                    {LIVE_ACTIVITIES[activityIndex].time}
+                  </span>
+                </div>
               </div>
 
               {/* Headline */}
               <div>
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-                  Expert home services, on demand.
+                  Expert home services,{' '}
+                  <span className="text-[#176B52]">on demand.</span>
                 </h1>
                 <p className="text-slate-600 text-sm sm:text-base mt-2.5 max-w-xl leading-relaxed">
                   Book background-verified specialists for sofa cleaning, full-home sanitization, AC power servicing, and appliance repairs at fixed, upfront rates.
                 </p>
               </div>
 
-              {/* Search Bar with Instant Suggestions */}
+              {/* Dynamic Search Bar with Cycling Animated Placeholder */}
               <div className="relative max-w-xl">
                 <form onSubmit={handleSearchSubmit} className="relative flex items-center">
                   <Search size={16} className="absolute left-3.5 text-slate-400" />
@@ -147,12 +200,12 @@ export const HomePage: React.FC = () => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onFocus={() => setIsSearchFocused(true)}
                     onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
-                    placeholder="Search for 'sofa cleaning', 'AC jet wash', '2 BHK'..."
-                    className="w-full pl-10 pr-28 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all"
+                    placeholder={SEARCH_PLACEHOLDERS[placeholderIndex]}
+                    className="w-full pl-10 pr-28 py-3.5 rounded-xl bg-slate-50/90 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-[#176B52] focus:ring-2 focus:ring-[#176B52]/15 transition-all shadow-xs"
                   />
                   <button
                     type="submit"
-                    className="absolute right-1.5 px-4 py-2 rounded-lg bg-[#176B52] hover:bg-[#135742] text-white text-xs font-bold transition-colors shadow-xs"
+                    className="absolute right-1.5 px-4 py-2 rounded-lg btn-primary text-white text-xs font-bold transition-all shadow-xs"
                   >
                     Search
                   </button>
@@ -191,7 +244,7 @@ export const HomePage: React.FC = () => {
                 )}
               </div>
 
-              {/* Direct 4-Service Quick Grid (Signature Urban Company Grid) */}
+              {/* Direct 4-Service Quick Grid with Hover Lift */}
               <div className="pt-2">
                 <div className="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3">
                   What do you need help with today?
@@ -203,18 +256,34 @@ export const HomePage: React.FC = () => {
                       <Link
                         key={pillar.title}
                         to={`/services/${pillar.slug}`}
-                        className="p-3 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-xs bg-slate-50/60 hover:bg-white transition-all flex flex-col justify-between group"
+                        className="p-3.5 rounded-xl border border-slate-200 hover-lift bg-slate-50/70 hover:bg-white transition-all flex flex-col justify-between group"
                       >
                         <div className="flex items-start justify-between">
-                          <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-800 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-colors">
+                          <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-800 flex items-center justify-center group-hover:bg-[#176B52] group-hover:text-white transition-all duration-200 shadow-2xs">
                             <IconComp size={16} />
                           </div>
-                          <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded">
-                            {pillar.price}
-                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const matchingSrv = services.find((s) => s.slug === pillar.slug);
+                                if (matchingSrv) setSelectedVideoService(matchingSrv);
+                              }}
+                              className="text-[10px] font-bold text-white bg-slate-900/90 hover:bg-[#176B52] px-1.5 py-0.5 rounded flex items-center gap-0.5 shadow-2xs transition-colors"
+                              title="Watch real service demonstration"
+                            >
+                              <Play size={9} className="fill-current" />
+                              <span>Video</span>
+                            </button>
+                            <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100/50">
+                              {pillar.price}
+                            </span>
+                          </div>
                         </div>
                         <div className="mt-3">
-                          <h4 className="font-bold text-xs text-slate-900 group-hover:text-slate-700">
+                          <h4 className="font-bold text-xs text-slate-900 group-hover:text-[#176B52] transition-colors">
                             {pillar.title}
                           </h4>
                           <p className="text-[10px] text-slate-500 mt-0.5 line-clamp-1">
@@ -230,32 +299,70 @@ export const HomePage: React.FC = () => {
               {/* Key Trust Guarantees */}
               <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-slate-100 text-xs text-slate-600">
                 <div className="flex items-center gap-1.5">
-                  <Check size={14} className="text-emerald-700 stroke-[2.5]" />
+                  <Check size={14} className="text-[#176B52] stroke-[2.5]" />
                   <span>Police-verified experts</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Check size={14} className="text-emerald-700 stroke-[2.5]" />
+                  <Check size={14} className="text-[#176B52] stroke-[2.5]" />
                   <span>Standardized transparent pricing</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Check size={14} className="text-emerald-700 stroke-[2.5]" />
+                  <Check size={14} className="text-[#176B52] stroke-[2.5]" />
                   <span>30-day rework warranty</span>
                 </div>
               </div>
 
             </div>
 
-            {/* Right Column: Authentic Professional Service Photography (5 cols) */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-100">
+            {/* Right Column: Hero Visual with Dynamic Floating Glass Badges (5 cols) */}
+            <div className="lg:col-span-5 relative mt-4 lg:mt-0">
+              
+              {/* Dynamic Floating Badge 1: Verification */}
+              <div className="absolute -top-3.5 -left-3.5 sm:-left-4 z-20 glass-card px-3.5 py-2.5 rounded-2xl shadow-lg animate-float flex items-center gap-2.5 border border-emerald-100/80">
+                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center font-bold text-xs border border-emerald-200/60 shadow-xs">
+                  <ShieldCheck size={16} strokeWidth={2.4} />
+                </div>
+                <div>
+                  <div className="font-extrabold text-xs text-slate-900 leading-tight">100% Police Verified</div>
+                  <div className="text-[10px] text-slate-500">Certified local specialists</div>
+                </div>
+              </div>
+
+              {/* Dynamic Floating Badge 2: Warranty Guarantee */}
+              <div className="absolute -bottom-3.5 -right-3.5 sm:-right-4 z-20 glass-card px-3.5 py-2.5 rounded-2xl shadow-lg animate-float-delayed flex items-center gap-2.5 border border-slate-200">
+                <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-xs border border-amber-200/60 shadow-xs">
+                  <Star size={16} className="fill-amber-500 text-amber-500" />
+                </div>
+                <div>
+                  <div className="font-extrabold text-xs text-slate-900 leading-tight">30-Day Rework Warranty</div>
+                  <div className="text-[10px] text-slate-500">Free rework guarantee</div>
+                </div>
+              </div>
+
+              {/* Main Visual Image Card with Watch Technician Play Button */}
+              <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-100 hover-lift group/hero">
                 <img
                   src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=80"
                   alt="Professional home cleaning specialist at work"
-                  className="w-full aspect-[4/3] object-cover"
+                  className="w-full aspect-[4/3] object-cover transition-transform duration-700 hover:scale-102"
                 />
 
+                {/* Video Play Button Overlay */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const sofaService = services.find((s) => s.slug === 'sofa-deep-cleaning') || services[0];
+                    setSelectedVideoService(sofaService);
+                  }}
+                  className="absolute inset-0 m-auto w-16 h-16 sm:w-18 sm:h-18 rounded-full glass-card hover:bg-white text-slate-900 flex items-center justify-center shadow-2xl transition-all duration-300 transform hover:scale-110 group/play z-10 border border-white/80"
+                  title="Watch verified specialist clean sofa in real video"
+                  aria-label="Watch verified specialist clean sofa in real video"
+                >
+                  <Play size={24} className="fill-[#176B52] text-[#176B52] ml-1 group-hover/play:scale-110 transition-transform" />
+                </button>
+
                 {/* Overlaid Verified Card */}
-                <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-xs p-3 rounded-xl border border-slate-200 flex items-center justify-between shadow-xs">
+                <div className="absolute bottom-3 left-3 right-3 glass-card p-3 rounded-xl border border-slate-200/90 flex items-center justify-between shadow-xs">
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center font-bold text-xs border border-emerald-200">
                       ★
@@ -265,14 +372,29 @@ export const HomePage: React.FC = () => {
                       <div className="text-[10px] text-slate-500">Based on 2,400+ verified Gujarat bookings</div>
                     </div>
                   </div>
-                  <span className="text-[10px] font-bold text-slate-800 bg-slate-100 px-2 py-1 rounded">
-                    Gujarat Verified
-                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const sofaService = services.find((s) => s.slug === 'sofa-deep-cleaning') || services[0];
+                      setSelectedVideoService(sofaService);
+                    }}
+                    className="text-[10px] font-bold text-[#176B52] bg-emerald-50 hover:bg-emerald-100 px-2 py-1 rounded border border-emerald-200/60 flex items-center gap-1 transition-colors"
+                  >
+                    <Play size={10} className="fill-current" />
+                    <span>Watch Pro</span>
+                  </button>
                 </div>
               </div>
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* DYNAMIC ANIMATED METRICS & SOCIAL PROOF */}
+      <section className="py-10 bg-slate-50/80 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedStats />
         </div>
       </section>
 
@@ -323,13 +445,13 @@ export const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             {/* Sofa Cleaning Pillar */}
-            <div className="rounded-xl border border-slate-200 bg-white p-5 flex flex-col justify-between hover:border-slate-300 transition-all">
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 flex flex-col justify-between hover-lift transition-all">
               <div>
-                <div className="aspect-[16/10] rounded-lg overflow-hidden bg-slate-100 mb-4">
+                <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 mb-4">
                   <img
                     src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80"
                     alt="Sofa Cleaning"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>
                 <h3 className="font-bold text-sm text-slate-900">Sofa & Upholstery Care</h3>
@@ -363,13 +485,13 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* Home Deep Cleaning Pillar */}
-            <div className="rounded-xl border border-slate-200 bg-white p-5 flex flex-col justify-between hover:border-slate-300 transition-all">
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 flex flex-col justify-between hover-lift transition-all">
               <div>
-                <div className="aspect-[16/10] rounded-lg overflow-hidden bg-slate-100 mb-4">
+                <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 mb-4">
                   <img
                     src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80"
                     alt="Full Home Cleaning"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>
                 <h3 className="font-bold text-sm text-slate-900">Full Home Deep Cleaning</h3>
@@ -403,13 +525,13 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* AC Servicing Pillar */}
-            <div className="rounded-xl border border-slate-200 bg-white p-5 flex flex-col justify-between hover:border-slate-300 transition-all">
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 flex flex-col justify-between hover-lift transition-all">
               <div>
-                <div className="aspect-[16/10] rounded-lg overflow-hidden bg-slate-100 mb-4">
+                <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 mb-4">
                   <img
                     src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=600&q=80"
                     alt="AC Servicing"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>
                 <h3 className="font-bold text-sm text-slate-900">AC Power Jet Servicing</h3>
@@ -443,13 +565,13 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* Washing Machine Service Pillar */}
-            <div className="rounded-xl border border-slate-200 bg-white p-5 flex flex-col justify-between hover:border-slate-300 transition-all">
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 flex flex-col justify-between hover-lift transition-all">
               <div>
-                <div className="aspect-[16/10] rounded-lg overflow-hidden bg-slate-100 mb-4">
+                <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 mb-4">
                   <img
                     src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=600&q=80"
                     alt="Washing Machine Repair"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>
                 <h3 className="font-bold text-sm text-slate-900">Washing Machine Repair</h3>
@@ -500,8 +622,8 @@ export const HomePage: React.FC = () => {
           </p>
 
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="p-6 rounded-xl bg-white border border-slate-200">
-              <div className="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center mb-4">
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 hover-lift transition-all">
+              <div className="w-9 h-9 rounded-xl bg-slate-900 text-white font-bold text-xs flex items-center justify-center mb-4 shadow-xs">
                 1
               </div>
               <h3 className="font-bold text-slate-900 text-sm mb-1.5">Select & Tailor Your Service</h3>
@@ -510,8 +632,8 @@ export const HomePage: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-6 rounded-xl bg-white border border-slate-200">
-              <div className="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center mb-4">
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 hover-lift transition-all">
+              <div className="w-9 h-9 rounded-xl bg-[#176B52] text-white font-bold text-xs flex items-center justify-center mb-4 shadow-xs">
                 2
               </div>
               <h3 className="font-bold text-slate-900 text-sm mb-1.5">Confirm Doorstep on Google Maps</h3>
@@ -520,8 +642,8 @@ export const HomePage: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-6 rounded-xl bg-white border border-slate-200">
-              <div className="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center mb-4">
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 hover-lift transition-all">
+              <div className="w-9 h-9 rounded-xl bg-slate-900 text-white font-bold text-xs flex items-center justify-center mb-4 shadow-xs">
                 3
               </div>
               <h3 className="font-bold text-slate-900 text-sm mb-1.5">Verified Pro Arrives with Warranty</h3>
@@ -552,7 +674,7 @@ export const HomePage: React.FC = () => {
             {reviews.slice(0, 3).map((rev) => (
               <div
                 key={rev.id}
-                className="p-5 rounded-xl border border-slate-200 bg-white flex flex-col justify-between"
+                className="p-5 rounded-2xl border border-slate-200 bg-white flex flex-col justify-between hover-lift transition-all shadow-2xs"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2.5">
@@ -651,6 +773,13 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Service Real Video Demonstration Modal */}
+      <ServiceVideoModal
+        service={selectedVideoService}
+        isOpen={!!selectedVideoService}
+        onClose={() => setSelectedVideoService(null)}
+      />
 
     </div>
   );

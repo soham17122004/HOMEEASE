@@ -19,8 +19,8 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, featured = fa
 
   return (
     <div
-      className={`group bg-white rounded-xl border border-slate-200 overflow-hidden transition-all duration-200 hover:shadow-md hover:border-slate-300 flex flex-col ${
-        featured ? 'ring-1 ring-slate-900/10' : ''
+      className={`group bg-white rounded-2xl border border-slate-200 overflow-hidden hover-lift flex flex-col ${
+        featured ? 'ring-1 ring-slate-900/5' : ''
       }`}
     >
       {/* Image Container */}
@@ -28,7 +28,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, featured = fa
         <img
           src={service.imageUrl}
           alt={service.title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           loading="lazy"
         />
 
@@ -45,6 +45,14 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, featured = fa
             </span>
           )}
         </div>
+
+        {/* Video available indicator */}
+        {service.videoUrl && (
+          <div className="absolute top-2.5 right-2.5 bg-black/60 backdrop-blur-xs text-white px-2 py-0.5 rounded-md text-[10px] font-bold flex items-center gap-1 shadow-xs border border-white/20 pointer-events-none">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Video</span>
+          </div>
+        )}
 
         {/* Duration badge */}
         <div className="absolute bottom-2.5 right-2.5 bg-white/95 text-slate-800 px-2 py-0.5 rounded-md text-[11px] font-semibold flex items-center gap-1 shadow-xs border border-slate-200">
