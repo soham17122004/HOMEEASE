@@ -32,49 +32,49 @@ export const ContactPage: React.FC = () => {
           </p>
         </div>
 
-        {/* 4 Contact Channels */}
+        {/* 4 Contact Channels - Crisp Rectangular Urban Company Style */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm text-center flex flex-col items-center">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
-              <Phone size={20} />
+          <div className="bg-white p-5 rounded-none border border-slate-300 shadow-2xs text-center flex flex-col items-center">
+            <div className="w-10 h-10 rounded-none bg-slate-100 text-slate-800 flex items-center justify-center mb-3 border border-slate-200">
+              <Phone size={18} />
             </div>
-            <h3 className="font-bold text-xs uppercase tracking-wider text-slate-400">Customer Helpline</h3>
+            <h3 className="font-bold text-[11px] uppercase tracking-wider text-slate-500">Customer Helpline</h3>
             <div className="font-extrabold text-slate-900 text-sm mt-1">{BRAND_CONFIG.contact.phone}</div>
             <div className="text-[11px] text-slate-500 mt-1">Toll-free across India</div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm text-center flex flex-col items-center justify-between">
+          <div className="bg-white p-5 rounded-none border border-slate-300 shadow-2xs text-center flex flex-col items-center justify-between">
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-3 mx-auto">
-                <MessageSquare size={20} />
+              <div className="w-10 h-10 rounded-none bg-emerald-50 text-emerald-800 flex items-center justify-center mb-3 mx-auto border border-emerald-200">
+                <MessageSquare size={18} />
               </div>
-              <h3 className="font-bold text-xs uppercase tracking-wider text-slate-400">Direct WhatsApp</h3>
+              <h3 className="font-bold text-[11px] uppercase tracking-wider text-slate-500">Direct WhatsApp</h3>
               <div className="font-extrabold text-slate-900 text-sm mt-1">{WHATSAPP_DISPLAY}</div>
               <div className="text-[11px] text-slate-500 mt-1">Live booking assistance 7 days/week</div>
             </div>
             <button
               type="button"
               onClick={() => openWhatsApp({ customMessage: 'Hello HomeEase! 👋 I need assistance with booking a home service in Gujarat.' })}
-              className="mt-3 px-3 py-1.5 rounded-lg bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold transition-all shadow-xs active:scale-95 cursor-pointer w-full"
+              className="mt-3 px-3 py-2 rounded-none bg-[#111827] hover:bg-[#1f2937] text-white text-xs font-bold transition-all border border-slate-800 cursor-pointer w-full"
             >
               Open WhatsApp
             </button>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm text-center flex flex-col items-center">
-            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
-              <Mail size={20} />
+          <div className="bg-white p-5 rounded-none border border-slate-300 shadow-2xs text-center flex flex-col items-center">
+            <div className="w-10 h-10 rounded-none bg-slate-100 text-slate-800 flex items-center justify-center mb-3 border border-slate-200">
+              <Mail size={18} />
             </div>
-            <h3 className="font-bold text-xs uppercase tracking-wider text-slate-400">Email Support</h3>
+            <h3 className="font-bold text-[11px] uppercase tracking-wider text-slate-500">Email Support</h3>
             <div className="font-extrabold text-slate-900 text-sm mt-1">{BRAND_CONFIG.contact.email}</div>
             <div className="text-[11px] text-slate-500 mt-1">Average response &lt; 2 hours</div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm text-center flex flex-col items-center">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3">
-              <Clock size={20} />
+          <div className="bg-white p-5 rounded-none border border-slate-300 shadow-2xs text-center flex flex-col items-center">
+            <div className="w-10 h-10 rounded-none bg-slate-100 text-slate-800 flex items-center justify-center mb-3 border border-slate-200">
+              <Clock size={18} />
             </div>
-            <h3 className="font-bold text-xs uppercase tracking-wider text-slate-400">Operating Hours</h3>
+            <h3 className="font-bold text-[11px] uppercase tracking-wider text-slate-500">Operating Hours</h3>
             <div className="font-extrabold text-slate-900 text-sm mt-1">{BRAND_CONFIG.contact.operatingHours}</div>
             <div className="text-[11px] text-slate-500 mt-1">Open on all public holidays</div>
           </div>
@@ -84,11 +84,11 @@ export const ContactPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Support Ticket Form (7 cols) */}
-          <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+          <div className="lg:col-span-7 bg-white rounded-none p-6 sm:p-8 border border-slate-300 shadow-2xs">
             {submitted ? (
               <div className="text-center py-10 space-y-4">
-                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center">
-                  <CheckCircle2 size={32} />
+                <div className="w-12 h-12 rounded-none bg-emerald-100 text-emerald-800 mx-auto flex items-center justify-center border border-emerald-300">
+                  <CheckCircle2 size={24} />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900">Message Received!</h3>
                 <p className="text-xs text-slate-500 max-w-sm mx-auto">
@@ -96,14 +96,14 @@ export const ContactPage: React.FC = () => {
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="px-5 py-2 rounded-xl bg-slate-900 text-white text-xs font-semibold"
+                  className="px-5 py-2.5 rounded-none bg-slate-900 text-white text-xs font-semibold cursor-pointer"
                 >
                   Send Another Inquiry
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <h2 className="text-lg font-bold text-slate-900">Send an Inquiry or Feedback</h2>
+                <h2 className="text-base font-bold text-slate-900 uppercase tracking-wide">Send an Inquiry or Feedback</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -113,7 +113,7 @@ export const ContactPage: React.FC = () => {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full p-3 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+                      className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900 bg-white"
                       placeholder="e.g. Ramesh Joshi"
                     />
                   </div>
@@ -124,7 +124,7 @@ export const ContactPage: React.FC = () => {
                       required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full p-3 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+                      className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900 bg-white"
                       placeholder="e.g. +91 98765 43210"
                     />
                   </div>
@@ -137,7 +137,7 @@ export const ContactPage: React.FC = () => {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+                    className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900 bg-white"
                     placeholder="e.g. ramesh@example.com"
                   />
                 </div>
@@ -147,7 +147,7 @@ export const ContactPage: React.FC = () => {
                   <select
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white"
+                    className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900 bg-white"
                   >
                     <option value="Booking Inquiry">Existing Booking Question / Rescheduling</option>
                     <option value="Custom Quote">Large Commercial / Villa Deep Clean Quote</option>
@@ -163,14 +163,14 @@ export const ContactPage: React.FC = () => {
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+                    className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900 bg-white"
                     placeholder="How can we assist you? Include booking reference code if applicable."
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/30 flex items-center justify-center gap-2"
+                  className="w-full py-3 rounded-none bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer transition-colors"
                 >
                   <span>Submit Support Message</span>
                   <Send size={14} />
@@ -180,18 +180,18 @@ export const ContactPage: React.FC = () => {
           </div>
 
           {/* Headquarters Info (5 cols) */}
-          <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
-            <h3 className="font-bold text-slate-900 text-sm">Corporate Headquarters</h3>
+          <div className="lg:col-span-5 bg-white rounded-none p-6 sm:p-8 border border-slate-300 shadow-2xs space-y-6">
+            <h3 className="font-bold text-slate-900 text-sm uppercase tracking-wide">Corporate Headquarters</h3>
             
             <div className="flex items-start gap-3 text-xs text-slate-600">
-              <MapPin size={18} className="text-emerald-600 shrink-0 mt-0.5" />
+              <MapPin size={18} className="text-[#176B52] shrink-0 mt-0.5" />
               <div>
                 <strong className="text-slate-900">{BRAND_CONFIG.name} Technologies Pvt. Ltd.</strong>
                 <p className="mt-1 leading-relaxed">{BRAND_CONFIG.contact.address}</p>
               </div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2 text-xs">
+            <div className="p-4 rounded-none bg-slate-50 border border-slate-200 space-y-2 text-xs">
               <div className="font-bold text-slate-900">Need Immediate Assistance?</div>
               <p className="text-slate-500 text-[11px] leading-relaxed">
                 If your technician has not arrived within 15 minutes of your slot window, call our express dispatch desk at{' '}

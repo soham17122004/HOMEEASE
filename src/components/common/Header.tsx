@@ -11,10 +11,13 @@ import {
   LogOut,
   Search,
   Home,
+  Phone,
+  CheckCircle2,
 } from 'lucide-react';
 import { BRAND_CONFIG } from '../../config/brand';
 import { DataStore, useStoreData } from '../../lib/store';
 import { LocationModal } from './LocationModal';
+import { LoginModal } from './LoginModal';
 import { openWhatsApp, WHATSAPP_DISPLAY } from '../../lib/whatsapp';
 
 export const Header: React.FC = () => {
@@ -22,8 +25,8 @@ export const Header: React.FC = () => {
   const location = useLocation();
   const { currentUser, selectedCity, bookings, services } = useStoreData();
   const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [quickSearch, setQuickSearch] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -36,28 +39,10 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Active bookings count
-  const myBookingsCount = currentUser
-    ? bookings.filter((b) => b.userId === currentUser.id && (b.status === 'confirmed' || b.status === 'in_progress' || b.status === 'pending')).length
-    : 0;
-
-  const handleLogout = () => {
-    DataStore.setCurrentUser(null);
-    setIsProfileDropdownOpen(false);
-    navigate('/');
-  };
-
-  const handleSwitchToAdmin = () => {
-    DataStore.switchRole('admin');
-    setIsProfileDropdownOpen(false);
-    navigate('/admin');
-  };
-
-  const handleSwitchToCustomer = () => {
-    DataStore.switchRole('customer');
-    setIsProfileDropdownOpen(false);
-    navigate('/');
-  };
+  // Close mobile drawer on route change
+  React.useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,42 +60,40 @@ export const Header: React.FC = () => {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 w-full transition-all duration-300 ${
-          isScrolled
-            ? 'glass-header shadow-xs py-0.5'
-            : 'bg-white border-b border-slate-200'
+        className={`sticky top-0 z-40 w-full transition-all duration-200 bg-white border-b border-slate-200 ${
+          isScrolled ? 'shadow-xs' : ''
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-15 sm:h-16">
             
             {/* Left: Brand Logo & Location Selector */}
-            <div className="flex items-center gap-5">
-              <Link to="/" className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-slate-900 flex items-center justify-center text-white shadow-xs">
-                  <Home size={18} strokeWidth={2.2} />
+            <div className="flex items-center gap-2 sm:gap-5 min-w-0">
+              <Link to="/" className="flex items-center gap-2 shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white font-bold shadow-xs">
+                  <Home size={16} strokeWidth={2.4} />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-extrabold text-lg tracking-tight text-slate-900 leading-none">
+                  <span className="font-extrabold text-base tracking-tight text-slate-900 leading-none">
                     {BRAND_CONFIG.name}
                   </span>
-                  <span className="text-[10px] tracking-normal font-medium text-slate-500 mt-1">
-                    Home Services • Gujarat
+                  <span className="hidden sm:inline text-[10px] tracking-normal font-semibold text-slate-500 mt-1 uppercase">
+                    Urban Services • Gujarat
                   </span>
                 </div>
               </Link>
 
-              {/* Location Selector Pill */}
+              {/* Location Selector */}
               <button
                 type="button"
                 onClick={() => setIsLocationOpen(true)}
-                className="flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-[#F7F8FA] hover:bg-slate-100 text-[#22252B] text-[11px] sm:text-xs font-semibold transition-colors border border-[#E6E8EC]"
+                className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-900 text-xs font-semibold transition-colors border border-slate-200 cursor-pointer shrink-0"
                 title="Change operating city"
               >
-                <MapPin size={12} className="text-[#176B52] shrink-0" />
-                <span className="max-w-[65px] sm:max-w-[130px] truncate">{selectedCity}</span>
+                <MapPin size={13} className="text-[#176B52] shrink-0" />
+                <span className="max-w-[70px] sm:max-w-[140px] truncate">{selectedCity}</span>
                 <span className="hidden sm:inline text-slate-400 font-normal">, Gujarat</span>
-                <ChevronDown size={11} className="text-slate-400 shrink-0" />
+                <ChevronDown size={12} className="text-slate-400 shrink-0" />
               </button>
             </div>
 
@@ -125,13 +108,13 @@ export const Header: React.FC = () => {
                   onFocus={() => setIsSearchFocused(true)}
                   onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
                   placeholder="Search 'sofa cleaning', 'AC service', '2BHK'..."
-                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all"
+                  className="w-full pl-9 pr-4 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-900 transition-all"
                 />
               </form>
 
               {/* Quick Search Auto-complete dropdown */}
               {isSearchFocused && matchingServices.length > 0 && (
-                <div className="absolute left-0 right-0 top-full mt-1.5 bg-white rounded-xl shadow-lg border border-slate-200 py-1.5 z-50 divide-y divide-slate-100">
+                <div className="absolute left-0 right-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-50 divide-y divide-slate-100">
                   {matchingServices.map((s) => (
                     <button
                       key={s.id}
@@ -141,7 +124,7 @@ export const Header: React.FC = () => {
                         setQuickSearch('');
                         setIsSearchFocused(false);
                       }}
-                      className="w-full px-3.5 py-2 text-left hover:bg-slate-50 flex items-center justify-between text-xs transition-colors"
+                      className="w-full px-3.5 py-2 text-left hover:bg-slate-50 flex items-center justify-between text-xs transition-colors cursor-pointer"
                     >
                       <div className="font-medium text-slate-800">{s.title}</div>
                       <span className="text-slate-500 font-semibold">₹{s.price}</span>
@@ -152,13 +135,13 @@ export const Header: React.FC = () => {
             </div>
 
             {/* Right: Nav Links & Actions */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               {/* Desktop Links */}
               <nav className="hidden md:flex items-center gap-5 text-xs font-semibold text-slate-600 mr-2">
                 <Link
                   to="/services"
                   className={`hover:text-slate-900 transition-colors ${
-                    location.pathname === '/services' ? 'text-slate-950 font-bold' : ''
+                    location.pathname === '/services' ? 'text-slate-950 font-bold border-b-2 border-slate-950 pb-0.5' : ''
                   }`}
                 >
                   All Services
@@ -166,7 +149,7 @@ export const Header: React.FC = () => {
                 <Link
                   to="/about"
                   className={`hover:text-slate-900 transition-colors ${
-                    location.pathname === '/about' ? 'text-slate-950 font-bold' : ''
+                    location.pathname === '/about' ? 'text-slate-950 font-bold border-b-2 border-slate-950 pb-0.5' : ''
                   }`}
                 >
                   Coverage & About
@@ -174,18 +157,18 @@ export const Header: React.FC = () => {
                 <Link
                   to="/faq"
                   className={`hover:text-slate-900 transition-colors ${
-                    location.pathname === '/faq' ? 'text-slate-950 font-bold' : ''
+                    location.pathname === '/faq' ? 'text-slate-950 font-bold border-b-2 border-slate-950 pb-0.5' : ''
                   }`}
                 >
                   Help
                 </Link>
               </nav>
 
-              {/* Direct WhatsApp Button (Logo Only) */}
+              {/* WhatsApp Icon Button (desktop / tablet) */}
               <button
                 type="button"
                 onClick={() => openWhatsApp({ customMessage: 'Hello HomeEase! 👋 I would like to inquire about booking a home service in Junagadh.' })}
-                className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-[#25D366] hover:bg-[#20ba5a] text-white shadow-xs transition-all active:scale-95 cursor-pointer"
+                className="hidden sm:inline-flex items-center justify-center w-8 h-8 rounded-lg bg-[#25D366] hover:bg-[#20ba5a] text-white shadow-2xs transition-all cursor-pointer"
                 title={`Chat on WhatsApp (${WHATSAPP_DISPLAY})`}
                 aria-label="Chat on WhatsApp"
               >
@@ -195,22 +178,47 @@ export const Header: React.FC = () => {
                 </svg>
               </button>
 
-              {/* Track Booking Guest Link */}
+              {/* Track Booking Guest Link - Hidden on mobile because it's in the mobile bottom nav */}
               <Link
                 to="/bookings"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors border border-slate-200"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-800 hover:bg-slate-100 transition-colors border border-slate-300"
               >
                 <CalendarCheck size={14} className="text-[#176B52]" />
                 <span>Track Booking</span>
               </Link>
 
-              {/* Mobile menu button */}
+              {/* Customer Account Button (Mobile & Desktop) */}
+              {currentUser ? (
+                <button
+                  type="button"
+                  onClick={() => setIsLoginOpen(true)}
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-xs font-bold text-[#176B52] transition-colors cursor-pointer"
+                  title={`Logged in as ${currentUser.fullName} (${currentUser.phone})`}
+                >
+                  <div className="w-5 h-5 rounded-full bg-[#176B52] text-white flex items-center justify-center text-[10px] font-extrabold shrink-0">
+                    {currentUser.fullName ? currentUser.fullName.charAt(0).toUpperCase() : 'U'}
+                  </div>
+                  <span className="hidden sm:inline max-w-[85px] truncate">{currentUser.fullName.split(' ')[0]}</span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setIsLoginOpen(true)}
+                  className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white transition-colors cursor-pointer shadow-xs"
+                >
+                  <User size={13} />
+                  <span>Login</span>
+                </button>
+              )}
+
+              {/* Mobile menu hamburger button */}
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+                className="md:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 border border-slate-200 transition-colors"
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               >
-                {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
           </div>
@@ -218,66 +226,149 @@ export const Header: React.FC = () => {
 
         {/* Mobile Navigation Drawer */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-3">
-            <button
-              type="button"
-              onClick={() => {
-                setIsLocationOpen(true);
-                setIsMobileMenuOpen(false);
-              }}
-              className="w-full flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800"
-            >
-              <div className="flex items-center gap-2">
-                <MapPin size={14} className="text-emerald-700" />
-                <span>Operating City: <strong>{selectedCity}, Gujarat</strong></span>
-              </div>
-              <ChevronDown size={13} className="text-slate-400" />
-            </button>
+          <>
+            {/* Dark blur backdrop */}
+            <div
+              className="md:hidden fixed inset-0 bg-slate-950/40 backdrop-blur-xs z-40 top-15"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
 
-            <div className="flex flex-col space-y-1 text-xs font-semibold text-slate-700 pt-1">
-              <Link
-                to="/services"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg hover:bg-slate-50"
+            {/* Slide-down drawer */}
+            <div className="md:hidden fixed inset-x-0 top-15 bg-white z-50 border-b border-slate-200 shadow-2xl px-4 py-4 space-y-3 animate-fadeIn max-h-[calc(100vh-4rem)] overflow-y-auto">
+              
+              {/* User Login / Profile Card in Mobile Menu */}
+              {currentUser ? (
+                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-9 h-9 rounded-full bg-[#176B52] text-white flex items-center justify-center font-bold text-sm shrink-0">
+                      {currentUser.fullName ? currentUser.fullName.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="font-extrabold text-xs text-slate-900 truncate">{currentUser.fullName}</div>
+                      <div className="text-[11px] text-slate-500 font-mono">{currentUser.phone}</div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      setIsLoginOpen(true);
+                    }}
+                    className="px-2.5 py-1 text-[11px] font-bold text-[#176B52] bg-white rounded-lg border border-emerald-200"
+                  >
+                    Manage
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    setIsLoginOpen(true);
+                  }}
+                  className="w-full p-3 rounded-xl bg-slate-900 text-white flex items-center justify-between shadow-xs cursor-pointer"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                      <User size={16} />
+                    </div>
+                    <div className="text-left">
+                      <div className="font-bold text-xs">Customer Login</div>
+                      <div className="text-[10px] text-slate-300">Enter Name & Mobile (No OTP)</div>
+                    </div>
+                  </div>
+                  <span className="text-xs font-bold px-2.5 py-1 bg-[#176B52] text-white rounded-lg">
+                    Sign In
+                  </span>
+                </button>
+              )}
+
+              {/* City quick selector */}
+              <button
+                type="button"
+                onClick={() => {
+                  setIsLocationOpen(true);
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800"
               >
-                All Services
-              </Link>
-              <Link
-                to="/about"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg hover:bg-slate-50"
-              >
-                Coverage & About
-              </Link>
-              <Link
-                to="/faq"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg hover:bg-slate-50"
-              >
-                Help & FAQ
-              </Link>
-              <Link
-                to="/contact"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg hover:bg-slate-50"
-              >
-                Contact Us
-              </Link>
-              <Link
-                to="/bookings"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg bg-emerald-50 text-emerald-900 flex items-center gap-2 font-semibold"
-              >
-                <CalendarCheck size={14} className="text-[#176B52]" />
-                <span>Track Booking</span>
-              </Link>
+                <div className="flex items-center gap-2">
+                  <MapPin size={15} className="text-[#176B52]" />
+                  <span>City: <strong>{selectedCity}, Gujarat</strong></span>
+                </div>
+                <span className="text-[11px] font-bold text-[#176B52]">Change</span>
+              </button>
+
+              <div className="flex flex-col space-y-1 text-sm font-semibold text-slate-700 pt-1">
+                <Link
+                  to="/services"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-3 py-2.5 rounded-lg hover:bg-slate-50 flex items-center justify-between"
+                >
+                  <span>All Services</span>
+                  <span className="text-xs text-slate-400 font-normal">15+ options</span>
+                </Link>
+                <Link
+                  to="/about"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-3 py-2.5 rounded-lg hover:bg-slate-50 flex items-center justify-between"
+                >
+                  <span>Coverage & About</span>
+                  <span className="text-xs text-slate-400 font-normal">Junagadh areas</span>
+                </Link>
+                <Link
+                  to="/bookings"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-3 py-2.5 rounded-lg hover:bg-slate-50 flex items-center justify-between"
+                >
+                  <span>Track My Bookings</span>
+                  <CalendarCheck size={14} className="text-slate-400" />
+                </Link>
+                <Link
+                  to="/faq"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-3 py-2.5 rounded-lg hover:bg-slate-50"
+                >
+                  Help & FAQs
+                </Link>
+                <Link
+                  to="/contact"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="px-3 py-2.5 rounded-lg hover:bg-slate-50"
+                >
+                  Contact Us
+                </Link>
+
+                <div className="pt-2 border-t border-slate-100 flex gap-2">
+                  <a
+                    href="tel:9016526419"
+                    className="flex-1 py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    <Phone size={14} />
+                    <span>Call Support</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      openWhatsApp({ customMessage: 'Hi HomeEase! I need help with service booking.' });
+                    }}
+                    className="flex-1 py-2.5 px-3 bg-[#25D366] hover:bg-[#20ba5a] text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    <span>WhatsApp</span>
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </header>
 
       {/* Location Modal */}
       <LocationModal isOpen={isLocationOpen} onClose={() => setIsLocationOpen(false)} />
+
+      {/* Customer Login Modal (No OTP, Name + Mobile Only) */}
+      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </>
   );
 };

@@ -102,7 +102,7 @@ export const AdminLoginPage: React.FC = () => {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md px-4">
         <div className="text-center mb-6">
-          <div className="w-12 h-12 rounded-xl bg-[#176B52] text-white flex items-center justify-center mx-auto shadow-sm">
+          <div className="w-12 h-12 rounded-none bg-[#176B52] text-white flex items-center justify-center mx-auto shadow-sm">
             <ShieldCheck size={26} strokeWidth={2.2} />
           </div>
           <h1 className="mt-3 text-xl font-bold tracking-tight text-slate-900">
@@ -114,11 +114,11 @@ export const AdminLoginPage: React.FC = () => {
         </div>
 
         {/* Login Card */}
-        <div className="bg-white py-8 px-6 shadow-sm border border-slate-200/90 rounded-2xl sm:px-8">
+        <div className="bg-white py-8 px-6 shadow-sm border border-slate-200/90 rounded-none sm:px-8">
           <form onSubmit={handleLogin} className="space-y-4">
             {/* Error Banner */}
             {errorMessage && (
-              <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-start gap-2 animate-fadeIn">
+              <div className="p-3 rounded-none bg-red-50 border border-red-200 text-red-800 text-xs flex items-start gap-2 animate-fadeIn">
                 <AlertCircle size={16} className="text-red-600 shrink-0 mt-0.5" />
                 <span className="leading-relaxed">{errorMessage}</span>
               </div>
@@ -137,7 +137,7 @@ export const AdminLoginPage: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="junagadh or admin@homeease.in"
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#176B52] focus:ring-1 focus:ring-[#176B52] transition-all bg-white"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-none border border-slate-200 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#176B52] focus:ring-1 focus:ring-[#176B52] transition-all bg-white"
                 />
               </div>
               <p className="text-[11px] text-slate-400 mt-1">
@@ -167,7 +167,7 @@ export const AdminLoginPage: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#176B52] focus:ring-1 focus:ring-[#176B52] transition-all bg-white"
+                  className="w-full pl-10 pr-10 py-2.5 rounded-none border border-slate-200 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#176B52] focus:ring-1 focus:ring-[#176B52] transition-all bg-white"
                 />
                 <button
                   type="button"
@@ -185,7 +185,7 @@ export const AdminLoginPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold bg-[#176B52] hover:bg-[#125742] text-white shadow-xs transition-all active:scale-98 cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 rounded-none text-xs sm:text-sm font-bold bg-[#176B52] hover:bg-[#125742] text-white shadow-xs transition-all active:scale-98 cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <span>Verifying Credentials...</span>
@@ -209,21 +209,21 @@ export const AdminLoginPage: React.FC = () => {
       {/* Forgot Password Modal */}
       {isForgotModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl w-full max-w-sm p-6 shadow-xl border border-slate-200 animate-scaleIn">
+          <div className="bg-white rounded-none w-full max-w-sm p-6 shadow-xl border border-slate-200 animate-scaleIn">
             <h3 className="text-sm font-bold text-slate-900 mb-1">Administrator Password Reset</h3>
             <p className="text-xs text-slate-500 mb-4">
               Enter the authorized administrator email to generate a secure reset token.
             </p>
 
             {forgotError && (
-              <div className="mb-3 p-2.5 rounded-lg bg-red-50 text-red-700 text-xs flex items-center gap-2">
+              <div className="mb-3 p-2.5 rounded-none bg-red-50 text-red-700 text-xs flex items-center gap-2">
                 <AlertCircle size={14} className="shrink-0" />
                 <span>{forgotError}</span>
               </div>
             )}
 
             {forgotMessage && (
-              <div className="mb-3 p-2.5 rounded-lg bg-emerald-50 text-emerald-800 text-xs flex items-center gap-2">
+              <div className="mb-3 p-2.5 rounded-none bg-emerald-50 text-emerald-800 text-xs flex items-center gap-2">
                 <CheckCircle2 size={14} className="shrink-0" />
                 <span>{forgotMessage}</span>
               </div>
@@ -241,20 +241,20 @@ export const AdminLoginPage: React.FC = () => {
                     value={forgotEmail}
                     onChange={(e) => setForgotEmail(e.target.value)}
                     placeholder="junagadh or admin@homeease.in"
-                    className="w-full p-2 rounded-lg border border-slate-200 text-xs text-slate-900"
+                    className="w-full p-2 rounded-none border border-slate-200 text-xs text-slate-900"
                   />
                 </div>
                 <div className="flex items-center justify-end gap-2 pt-2">
                   <button
                     type="button"
                     onClick={() => setIsForgotModalOpen(false)}
-                    className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100"
+                    className="px-3 py-1.5 rounded-none text-xs font-semibold text-slate-600 hover:bg-slate-100"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#176B52] text-white hover:bg-[#125742]"
+                    className="px-3 py-1.5 rounded-none text-xs font-bold bg-[#176B52] text-white hover:bg-[#125742]"
                   >
                     Generate Token
                   </button>
@@ -263,7 +263,7 @@ export const AdminLoginPage: React.FC = () => {
             ) : (
               <form onSubmit={handleConfirmReset} className="space-y-3">
                 {generatedDemoCode && (
-                  <div className="p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900 font-mono text-center">
+                  <div className="p-2.5 rounded-none bg-amber-50 border border-amber-200 text-xs text-amber-900 font-mono text-center">
                     Verification Code: <strong>{generatedDemoCode}</strong>
                   </div>
                 )}
@@ -277,7 +277,7 @@ export const AdminLoginPage: React.FC = () => {
                     value={resetCode}
                     onChange={(e) => setResetCode(e.target.value)}
                     placeholder="Enter code"
-                    className="w-full p-2 rounded-lg border border-slate-200 text-xs text-slate-900 font-mono"
+                    className="w-full p-2 rounded-none border border-slate-200 text-xs text-slate-900 font-mono"
                   />
                 </div>
                 <div>
@@ -291,7 +291,7 @@ export const AdminLoginPage: React.FC = () => {
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="Enter new password"
-                    className="w-full p-2 rounded-lg border border-slate-200 text-xs text-slate-900"
+                    className="w-full p-2 rounded-none border border-slate-200 text-xs text-slate-900"
                   />
                 </div>
                 <div className="flex items-center justify-end gap-2 pt-2">
@@ -301,13 +301,13 @@ export const AdminLoginPage: React.FC = () => {
                       setResetStep('request');
                       setIsForgotModalOpen(false);
                     }}
-                    className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100"
+                    className="px-3 py-1.5 rounded-none text-xs font-semibold text-slate-600 hover:bg-slate-100"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#176B52] text-white hover:bg-[#125742]"
+                    className="px-3 py-1.5 rounded-none text-xs font-bold bg-[#176B52] text-white hover:bg-[#125742]"
                   >
                     Save New Password
                   </button>

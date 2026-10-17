@@ -65,13 +65,13 @@ export const ServiceEnquiryModal: React.FC<ServiceEnquiryModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl border border-slate-100 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 animate-fadeIn">
+      <div className="bg-white rounded-none w-full max-w-lg shadow-xl border border-slate-300 overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-amber-50/60">
+        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center">
-              <MapPin size={18} />
+            <div className="w-8 h-8 rounded-none bg-slate-900 text-white flex items-center justify-center">
+              <MapPin size={16} />
             </div>
             <div>
               <h3 className="font-bold text-slate-900 text-sm">Request Service Coverage</h3>
@@ -82,7 +82,7 @@ export const ServiceEnquiryModal: React.FC<ServiceEnquiryModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
+            className="text-slate-400 hover:text-slate-600 p-1.5 rounded-none hover:bg-slate-100 transition-colors cursor-pointer"
           >
             <X size={18} />
           </button>
@@ -90,8 +90,8 @@ export const ServiceEnquiryModal: React.FC<ServiceEnquiryModalProps> = ({
 
         {submitted ? (
           <div className="p-8 text-center space-y-4">
-            <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-              <CheckCircle2 size={32} />
+            <div className="w-12 h-12 rounded-none bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto">
+              <CheckCircle2 size={28} />
             </div>
             <h4 className="text-lg font-extrabold text-slate-900">Enquiry Received!</h4>
             <p className="text-xs text-slate-600 max-w-sm mx-auto leading-relaxed">
@@ -102,15 +102,15 @@ export const ServiceEnquiryModal: React.FC<ServiceEnquiryModalProps> = ({
                 setSubmitted(false);
                 onClose();
               }}
-              className="px-6 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors"
+              className="px-6 py-2.5 bg-slate-900 text-white rounded-none text-xs font-bold hover:bg-slate-800 transition-colors cursor-pointer"
             >
               Close
             </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="p-6 space-y-4">
-            <div className="bg-slate-50 p-3 rounded-2xl border border-slate-200 text-xs text-slate-600 space-y-1">
-              <p className="font-semibold text-slate-800">
+            <div className="bg-slate-50 p-3 rounded-none border border-slate-200 text-xs text-slate-600 space-y-1">
+              <p className="font-bold text-slate-900">
                 Notice: This address is currently outside our immediate active zone.
               </p>
               <p className="text-[11px] text-slate-500">
@@ -119,7 +119,7 @@ export const ServiceEnquiryModal: React.FC<ServiceEnquiryModalProps> = ({
             </div>
 
             {error && (
-              <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-600 flex items-center gap-2">
+              <div className="p-3 rounded-none bg-rose-50 border border-rose-200 text-xs text-rose-600 flex items-center gap-2">
                 <AlertCircle size={16} />
                 <span>{error}</span>
               </div>
@@ -127,82 +127,82 @@ export const ServiceEnquiryModal: React.FC<ServiceEnquiryModalProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">Your Full Name *</label>
+                <label className="text-[11px] font-bold text-slate-700 block mb-1 uppercase tracking-wider">Your Full Name *</label>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Pooja Trivedi"
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900"
                 />
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">Mobile Number *</label>
+                <label className="text-[11px] font-bold text-slate-700 block mb-1 uppercase tracking-wider">Mobile Number *</label>
                 <input
                   type="tel"
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="e.g. 9825012345"
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900"
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">Email Address</label>
+                <label className="text-[11px] font-bold text-slate-700 block mb-1 uppercase tracking-wider">Email Address</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g. name@example.com"
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900"
                 />
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">City / Town</label>
+                <label className="text-[11px] font-bold text-slate-700 block mb-1 uppercase tracking-wider">City / Town</label>
                 <input
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="e.g. Morbi"
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900"
                 />
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">Postal PIN Code</label>
+                <label className="text-[11px] font-bold text-slate-700 block mb-1 uppercase tracking-wider">Postal PIN Code</label>
                 <input
                   type="text"
                   value={pincode}
                   maxLength={6}
                   onChange={(e) => setPincode(e.target.value)}
                   placeholder="e.g. 363641"
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900"
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">Full Service Address</label>
+                <label className="text-[11px] font-bold text-slate-700 block mb-1 uppercase tracking-wider">Full Service Address</label>
                 <textarea
                   rows={2}
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="e.g. Flat 301, Silver Residency, Near Highway..."
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900"
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">Specific Requirements / Notes</label>
+                <label className="text-[11px] font-bold text-slate-700 block mb-1 uppercase tracking-wider">Specific Requirements / Notes</label>
                 <textarea
                   rows={2}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="e.g. Need sofa sanitization for 3-seater before weekend"
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900"
                 />
               </div>
             </div>
@@ -213,7 +213,7 @@ export const ServiceEnquiryModal: React.FC<ServiceEnquiryModalProps> = ({
                 onClick={() => openWhatsApp({
                   customMessage: `Hello HomeEase! 👋 I need service in my area: ${address || city} (PIN: ${pincode}). Category: ${getCategoryDisplayName(serviceCategory)}. Can you dispatch a team?`,
                 })}
-                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
+                className="w-full sm:w-auto px-4 py-2.5 rounded-none bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold transition-all shadow-2xs flex items-center justify-center gap-1.5 cursor-pointer"
                 title={`Chat on WhatsApp: ${WHATSAPP_DISPLAY}`}
               >
                 <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
@@ -227,13 +227,13 @@ export const ServiceEnquiryModal: React.FC<ServiceEnquiryModalProps> = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                  className="px-4 py-2.5 rounded-none border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-md shadow-amber-600/30 flex items-center gap-1.5"
+                  className="px-5 py-2.5 rounded-none bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <Send size={14} />
                   <span>Submit Enquiry</span>

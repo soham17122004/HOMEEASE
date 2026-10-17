@@ -182,7 +182,7 @@ export function mapBackendServiceToFrontend(s: any): Service {
   const resolvedImageUrl =
     s.image_url && !s.image_url.includes('1621905251189')
       ? s.image_url
-      : initialMatch?.imageUrl || s.imageUrl || 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80';
+      : initialMatch?.imageUrl || s.imageUrl || '/images/services/home-cleaning.jpg';
 
   const resolvedGallery =
     Array.isArray(s.gallery_urls) && s.gallery_urls.length > 0
@@ -359,7 +359,7 @@ export const DataStore = {
           slug: c.id,
           description: c.description || '',
           iconName: c.icon || 'Sparkles',
-          imageUrl: c.image_url || 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80',
+          imageUrl: c.image_url || '/images/services/home-cleaning.jpg',
           serviceCount: c.services?.length || 0,
           isPopular: true,
         }));

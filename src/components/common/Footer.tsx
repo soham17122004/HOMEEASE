@@ -23,7 +23,7 @@ export const Footer: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+              <div className="w-8 h-8 rounded-none bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
                 <ShieldCheck size={18} />
               </div>
               <div>
@@ -35,7 +35,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+              <div className="w-8 h-8 rounded-none bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
                 <CheckCircle2 size={18} />
               </div>
               <div>
@@ -47,7 +47,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+              <div className="w-8 h-8 rounded-none bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
                 <FileText size={18} />
               </div>
               <div>
@@ -59,7 +59,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+              <div className="w-8 h-8 rounded-none bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
                 <Clock size={18} />
               </div>
               <div>
@@ -80,7 +80,7 @@ export const Footer: React.FC = () => {
           {/* Brand & Contact */}
           <div className="lg:col-span-2 space-y-3.5">
             <Link to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold">
+              <div className="w-8 h-8 rounded-none bg-slate-900 text-white flex items-center justify-center font-bold">
                 <Home size={16} />
               </div>
               <span className="font-extrabold text-base tracking-tight text-slate-900">
@@ -155,7 +155,7 @@ export const Footer: React.FC = () => {
               {GUJARAT_CITIES.map((c) => (
                 <span
                   key={c.name}
-                  className="bg-white px-2 py-0.5 rounded border border-slate-200 text-slate-700 font-medium"
+                  className="bg-white px-2 py-0.5 rounded-none border border-slate-200 text-slate-700 font-medium"
                 >
                   {c.name}
                 </span>

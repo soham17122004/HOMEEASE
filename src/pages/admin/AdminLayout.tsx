@@ -98,7 +98,7 @@ export const AdminLayout: React.FC = () => {
           {/* Admin Header */}
           <div className="p-4 border-b border-slate-200 flex items-center justify-between">
             <Link to="/admin" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#176B52] flex items-center justify-center text-white shadow-xs">
+              <div className="w-8 h-8 rounded-none bg-[#176B52] flex items-center justify-center text-white shadow-xs">
                 <ShieldCheck size={18} />
               </div>
               <div>
@@ -124,7 +124,7 @@ export const AdminLayout: React.FC = () => {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className={`flex items-center justify-between px-3 py-2 rounded-lg transition-colors ${
+                  className={`flex items-center justify-between px-3 py-2 rounded-none transition-colors ${
                     isActive
                       ? 'bg-[#176B52] text-white font-bold shadow-xs'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
@@ -136,7 +136,7 @@ export const AdminLayout: React.FC = () => {
                   </div>
                   {item.badge !== undefined && (
                     <span
-                      className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                      className={`px-1.5 py-0.5 rounded-none text-[10px] font-bold ${
                         isActive ? 'bg-white text-slate-900' : 'bg-amber-100 text-amber-800'
                       }`}
                     >
@@ -153,7 +153,7 @@ export const AdminLayout: React.FC = () => {
         <div className="p-3 border-t border-slate-200 space-y-2">
           <Link
             to="/"
-            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200 transition-colors"
+            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-none bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200 transition-colors"
           >
             <Home size={13} />
             <span>Customer Website</span>
@@ -171,7 +171,7 @@ export const AdminLayout: React.FC = () => {
           </button>
 
           {/* Logged in Admin Info & Logout */}
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-2">
+          <div className="p-2.5 rounded-none bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-2">
             <div className="truncate flex-1">
               <div className="text-[11px] font-bold text-slate-900 truncate">
                 Operations Head
@@ -183,7 +183,7 @@ export const AdminLayout: React.FC = () => {
             <button
               type="button"
               onClick={handleLogout}
-              className="text-slate-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-white transition-colors cursor-pointer"
+              className="text-slate-400 hover:text-red-600 p-1.5 rounded-none hover:bg-white transition-colors cursor-pointer"
               title="Secure Log Out"
             >
               <LogOut size={15} />

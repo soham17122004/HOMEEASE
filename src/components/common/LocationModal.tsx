@@ -110,15 +110,15 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose })
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl w-full max-w-md border border-slate-200/90 shadow-xl overflow-hidden flex flex-col animate-scaleIn transition-all"
+        className="bg-white rounded-none w-full max-w-md border border-slate-300 shadow-xl overflow-hidden flex flex-col transition-all"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
         <div className="px-6 pt-6 pb-4 flex items-start justify-between gap-4">
           <div className="flex items-start gap-2.5">
-            <MapPin size={18} className="text-emerald-700 shrink-0 mt-0.5" />
+            <MapPin size={18} className="text-[#176B52] shrink-0 mt-0.5" />
             <div>
-              <h2 className="text-base font-semibold text-slate-900 tracking-tight">
+              <h2 className="text-base font-bold text-slate-900 tracking-tight">
                 Choose your service location
               </h2>
               <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
@@ -129,7 +129,7 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose })
           <button
             type="button"
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer -mr-1"
+            className="text-slate-400 hover:text-slate-600 p-1.5 rounded-none hover:bg-slate-100 transition-colors cursor-pointer -mr-1"
             title="Close dialog"
             aria-label="Close dialog"
           >
@@ -147,13 +147,13 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose })
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search your area or 6-digit pincode"
-              className="w-full pl-10 pr-9 py-2.5 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 transition-all"
+              className="w-full pl-10 pr-9 py-2.5 rounded-none border border-slate-300 bg-white text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-slate-900 transition-all"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 p-1 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100"
+                className="absolute right-2.5 p-1 text-slate-400 hover:text-slate-600 rounded-none hover:bg-slate-100"
                 title="Clear search"
               >
                 <X size={14} />
@@ -169,16 +169,16 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose })
             <button
               type="button"
               onClick={handleSelectJunagadh}
-              className="w-full text-left p-4 rounded-xl border border-emerald-600 bg-emerald-50/20 hover:bg-emerald-50/40 transition-all cursor-pointer flex items-start justify-between gap-3 group"
+              className="w-full text-left p-4 rounded-none border border-slate-900 bg-slate-50 hover:bg-slate-100 transition-all cursor-pointer flex items-start justify-between gap-3 group"
             >
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-emerald-100/80 text-emerald-800 flex items-center justify-center shrink-0 mt-0.5">
-                  <MapPin size={16} className="text-emerald-700" />
+                <div className="w-8 h-8 rounded-none bg-slate-900 text-white flex items-center justify-center shrink-0 mt-0.5">
+                  <MapPin size={16} />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-sm font-semibold text-slate-900">Junagadh, Gujarat</span>
-                    <span className="inline-flex items-center text-[10px] font-medium text-emerald-800 bg-emerald-100/70 border border-emerald-200 px-2 py-0.5 rounded-full">
+                    <span className="text-sm font-bold text-slate-900">Junagadh, Gujarat</span>
+                    <span className="inline-flex items-center text-[10px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-none">
                       Service Available
                     </span>
                   </div>
@@ -194,18 +194,18 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose })
               </div>
 
               {/* Selection indicator */}
-              <div className="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-1">
+              <div className="w-5 h-5 rounded-none bg-slate-900 text-white flex items-center justify-center shrink-0 mt-1">
                 <Check size={12} strokeWidth={2.5} />
               </div>
             </button>
           ) : (
             /* Other Cities / Unsupported Location: Coming Soon */
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/60 text-center space-y-3">
-              <div className="w-9 h-9 rounded-full bg-slate-200/70 text-slate-500 flex items-center justify-center mx-auto">
+            <div className="p-5 rounded-none border border-slate-200 bg-slate-50 text-center space-y-3">
+              <div className="w-9 h-9 rounded-none bg-slate-200 text-slate-500 flex items-center justify-center mx-auto">
                 <MapPin size={16} />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-slate-900">
+                <h3 className="text-sm font-bold text-slate-900">
                   We're coming to your city soon!
                 </h3>
                 <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto leading-relaxed">
@@ -218,14 +218,14 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose })
                 <button
                   type="button"
                   disabled
-                  className="w-full py-2 px-3 rounded-lg text-xs font-medium text-slate-400 bg-slate-200/70 border border-slate-200 cursor-not-allowed select-none"
+                  className="w-full py-2 px-3 rounded-none text-xs font-semibold text-slate-400 bg-slate-200 border border-slate-200 cursor-not-allowed select-none"
                 >
                   Coming Soon
                 </button>
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="text-xs font-medium text-emerald-700 hover:text-emerald-800 hover:underline transition-colors cursor-pointer"
+                  className="text-xs font-semibold text-slate-900 hover:underline transition-colors cursor-pointer"
                 >
                   Switch to Junagadh, Gujarat
                 </button>
@@ -235,8 +235,8 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose })
         </div>
 
         {/* Modal Footer */}
-        <div className="px-6 py-3 border-t border-slate-100 bg-slate-50/50 flex items-center justify-center gap-2 text-xs text-slate-500">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
+        <div className="px-6 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-center gap-2 text-xs text-slate-500 font-medium">
+          <span className="w-2 h-2 rounded-none bg-emerald-600 shrink-0" />
           <span>Currently serving Junagadh, Gujarat</span>
         </div>
       </div>

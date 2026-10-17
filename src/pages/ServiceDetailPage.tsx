@@ -15,13 +15,10 @@ import {
   MapPin,
   Lock,
   Camera,
-  Play,
-  Film,
 } from 'lucide-react';
 import { BRAND_CONFIG } from '../config/brand';
 import { useStoreData, DataStore } from '../lib/store';
 import { RatingStars } from '../components/common/RatingStars';
-import { ServiceVideoPlayer } from '../components/common/ServiceVideoPlayer';
 import {
   ServiceCustomizerStudio,
   CustomizedServiceConfig,
@@ -42,7 +39,6 @@ export const ServiceDetailPage: React.FC = () => {
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-  const [mediaMode, setMediaMode] = useState<'video' | 'photos'>(service?.videoUrl ? 'video' : 'photos');
 
   // Dynamic customization state from Studio
   const [customConfig, setCustomConfig] = useState<CustomizedServiceConfig | null>(null);
@@ -55,14 +51,14 @@ export const ServiceDetailPage: React.FC = () => {
   if (!service) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <div className="bg-white rounded-xl p-8 max-w-md w-full text-center border border-slate-200">
+        <div className="bg-white rounded-none p-8 max-w-md w-full text-center border border-slate-200">
           <h2 className="text-lg font-bold text-slate-900">Service Not Found</h2>
           <p className="text-xs text-slate-500 mt-1.5">
             The service you requested may have been relocated or deactivated.
           </p>
           <Link
             to="/services"
-            className="mt-4 inline-block px-4 py-2 rounded-lg bg-slate-900 text-white text-xs font-bold"
+            className="mt-4 inline-block px-4 py-2 rounded-none bg-slate-900 text-white text-xs font-bold"
           >
             Back to Services
           </Link>
@@ -113,7 +109,7 @@ export const ServiceDetailPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb Navigation */}
-        <nav className="text-xs text-slate-400 mb-6 flex items-center gap-1.5 font-medium">
+        <nav className="text-xs text-slate-400 mb-5 flex items-center gap-1.5 font-medium">
           <Link to="/" className="hover:text-slate-900">Home</Link>
           <span>/</span>
           <Link to="/services" className="hover:text-slate-900">Services</Link>
@@ -122,206 +118,90 @@ export const ServiceDetailPage: React.FC = () => {
         </nav>
 
         {/* Main Grid: Details & Customizer (8 cols) + Sticky Summary Card (4 cols) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           
           {/* LEFT COLUMN: Gallery, Customizer Studio & Service Details */}
           <div className="lg:col-span-8 space-y-6">
             
-            {/* Premium Realistic Service Media Card: Video & Photography Showcase */}
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-xs">
+            {/* Urban Company High Quality Image Showcase - Strictly Rectangular */}
+            <div className="bg-white rounded-none p-4 sm:p-5 border border-slate-200">
               
-              {/* Media Switcher Tab Header */}
-              <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-100">
-                <div className="flex items-center gap-2">
-                  {service.videoUrl && (
-                    <button
-                      type="button"
-                      onClick={() => setMediaMode('video')}
-                      className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-2xs ${
-                        mediaMode === 'video'
-                          ? 'bg-[#176B52] text-white shadow-xs'
-                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                      }`}
-                    >
-                      <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-300"></span>
-                      </span>
-                      <Play size={12} className="fill-current" />
-                      <span>Real Service Video</span>
-                    </button>
-                  )}
+              {/* Main Photo Viewer */}
+              <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-none overflow-hidden bg-slate-100 border border-slate-200">
+                <img
+                  src={gallery[activeImageIndex]}
+                  alt={`${service.title} - Service in action`}
+                  className="w-full h-full object-cover"
+                />
 
-                  <button
-                    type="button"
-                    onClick={() => setMediaMode('photos')}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                      mediaMode === 'photos'
-                        ? 'bg-[#176B52] text-white shadow-xs'
-                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                    }`}
-                  >
-                    <Camera size={13} />
-                    <span>Real Photos ({gallery.length})</span>
-                  </button>
+                {/* Top Badges - Crisp Rectangular */}
+                <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none">
+                  <div className="flex items-center gap-2">
+                    {service.isPopular && (
+                      <span className="px-2 py-0.5 rounded-none text-[10px] font-bold bg-slate-900 text-white flex items-center gap-1 tracking-wider uppercase">
+                        Popular Choice
+                      </span>
+                    )}
+                    <span className="px-2 py-0.5 rounded-none text-[10px] font-bold bg-white text-slate-900 border border-slate-300 flex items-center gap-1">
+                      <Clock size={11} className="text-[#176B52]" />
+                      <span>{service.durationMinutes} mins</span>
+                    </span>
+                  </div>
+
+                  <span className="text-[10px] font-bold bg-white/95 text-slate-800 px-2 py-0.5 rounded-none border border-slate-300">
+                    {activeImageIndex + 1} of {gallery.length} Photos
+                  </span>
                 </div>
 
-                <div className="hidden sm:flex items-center gap-1 text-[11px] font-semibold text-slate-500">
-                  <ShieldCheck size={13} className="text-[#176B52]" />
-                  <span>Junagadh Doorstep Verified</span>
+                {/* Bottom Realistic Caption & Watermark */}
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs pointer-events-none">
+                  <div className="flex items-center gap-1.5 bg-black/75 px-2.5 py-1 rounded-none border border-white/20">
+                    <Camera size={12} className="text-emerald-400" />
+                    <span className="font-semibold text-[11px]">Real Service Photography</span>
+                    <span className="text-white/70 text-[10px] hidden sm:inline">• Certified Junagadh Expert</span>
+                  </div>
                 </div>
               </div>
 
-              {/* MEDIA CONTAINER: Video Player OR Photo Viewer */}
-              {mediaMode === 'video' && service.videoUrl ? (
-                <div className="space-y-3">
-                  <ServiceVideoPlayer
-                    videoUrl={service.videoUrl}
-                    posterUrl={service.videoPosterUrl || service.imageUrl}
-                    title={service.videoTitle || `${service.title} - Real Service In Action`}
-                    technicianName="Specialist Rajesh V."
-                    technicianRole="Senior Service Professional"
-                    autoPlay={false}
-                  />
-
-                  {/* Video Caption & Verification Note */}
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-between text-xs">
-                    <div className="flex items-center gap-2">
-                      <Film size={14} className="text-[#176B52] shrink-0" />
-                      <span className="font-semibold text-slate-900 text-[11px] sm:text-xs">
-                        {service.videoTitle || 'Real Service Demonstration with Certified Specialist'}
-                      </span>
-                    </div>
-                    <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 shrink-0">
-                      Standardized SOP
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                <div>
-                  <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-xl overflow-hidden bg-slate-100 group">
-                    <img
-                      src={gallery[activeImageIndex]}
-                      alt={`${service.title} - Real Service In Action`}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
-                    />
-
-                    {/* Subtle contrast gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
-
-                    {/* Top Badges */}
-                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2 pointer-events-none">
-                        {service.isPopular && (
-                          <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-slate-900/90 text-white shadow-xs backdrop-blur-xs flex items-center gap-1">
-                            <Sparkles size={11} className="text-amber-400" />
-                            <span>Popular Choice</span>
-                          </span>
-                        )}
-                        <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-white/95 text-slate-900 border border-white/40 shadow-xs backdrop-blur-xs flex items-center gap-1">
-                          <Clock size={11} className="text-[#176B52]" />
-                          <span>{service.durationMinutes} mins</span>
-                        </span>
+              {/* Thumbnails - Crisp Rectangular */}
+              <div className="flex items-center gap-2 mt-3 pt-2 border-t border-slate-100 overflow-x-auto pb-1">
+                {gallery.map((img: string, idx: number) => {
+                  const captions = [
+                    'Overview & Prep',
+                    'Service in Action',
+                    'Pristine Result',
+                  ];
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setActiveImageIndex(idx)}
+                      className={`group relative flex-1 sm:flex-initial sm:w-28 rounded-none overflow-hidden border transition-all text-left cursor-pointer ${
+                        activeImageIndex === idx
+                          ? 'border-slate-900 ring-1 ring-slate-900'
+                          : 'border-slate-200 opacity-70 hover:opacity-100 hover:border-slate-400'
+                      }`}
+                    >
+                      <div className="aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                        <img
+                          src={img}
+                          alt={`Photo ${idx + 1}`}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-
-                      {/* Play Video Quick Trigger */}
-                      {service.videoUrl && (
-                        <button
-                          type="button"
-                          onClick={() => setMediaMode('video')}
-                          className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs flex items-center gap-1 transition-all hover:scale-105"
-                        >
-                          <Play size={11} className="fill-white" />
-                          <span>Watch Video Demo</span>
-                        </button>
-                      )}
-                    </div>
-
-                    {/* Bottom Realistic Caption & Watermark */}
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs pointer-events-none">
-                      <div className="flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/15">
-                        <Camera size={12} className="text-emerald-400" />
-                        <span className="font-semibold text-[11px]">Real Service Photography</span>
-                        <span className="text-white/60 text-[10px] hidden sm:inline">• Certified Technician At Work</span>
+                      <div className="p-1 px-1.5 bg-white text-[10px] font-semibold text-slate-700 truncate border-t border-slate-100">
+                        {captions[idx] || `Photo ${idx + 1}`}
                       </div>
-
-                      <div className="text-[11px] font-medium text-white/80 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md border border-white/10">
-                        {activeImageIndex + 1} / {gallery.length}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Thumbnails */}
-                  <div className="flex items-center gap-2.5 mt-3 pt-2 border-t border-slate-100 overflow-x-auto pb-1">
-                    {/* Video Quick Thumbnail */}
-                    {service.videoUrl && (
-                      <button
-                        type="button"
-                        onClick={() => setMediaMode('video')}
-                        className={`group relative flex-1 sm:flex-initial sm:w-28 rounded-lg overflow-hidden border transition-all text-left ${
-                          mediaMode === 'video'
-                            ? 'border-emerald-700 ring-2 ring-emerald-700/20'
-                            : 'border-slate-200 hover:border-emerald-700'
-                        }`}
-                      >
-                        <div className="aspect-[16/10] w-full overflow-hidden bg-slate-900 relative flex items-center justify-center">
-                          <img
-                            src={service.videoPosterUrl || service.imageUrl}
-                            alt="Video Thumbnail"
-                            className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-300"
-                          />
-                          <div className="absolute w-8 h-8 rounded-full bg-white text-slate-900 flex items-center justify-center shadow-lg group-hover:bg-[#176B52] group-hover:text-white transition-colors">
-                            <Play size={14} className="fill-current ml-0.5" />
-                          </div>
-                        </div>
-                        <div className="p-1 px-1.5 bg-slate-900 text-[10px] font-bold text-white truncate text-center">
-                          ▶ Video Demo
-                        </div>
-                      </button>
-                    )}
-
-                    {gallery.map((img: string, idx: number) => {
-                      const captions = [
-                        'Overview & Prep',
-                        'Service in Action',
-                        'Pristine Result',
-                      ];
-                      return (
-                        <button
-                          key={idx}
-                          type="button"
-                          onClick={() => {
-                            setMediaMode('photos');
-                            setActiveImageIndex(idx);
-                          }}
-                          className={`group relative flex-1 sm:flex-initial sm:w-28 rounded-lg overflow-hidden border transition-all text-left ${
-                            mediaMode === 'photos' && activeImageIndex === idx
-                              ? 'border-emerald-700 ring-2 ring-emerald-700/20'
-                              : 'border-slate-200 opacity-70 hover:opacity-100 hover:border-slate-300'
-                          }`}
-                        >
-                          <div className="aspect-[16/10] w-full overflow-hidden bg-slate-100">
-                            <img
-                              src={img}
-                              alt={`Photo ${idx + 1}`}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            />
-                          </div>
-                          <div className="p-1 px-1.5 bg-white text-[10px] font-semibold text-slate-700 truncate border-t border-slate-100">
-                            {captions[idx] || `Snapshot ${idx + 1}`}
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Service Header Overview */}
-            <div className="bg-white rounded-xl p-6 border border-slate-200 space-y-3">
+            {/* Service Header Overview - Crisp Rectangular */}
+            <div className="bg-white rounded-none p-5 sm:p-6 border border-slate-200 space-y-3">
               <div className="flex flex-wrap items-center gap-2">
-                <div className="flex items-center gap-1 bg-amber-50 text-amber-900 border border-amber-200 px-2 py-0.5 rounded text-xs font-bold">
+                <div className="flex items-center gap-1 bg-amber-50 text-amber-900 border border-amber-200 px-1.5 py-0.5 rounded-none text-xs font-bold">
                   <Star size={12} className="fill-amber-500 text-amber-500" />
                   <span>{service.rating.toFixed(2)}</span>
                 </div>
@@ -330,7 +210,7 @@ export const ServiceDetailPage: React.FC = () => {
                 </span>
                 <span className="text-slate-300">•</span>
                 <div className="flex items-center gap-1 text-xs text-slate-600">
-                  <MapPin size={12} className="text-emerald-700" />
+                  <MapPin size={12} className="text-[#176B52]" />
                   <span>Available in {selectedCity}, Gujarat</span>
                 </div>
               </div>
@@ -346,15 +226,15 @@ export const ServiceDetailPage: React.FC = () => {
               {/* 3 Pillars strip */}
               <div className="grid grid-cols-3 gap-2 pt-3 border-t border-slate-100">
                 <div className="flex items-center gap-2 text-xs text-slate-700">
-                  <BadgeCheck size={16} className="text-emerald-700 shrink-0" />
+                  <BadgeCheck size={16} className="text-[#176B52] shrink-0" />
                   <span>Verified Professionals</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-slate-700">
-                  <ShieldCheck size={16} className="text-emerald-700 shrink-0" />
+                  <ShieldCheck size={16} className="text-[#176B52] shrink-0" />
                   <span>Transparent Pricing</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-slate-700">
-                  <Clock size={16} className="text-emerald-700 shrink-0" />
+                  <Clock size={16} className="text-[#176B52] shrink-0" />
                   <span>On-Time Arrival</span>
                 </div>
               </div>
@@ -375,15 +255,15 @@ export const ServiceDetailPage: React.FC = () => {
               />
             </div>
 
-            {/* What is Included / Excluded */}
-            <div className="bg-white rounded-xl p-6 border border-slate-200 space-y-5">
-              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+            {/* What is Included / Excluded - Crisp Rectangular */}
+            <div className="bg-white rounded-none p-5 sm:p-6 border border-slate-200 space-y-4">
+              <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                 What is Included in This Service
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                 {service.includedItems.map((item: string, idx: number) => (
-                  <div key={idx} className="flex items-start gap-2 p-2.5 rounded-lg bg-slate-50 border border-slate-200">
-                    <CheckCircle2 size={14} className="text-emerald-700 shrink-0 mt-0.5" />
+                  <div key={idx} className="flex items-start gap-2 p-2.5 rounded-none bg-slate-50 border border-slate-200">
+                    <CheckCircle2 size={14} className="text-[#176B52] shrink-0 mt-0.5" />
                     <span className="text-xs text-slate-800 leading-relaxed">{item}</span>
                   </div>
                 ))}
@@ -406,25 +286,25 @@ export const ServiceDetailPage: React.FC = () => {
               )}
             </div>
 
-            {/* FAQ Accordion */}
+            {/* FAQ Accordion - Crisp Rectangular */}
             {service.faqList && service.faqList.length > 0 && (
-              <div className="bg-white rounded-xl p-6 border border-slate-200 space-y-4">
-                <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+              <div className="bg-white rounded-none p-5 sm:p-6 border border-slate-200 space-y-3">
+                <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   Service Specific Questions
                 </h2>
                 <div className="space-y-2">
                   {service.faqList.map((faq: { question: string; answer: string }, idx: number) => (
-                    <div key={idx} className="rounded-lg border border-slate-200 overflow-hidden">
+                    <div key={idx} className="rounded-none border border-slate-200 overflow-hidden">
                       <button
                         type="button"
                         onClick={() => setOpenFaqIndex(openFaqIndex === idx ? null : idx)}
-                        className="w-full p-3 text-left flex items-center justify-between text-xs font-bold text-slate-900 hover:bg-slate-50"
+                        className="w-full p-3 text-left flex items-center justify-between text-xs font-bold text-slate-900 hover:bg-slate-50 cursor-pointer"
                       >
                         <span>{faq.question}</span>
                         <ChevronDown size={14} className={`text-slate-400 transition-transform ${openFaqIndex === idx ? 'rotate-180' : ''}`} />
                       </button>
                       {openFaqIndex === idx && (
-                        <div className="px-3 pb-3 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-2">
+                        <div className="px-3 pb-3 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-2 bg-slate-50/50">
                           {faq.answer}
                         </div>
                       )}
@@ -434,25 +314,25 @@ export const ServiceDetailPage: React.FC = () => {
               </div>
             )}
 
-            {/* Reviews Section */}
-            <div className="bg-white rounded-xl p-6 border border-slate-200 space-y-4">
+            {/* Reviews Section - Crisp Rectangular */}
+            <div className="bg-white rounded-none p-5 sm:p-6 border border-slate-200 space-y-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+                <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   Verified Customer Reviews
                 </h2>
                 <button
                   type="button"
                   onClick={() => setShowReviewModal(true)}
-                  className="text-xs font-bold text-slate-900 hover:underline"
+                  className="text-xs font-bold text-slate-900 hover:underline cursor-pointer"
                 >
                   Write a Review
                 </button>
               </div>
 
               {serviceReviews.length > 0 ? (
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   {serviceReviews.map((rev: Review) => (
-                    <div key={rev.id} className="p-3.5 rounded-lg border border-slate-200 bg-slate-50/50">
+                    <div key={rev.id} className="p-3.5 rounded-none border border-slate-200 bg-slate-50/50">
                       <div className="flex items-center justify-between mb-1.5">
                         <div className="font-bold text-xs text-slate-900">{rev.userName}</div>
                         <div className="flex items-center gap-0.5">
@@ -478,9 +358,9 @@ export const ServiceDetailPage: React.FC = () => {
 
           </div>
 
-          {/* RIGHT COLUMN: STICKY BOOKING SUMMARY CARD (4 COLS) */}
+          {/* RIGHT COLUMN: STICKY BOOKING SUMMARY CARD (4 COLS) - CRISP RECTANGULAR */}
           <div className="lg:col-span-4 sticky top-20 space-y-4">
-            <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm space-y-5">
+            <div className="bg-white rounded-none p-5 border border-slate-300 shadow-2xs space-y-5">
               <div>
                 <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                   Fixed Transparent Price
@@ -498,8 +378,8 @@ export const ServiceDetailPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Guarantees Box */}
-              <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-2 text-xs text-slate-700">
+              {/* Guarantees Box - Crisp Rectangle */}
+              <div className="p-3 rounded-none bg-slate-50 border border-slate-200 space-y-2 text-xs text-slate-700">
                 <div className="flex items-center gap-2">
                   <Check size={13} className="text-[#176B52]" />
                   <span>30-Day Service Guarantee</span>
@@ -514,12 +394,12 @@ export const ServiceDetailPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="space-y-2.5">
+              {/* Action Buttons - Urban Company Crisp Rectangular */}
+              <div className="space-y-2">
                 <button
                   type="button"
                   onClick={handleBookNow}
-                  className="w-full py-3.5 rounded-xl bg-[#176B52] hover:bg-[#135742] text-white text-xs font-bold transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
+                  className="w-full py-3 rounded-none bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Book Online Now</span>
                   <ArrowRight size={14} />
@@ -532,7 +412,7 @@ export const ServiceDetailPage: React.FC = () => {
                     price: currentPrice,
                     customMessage: `Hello HomeEase! 👋 I want to book: ${service.title} (Starting at ₹${currentPrice}). Please confirm availability for today/tomorrow.`,
                   })}
-                  className="w-full py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-xs active:scale-95 cursor-pointer"
+                  className="w-full py-2.5 rounded-none bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
                   title={`Book on WhatsApp: ${WHATSAPP_DISPLAY}`}
                 >
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -549,8 +429,8 @@ export const ServiceDetailPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Need Assistance Card */}
-            <div className="bg-white rounded-xl p-4 border border-slate-200 text-xs text-slate-600 space-y-2">
+            {/* Need Assistance Card - Crisp Rectangle */}
+            <div className="bg-white rounded-none p-4 border border-slate-200 text-xs text-slate-600 space-y-2">
               <div className="font-bold text-slate-900">Have questions about this service?</div>
               <p className="text-[11px] text-slate-500 leading-relaxed">
                 Chat or call our Gujarat customer desk at <strong>{WHATSAPP_DISPLAY}</strong>.
@@ -558,7 +438,7 @@ export const ServiceDetailPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => openWhatsApp({ customMessage: `Hello HomeEase! 👋 I have a question about ${service.title}.` })}
-                className="w-full py-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold transition-colors flex items-center justify-center gap-1.5 border border-emerald-200 cursor-pointer"
+                className="w-full py-2 rounded-none bg-slate-50 hover:bg-slate-100 text-slate-900 text-xs font-bold transition-colors flex items-center justify-center gap-1.5 border border-slate-300 cursor-pointer"
               >
                 <span>Chat with Customer Desk</span>
               </button>
@@ -568,11 +448,11 @@ export const ServiceDetailPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Sticky Action Bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-[#E6E8EC] p-3 px-4 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] flex items-center justify-between">
+      {/* Mobile Sticky Action Bar - Crisp Rectangles */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-300 p-3 px-4 shadow-md flex items-center justify-between">
         <div>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-base font-extrabold text-[#176B52]">
+            <span className="text-base font-extrabold text-slate-900">
               {BRAND_CONFIG.currency.symbol}{currentPrice}
             </span>
             <span className="text-[11px] text-slate-400 line-through">
@@ -586,17 +466,17 @@ export const ServiceDetailPage: React.FC = () => {
         <button
           type="button"
           onClick={handleBookNow}
-          className="px-5 py-2.5 rounded-xl bg-[#176B52] hover:bg-[#135742] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all"
+          className="px-5 py-2.5 rounded-none bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center gap-1.5 cursor-pointer"
         >
           <span>Book Now</span>
           <ArrowRight size={14} />
         </button>
       </div>
 
-      {/* Review Modal */}
+      {/* Review Modal - Crisp Rectangle */}
       {showReviewModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full border border-slate-200 shadow-xl space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white rounded-none p-6 max-w-md w-full border border-slate-300 shadow-xl space-y-4">
             <h3 className="font-bold text-sm text-slate-900">Write a Customer Review</h3>
             <form onSubmit={handleReviewSubmit} className="space-y-3">
               <div>
@@ -607,7 +487,7 @@ export const ServiceDetailPage: React.FC = () => {
                       key={star}
                       type="button"
                       onClick={() => setReviewRating(star)}
-                      className="p-1"
+                      className="p-1 cursor-pointer"
                     >
                       <Star
                         size={20}
@@ -626,7 +506,7 @@ export const ServiceDetailPage: React.FC = () => {
                   value={reviewComment}
                   onChange={(e) => setReviewComment(e.target.value)}
                   placeholder="Describe the quality of service, technician punctuality, etc."
-                  className="w-full p-2.5 rounded-lg border border-slate-200 text-xs focus:outline-none focus:border-slate-400"
+                  className="w-full p-2.5 rounded-none border border-slate-300 text-xs focus:outline-none focus:border-slate-900"
                 />
               </div>
 
@@ -634,13 +514,13 @@ export const ServiceDetailPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowReviewModal(false)}
-                  className="px-3.5 py-2 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                  className="px-3.5 py-2 rounded-none border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-lg bg-slate-900 text-white text-xs font-bold hover:bg-slate-800"
+                  className="px-4 py-2 rounded-none bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 cursor-pointer"
                 >
                   Submit Review
                 </button>

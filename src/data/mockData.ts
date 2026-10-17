@@ -7,7 +7,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     slug: 'home-cleaning',
     description: 'Thorough, spotless deep cleaning for apartments, villas, and kitchens.',
     iconName: 'Sparkles',
-    imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/services/home-cleaning.jpg',
     serviceCount: 5,
     isPopular: true,
   },
@@ -17,7 +17,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     slug: 'sofa-carpet-care',
     description: 'Steam extraction, fabric shampooing, and spot removal for sofas & mattresses.',
     iconName: 'Armchair',
-    imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/services/sofa-cleaning.jpg',
     serviceCount: 4,
     isPopular: true,
   },
@@ -27,7 +27,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     slug: 'ac-servicing',
     description: 'Jet-pump washing, gas top-up, PCB diagnostic, and coil cleaning.',
     iconName: 'Wind',
-    imageUrl: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/services/ac-repair.jpg',
     serviceCount: 4,
     isPopular: true,
   },
@@ -37,7 +37,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     slug: 'appliance-repair',
     description: 'Certified repair for washing machines, refrigerators, microwaves, and RO purifiers.',
     iconName: 'Wrench',
-    imageUrl: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/services/washing-machine.jpg',
     serviceCount: 6,
     isPopular: true,
   },
@@ -47,7 +47,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     slug: 'kitchen-bathroom',
     description: 'Tile descaling, oil grime removal, chimney de-greasing, and mirror polishing.',
     iconName: 'Bath',
-    imageUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/services/bathroom-cleaning.jpg',
     serviceCount: 3,
     isPopular: false,
   },
@@ -57,7 +57,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     slug: 'electrician-services',
     description: 'Switchboard fixes, chandelier & fan fittings, short circuit diagnostic.',
     iconName: 'Zap',
-    imageUrl: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/services/electrician.jpg',
     serviceCount: 4,
     isPopular: false,
   },
@@ -67,7 +67,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     slug: 'plumbing-solutions',
     description: 'Leakage detection, tap replacement, pipe unclogging, and sanitary fittings.',
     iconName: 'Droplets',
-    imageUrl: 'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/services/plumbing.jpg',
     serviceCount: 4,
     isPopular: false,
   },
@@ -77,7 +77,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     slug: 'pest-control',
     description: 'Odorless cockroach gel, anti-termite barrier, bedbug deep extermination.',
     iconName: 'ShieldAlert',
-    imageUrl: 'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/services/pest-control.jpg',
     serviceCount: 3,
     isPopular: false,
   },
@@ -97,15 +97,11 @@ export const INITIAL_SERVICES: Service[] = [
     durationMinutes: 75,
     rating: 4.88,
     reviewCount: 384,
-    imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80',
+    imageUrl: '/images/services/sofa-cleaning.jpg',
     galleryUrls: [
-      'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1540518614846-7ede433c4b4f?auto=format&fit=crop&w=1200&q=80'
+      '/images/services/sofa-cleaning.jpg',
+      '/images/services/home-cleaning.jpg'
     ],
-    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Industrial_vacuum_cleaner_in_operation.webm',
-    videoTitle: 'Certified Specialist: Deep Foam Injection & Vacuum Extraction on Fabric Sofa',
-    videoPosterUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80',
     isPopular: true,
     isActive: true,
     includedItems: [
@@ -148,15 +144,12 @@ export const INITIAL_SERVICES: Service[] = [
     durationMinutes: 240,
     rating: 4.91,
     reviewCount: 612,
-    imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80',
+    imageUrl: '/images/services/home-cleaning.jpg',
     galleryUrls: [
-      'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'
+      '/images/services/home-cleaning.jpg',
+      '/images/services/kitchen-cleaning.jpg',
+      '/images/services/bathroom-cleaning.jpg'
     ],
-    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Sweeping.webm',
-    videoTitle: 'Professional Cleaning Crew: Floor Buffing, Dusting & Deep Sanitization',
-    videoPosterUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80',
     isPopular: true,
     isActive: true,
     includedItems: [
@@ -199,15 +192,11 @@ export const INITIAL_SERVICES: Service[] = [
     durationMinutes: 45,
     rating: 4.87,
     reviewCount: 1042,
-    imageUrl: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1200&q=80',
+    imageUrl: '/images/services/ac-repair.jpg',
     galleryUrls: [
-      'https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1590486803833-1c5dc8ddd4c8?auto=format&fit=crop&w=1200&q=80'
+      '/images/services/ac-repair.jpg',
+      '/images/services/electrician.jpg'
     ],
-    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Industrial_vacuum_cleaner_in_operation.webm',
-    videoTitle: 'HVAC Technician: High-Pressure Power Jet Flush & Coil Descaling In Action',
-    videoPosterUrl: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1200&q=80',
     isPopular: true,
     isActive: true,
     includedItems: [
@@ -250,15 +239,11 @@ export const INITIAL_SERVICES: Service[] = [
     durationMinutes: 60,
     rating: 4.82,
     reviewCount: 295,
-    imageUrl: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=1200&q=80',
+    imageUrl: '/images/services/washing-machine.jpg',
     galleryUrls: [
-      'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=1200&q=80'
+      '/images/services/washing-machine.jpg',
+      '/images/services/ac-repair.jpg'
     ],
-    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Sweeping.webm',
-    videoTitle: 'Appliance Specialist: Drum Descaling, Filter Clearance & Motor Spin Diagnostics',
-    videoPosterUrl: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=1200&q=80',
     isPopular: true,
     isActive: true,
     includedItems: [
@@ -295,15 +280,11 @@ export const INITIAL_SERVICES: Service[] = [
     durationMinutes: 60,
     rating: 4.85,
     reviewCount: 450,
-    imageUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80',
+    imageUrl: '/images/services/bathroom-cleaning.jpg',
     galleryUrls: [
-      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1200&q=80'
+      '/images/services/bathroom-cleaning.jpg',
+      '/images/services/kitchen-cleaning.jpg'
     ],
-    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Industrial_vacuum_cleaner_in_operation.webm',
-    videoTitle: 'Bathroom Specialist: Tile Descaling & High-Shine Chrome Polish',
-    videoPosterUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80',
     isPopular: true,
     isActive: true,
     includedItems: [
@@ -339,15 +320,11 @@ export const INITIAL_SERVICES: Service[] = [
     durationMinutes: 75,
     rating: 4.89,
     reviewCount: 228,
-    imageUrl: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1200&q=80',
+    imageUrl: '/images/services/kitchen-cleaning.jpg',
     galleryUrls: [
-      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=80'
+      '/images/services/kitchen-cleaning.jpg',
+      '/images/services/home-cleaning.jpg'
     ],
-    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Sweeping.webm',
-    videoTitle: 'Kitchen Technician: Chemical Immersion Degreasing of Baffle Filters',
-    videoPosterUrl: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1200&q=80',
     isPopular: false,
     isActive: true,
     includedItems: [
@@ -379,15 +356,11 @@ export const INITIAL_SERVICES: Service[] = [
     durationMinutes: 60,
     rating: 4.83,
     reviewCount: 520,
-    imageUrl: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1200&q=80',
+    imageUrl: '/images/services/electrician.jpg',
     galleryUrls: [
-      'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80'
+      '/images/services/electrician.jpg',
+      '/images/services/ac-repair.jpg'
     ],
-    videoUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Industrial_vacuum_cleaner_in_operation.webm',
-    videoTitle: 'Licensed Electrician: Circuit Breaker Testing & Switchboard Diagnostics',
-    videoPosterUrl: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1200&q=80',
     isPopular: false,
     isActive: true,
     includedItems: [
@@ -419,11 +392,10 @@ export const INITIAL_SERVICES: Service[] = [
     durationMinutes: 60,
     rating: 4.81,
     reviewCount: 412,
-    imageUrl: 'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&w=1200&q=80',
+    imageUrl: '/images/services/plumbing.jpg',
     galleryUrls: [
-      'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=1200&q=80'
+      '/images/services/plumbing.jpg',
+      '/images/services/bathroom-cleaning.jpg'
     ],
     isPopular: false,
     isActive: true,
@@ -456,11 +428,10 @@ export const INITIAL_SERVICES: Service[] = [
     durationMinutes: 45,
     rating: 4.90,
     reviewCount: 310,
-    imageUrl: 'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?auto=format&fit=crop&w=1200&q=80',
+    imageUrl: '/images/services/pest-control.jpg',
     galleryUrls: [
-      'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&w=1200&q=80'
+      '/images/services/pest-control.jpg',
+      '/images/services/kitchen-cleaning.jpg'
     ],
     isPopular: false,
     isActive: true,

@@ -112,13 +112,13 @@ export const AdminDashboardPage: React.FC = () => {
   if (loading) {
     return (
       <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto animate-pulse">
-        <div className="h-10 bg-slate-200 rounded-lg w-1/3" />
+        <div className="h-10 bg-slate-200 rounded-none w-1/3" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-32 bg-slate-100 rounded-xl border border-slate-200" />
+            <div key={i} className="h-32 bg-slate-100 rounded-none border border-slate-200" />
           ))}
         </div>
-        <div className="h-64 bg-slate-100 rounded-xl border border-slate-200" />
+        <div className="h-64 bg-slate-100 rounded-none border border-slate-200" />
       </div>
     );
   }
@@ -126,8 +126,8 @@ export const AdminDashboardPage: React.FC = () => {
   if (error || !data) {
     return (
       <div className="p-6 sm:p-8 max-w-3xl mx-auto my-12">
-        <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 text-center space-y-4 shadow-sm">
-          <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mx-auto">
+        <div className="bg-rose-50 border border-rose-200 rounded-none p-6 text-center space-y-4 shadow-sm">
+          <div className="w-12 h-12 rounded-none bg-rose-100 text-rose-600 flex items-center justify-center mx-auto">
             <AlertCircle size={24} />
           </div>
           <h2 className="text-lg font-bold text-slate-900">Database Connection Notice</h2>
@@ -137,7 +137,7 @@ export const AdminDashboardPage: React.FC = () => {
           <div className="pt-2">
             <button
               onClick={handleRefresh}
-              className="px-4 py-2 rounded-xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 inline-flex items-center gap-2 cursor-pointer shadow-sm transition-all"
+              className="px-4 py-2 rounded-none bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 inline-flex items-center gap-2 cursor-pointer shadow-sm transition-all"
             >
               <RefreshCw size={13} className={isRefreshing ? 'animate-spin' : ''} />
               <span>Retry Connection</span>
@@ -157,8 +157,8 @@ export const AdminDashboardPage: React.FC = () => {
             <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
               Live Operations & Dispatch
             </h1>
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-none text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+              <span className="w-1.5 h-1.5 rounded-none bg-emerald-500 animate-pulse" />
               Live DB
             </span>
           </div>
@@ -172,7 +172,7 @@ export const AdminDashboardPage: React.FC = () => {
             type="button"
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            className="px-3 py-2 rounded-none bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             title={`Last updated at ${lastRefreshedAt.toLocaleTimeString()}`}
           >
             <RefreshCw size={13} className={isRefreshing ? 'animate-spin text-emerald-600' : 'text-slate-500'} />
@@ -180,14 +180,14 @@ export const AdminDashboardPage: React.FC = () => {
           </button>
           <Link
             to="/admin/service-areas"
-            className="px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-colors flex items-center gap-1.5"
+            className="px-3 py-2 rounded-none bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-colors flex items-center gap-1.5"
           >
             <MapPin size={13} className="text-slate-500" />
             <span>Service Areas</span>
           </Link>
           <Link
             to="/admin/bookings"
-            className="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-xs transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-none bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-xs transition-colors flex items-center gap-1.5"
           >
             <span>All Bookings ({data.total_bookings})</span>
             <ChevronRight size={13} />
@@ -196,7 +196,7 @@ export const AdminDashboardPage: React.FC = () => {
       </div>
 
       {/* REVENUE & ACCOUNTING AUDIT CALLOUT (Clear Definition) */}
-      <div className="bg-gradient-to-r from-emerald-900 to-teal-950 text-white rounded-2xl p-5 shadow-sm border border-emerald-800 space-y-4">
+      <div className="bg-gradient-to-r from-emerald-900 to-teal-950 text-white rounded-none p-5 shadow-sm border border-emerald-800 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-emerald-800/80 pb-4">
           <div>
             <div className="text-[11px] font-semibold text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
@@ -207,7 +207,7 @@ export const AdminDashboardPage: React.FC = () => {
               {BRAND_CONFIG.currency.symbol}{data.eligible_completed_revenue.toLocaleString()}
             </div>
           </div>
-          <div className="bg-emerald-800/60 border border-emerald-700/60 rounded-xl px-3.5 py-2 text-right">
+          <div className="bg-emerald-800/60 border border-emerald-700/60 rounded-none px-3.5 py-2 text-right">
             <div className="text-[10px] text-emerald-300 font-semibold uppercase">Realized Calculation Rule</div>
             <div className="text-xs font-bold text-emerald-100 mt-0.5">
               Completed Jobs Only ({data.completed_bookings} of {data.total_bookings} total)
@@ -217,28 +217,28 @@ export const AdminDashboardPage: React.FC = () => {
 
         {/* Breakdown row: Gross Value vs Collected vs Pending vs Cancelled */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-          <div className="bg-emerald-950/60 p-2.5 rounded-lg border border-emerald-800/50">
+          <div className="bg-emerald-950/60 p-2.5 rounded-none border border-emerald-800/50">
             <span className="text-[10px] text-emerald-400 font-semibold block">Gross Booking Value</span>
             <span className="text-sm font-bold text-white">
               {BRAND_CONFIG.currency.symbol}{data.gross_booking_value.toLocaleString()}
             </span>
           </div>
 
-          <div className="bg-emerald-950/60 p-2.5 rounded-lg border border-emerald-800/50">
+          <div className="bg-emerald-950/60 p-2.5 rounded-none border border-emerald-800/50">
             <span className="text-[10px] text-emerald-400 font-semibold block">Verified Collected</span>
             <span className="text-sm font-bold text-white">
               {BRAND_CONFIG.currency.symbol}{data.collected_payments.toLocaleString()}
             </span>
           </div>
 
-          <div className="bg-emerald-950/60 p-2.5 rounded-lg border border-emerald-800/50">
+          <div className="bg-emerald-950/60 p-2.5 rounded-none border border-emerald-800/50">
             <span className="text-[10px] text-amber-300 font-semibold block">Pending / Unverified</span>
             <span className="text-sm font-bold text-amber-200">
               {BRAND_CONFIG.currency.symbol}{data.pending_payments.toLocaleString()}
             </span>
           </div>
 
-          <div className="bg-emerald-950/60 p-2.5 rounded-lg border border-emerald-800/50">
+          <div className="bg-emerald-950/60 p-2.5 rounded-none border border-emerald-800/50">
             <span className="text-[10px] text-rose-300 font-semibold block">Cancelled (Excluded)</span>
             <span className="text-sm font-bold text-rose-200">
               {BRAND_CONFIG.currency.symbol}{data.cancelled_revenue.toLocaleString()}
@@ -255,10 +255,10 @@ export const AdminDashboardPage: React.FC = () => {
       {/* CORE KPI CARDS (4x Grid) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Bookings */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 space-y-2 shadow-2xs">
+        <div className="bg-white p-5 rounded-none border border-slate-200 space-y-2 shadow-2xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
             <span>Total Orders Placed</span>
-            <div className="p-1.5 rounded-md bg-slate-100 text-slate-700">
+            <div className="p-1.5 rounded-none bg-slate-100 text-slate-700">
               <CalendarCheck size={15} />
             </div>
           </div>
@@ -266,23 +266,23 @@ export const AdminDashboardPage: React.FC = () => {
             {data.total_bookings}
           </div>
           <div className="flex items-center gap-1.5 text-[10px] font-semibold text-slate-600 flex-wrap">
-            <span className="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700">
+            <span className="px-1.5 py-0.5 rounded-none bg-emerald-50 text-emerald-700">
               {data.completed_bookings} Completed
             </span>
-            <span className="px-1.5 py-0.5 rounded bg-amber-50 text-amber-800">
+            <span className="px-1.5 py-0.5 rounded-none bg-amber-50 text-amber-800">
               {data.pending_requests} Pending
             </span>
-            <span className="px-1.5 py-0.5 rounded bg-rose-50 text-rose-700">
+            <span className="px-1.5 py-0.5 rounded-none bg-rose-50 text-rose-700">
               {data.cancelled_bookings} Cancelled
             </span>
           </div>
         </div>
 
         {/* Today's Appointments */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 space-y-2 shadow-2xs">
+        <div className="bg-white p-5 rounded-none border border-slate-200 space-y-2 shadow-2xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
             <span>Today's Appointments</span>
-            <div className="p-1.5 rounded-md bg-blue-50 text-blue-700">
+            <div className="p-1.5 rounded-none bg-blue-50 text-blue-700">
               <Clock size={15} />
             </div>
           </div>
@@ -295,10 +295,10 @@ export const AdminDashboardPage: React.FC = () => {
         </div>
 
         {/* Registered Customers */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 space-y-2 shadow-2xs">
+        <div className="bg-white p-5 rounded-none border border-slate-200 space-y-2 shadow-2xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
             <span>Registered Customers</span>
-            <div className="p-1.5 rounded-md bg-purple-50 text-purple-700">
+            <div className="p-1.5 rounded-none bg-purple-50 text-purple-700">
               <Users size={15} />
             </div>
           </div>
@@ -311,10 +311,10 @@ export const AdminDashboardPage: React.FC = () => {
         </div>
 
         {/* Active Catalog Services */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 space-y-2 shadow-2xs">
+        <div className="bg-white p-5 rounded-none border border-slate-200 space-y-2 shadow-2xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
             <span>Active Services</span>
-            <div className="p-1.5 rounded-md bg-amber-50 text-amber-700">
+            <div className="p-1.5 rounded-none bg-amber-50 text-amber-700">
               <Wrench size={15} />
             </div>
           </div>
@@ -328,7 +328,7 @@ export const AdminDashboardPage: React.FC = () => {
       </div>
 
       {/* APPOINTMENT SLOTS CAPACITY & UTILIZATION */}
-      <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-4 shadow-2xs">
+      <div className="bg-white rounded-none border border-slate-200 p-5 space-y-4 shadow-2xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
           <div>
             <h3 className="font-bold text-slate-900 text-sm">Appointment Slot Capacity & Utilization</h3>
@@ -336,7 +336,7 @@ export const AdminDashboardPage: React.FC = () => {
               Real-time slot utilization tracking across active dispatch windows in Junagadh.
             </p>
           </div>
-          <span className="text-[11px] font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-md">
+          <span className="text-[11px] font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-none">
             Operating Hours: 8:00 AM – 8:00 PM
           </span>
         </div>
@@ -347,12 +347,12 @@ export const AdminDashboardPage: React.FC = () => {
             return (
               <div
                 key={slot.slot}
-                className="p-3.5 rounded-xl bg-slate-50/80 border border-slate-200/80 space-y-2 hover:bg-slate-50 transition-colors"
+                className="p-3.5 rounded-none bg-slate-50/80 border border-slate-200/80 space-y-2 hover:bg-slate-50 transition-colors"
               >
                 <div className="flex items-center justify-between">
                   <span className="font-mono font-bold text-xs text-slate-900">{slot.slot}</span>
                   <span
-                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded-none ${
                       slot.available_count === 0
                         ? 'bg-rose-100 text-rose-800'
                         : slot.available_count <= 2
@@ -364,7 +364,7 @@ export const AdminDashboardPage: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                <div className="w-full bg-slate-200 h-1.5 rounded-none overflow-hidden">
                   <div
                     style={{ width: `${bookedRatio}%` }}
                     className={`h-full transition-all ${
@@ -386,13 +386,13 @@ export const AdminDashboardPage: React.FC = () => {
       {/* TRENDS & STATUS PIPELINE */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Real Monthly Revenue Trend (8 cols) */}
-        <div className="lg:col-span-8 bg-white rounded-xl border border-slate-200 p-5 space-y-4 shadow-2xs">
+        <div className="lg:col-span-8 bg-white rounded-none border border-slate-200 p-5 space-y-4 shadow-2xs">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
               <h3 className="font-bold text-slate-900 text-sm">Monthly Booking & Revenue Trend</h3>
               <p className="text-xs text-slate-500">Aggregated strictly from actual completed records in the database</p>
             </div>
-            <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+            <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-none border border-emerald-200">
               Actual Database Records
             </span>
           </div>
@@ -415,7 +415,7 @@ export const AdminDashboardPage: React.FC = () => {
                     </div>
                     <div
                       style={{ height: `${heightPct}%` }}
-                      className="w-full max-w-[42px] bg-[#176B52] group-hover:bg-[#125742] rounded-t transition-all"
+                      className="w-full max-w-[42px] bg-[#176B52] group-hover:bg-[#125742] rounded-none transition-all"
                     />
                     <span className="text-[11px] text-slate-600 font-semibold">{item.month}</span>
                     <span className="text-[9px] text-slate-400">{item.bookings} order(s)</span>
@@ -439,7 +439,7 @@ export const AdminDashboardPage: React.FC = () => {
         </div>
 
         {/* Status Distribution (4 cols) */}
-        <div className="lg:col-span-4 bg-white rounded-xl border border-slate-200 p-5 space-y-4 shadow-2xs">
+        <div className="lg:col-span-4 bg-white rounded-none border border-slate-200 p-5 space-y-4 shadow-2xs">
           <div className="border-b border-slate-100 pb-3">
             <h3 className="font-bold text-slate-900 text-sm">Booking Status Pipeline</h3>
             <p className="text-xs text-slate-500">Live counts by dispatch phase</p>
@@ -449,11 +449,11 @@ export const AdminDashboardPage: React.FC = () => {
             {data.status_distribution.map((item) => (
               <div
                 key={item.status}
-                className="p-2.5 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-between text-xs"
+                className="p-2.5 rounded-none bg-slate-50 border border-slate-100 flex items-center justify-between text-xs"
               >
                 <div className="flex items-center gap-2">
                   <span
-                    className={`w-2 h-2 rounded-full ${
+                    className={`w-2 h-2 rounded-none ${
                       item.status === 'completed'
                         ? 'bg-emerald-500'
                         : item.status === 'confirmed'
@@ -469,7 +469,7 @@ export const AdminDashboardPage: React.FC = () => {
                     {item.status.replace('_', ' ')}
                   </span>
                 </div>
-                <span className="font-bold text-slate-900 bg-white px-2 py-0.5 rounded border border-slate-200 font-mono">
+                <span className="font-bold text-slate-900 bg-white px-2 py-0.5 rounded-none border border-slate-200 font-mono">
                   {item.count}
                 </span>
               </div>
@@ -489,7 +489,7 @@ export const AdminDashboardPage: React.FC = () => {
       </div>
 
       {/* ACTIVE SERVICES AND CONFIGURED PRICING PREVIEW */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs">
+      <div className="bg-white rounded-none border border-slate-200 overflow-hidden shadow-2xs">
         <div className="p-5 border-b border-slate-100 flex items-center justify-between">
           <div>
             <h3 className="font-bold text-slate-900 text-sm">Configured Database Services & Pricing</h3>
@@ -499,7 +499,7 @@ export const AdminDashboardPage: React.FC = () => {
           </div>
           <Link
             to="/admin/services"
-            className="text-xs font-bold text-emerald-800 hover:text-emerald-900 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg border border-emerald-200 transition-colors inline-flex items-center gap-1"
+            className="text-xs font-bold text-emerald-800 hover:text-emerald-900 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-none border border-emerald-200 transition-colors inline-flex items-center gap-1"
           >
             <Wrench size={13} />
             <span>Manage Catalog ({data.active_services_count})</span>
@@ -538,7 +538,7 @@ export const AdminDashboardPage: React.FC = () => {
                   </td>
                   <td className="py-3 px-4">
                     <span
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                      className={`px-2 py-0.5 rounded-none text-[10px] font-bold ${
                         svc.is_active ? 'bg-emerald-50 text-emerald-800' : 'bg-slate-100 text-slate-600'
                       }`}
                     >
@@ -553,7 +553,7 @@ export const AdminDashboardPage: React.FC = () => {
       </div>
 
       {/* RECENT REAL BOOKINGS TABLE */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs">
+      <div className="bg-white rounded-none border border-slate-200 overflow-hidden shadow-2xs">
         <div className="p-5 border-b border-slate-100 flex items-center justify-between">
           <div>
             <h3 className="font-bold text-slate-900 text-sm">Recent Real Customer Bookings</h3>
@@ -610,7 +610,7 @@ export const AdminDashboardPage: React.FC = () => {
                     </td>
                     <td className="py-3.5 px-4">
                       <span
-                        className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                        className={`px-2 py-0.5 rounded-none text-[10px] font-bold ${
                           b.payment_status === 'completed' || b.payment_status === 'paid'
                             ? 'bg-emerald-50 text-emerald-800'
                             : 'bg-amber-50 text-amber-800'
@@ -624,7 +624,7 @@ export const AdminDashboardPage: React.FC = () => {
                         disabled={statusUpdatingId === b.id}
                         value={b.status}
                         onChange={(e) => handleStatusChange(b.id, e.target.value)}
-                        className={`text-xs font-semibold px-2 py-1 rounded-md border cursor-pointer focus:outline-none ${
+                        className={`text-xs font-semibold px-2 py-1 rounded-none border cursor-pointer focus:outline-none ${
                           b.status === 'confirmed'
                             ? 'bg-blue-50 text-blue-800 border-blue-200'
                             : b.status === 'completed'

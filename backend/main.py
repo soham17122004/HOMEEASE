@@ -680,6 +680,13 @@ def get_dashboard_summary(admin: dict = Depends(get_current_admin), db: Session 
     ]
 
     return {
+        "summary": {
+            "total_bookings": total,
+            "total_revenue": eligible_completed_revenue,
+            "pending_requests": pending,
+            "completed_bookings": completed,
+            "net_revenue": net_revenue,
+        },
         "total_bookings": total,
         "pending_requests": pending,
         "confirmed_bookings": confirmed,
@@ -788,21 +795,24 @@ def get_admin_reports(
         for b in all_bookings
     ]
 
+    metrics_data = {
+        "total_bookings": total,
+        "completed_bookings": len(completed_bookings),
+        "cancelled_bookings": len(cancelled_bookings),
+        "pending_bookings": len(pending_bookings),
+        "confirmed_bookings": len(confirmed_bookings),
+        "gross_booking_value": gross_booking_value,
+        "eligible_completed_revenue": eligible_completed_revenue,
+        "total_revenue": eligible_completed_revenue,
+        "pending_payments": pending_payments,
+        "cancelled_value": cancelled_value,
+        "avg_order_value": avg_order_value,
+        "revenue_calculation_definition": "Net Revenue is calculated strictly from eligible completed bookings. Cancelled, pending, and unverified payments are strictly excluded."
+    }
+
     return {
-        "metrics": {
-            "total_bookings": total,
-            "completed_bookings": len(completed_bookings),
-            "cancelled_bookings": len(cancelled_bookings),
-            "pending_bookings": len(pending_bookings),
-            "confirmed_bookings": len(confirmed_bookings),
-            "gross_booking_value": gross_booking_value,
-            "eligible_completed_revenue": eligible_completed_revenue,
-            "total_revenue": eligible_completed_revenue,
-            "pending_payments": pending_payments,
-            "cancelled_value": cancelled_value,
-            "avg_order_value": avg_order_value,
-            "revenue_calculation_definition": "Net Revenue is calculated strictly from eligible completed bookings. Cancelled, pending, and unverified payments are strictly excluded."
-        },
+        "summary": metrics_data,
+        "metrics": metrics_data,
         "top_services": top_services,
         "status_distribution": status_distribution,
         "export_rows": export_rows,

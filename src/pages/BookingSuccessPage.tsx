@@ -26,14 +26,14 @@ export const BookingSuccessPage: React.FC = () => {
   if (!booking) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-3xl p-8 max-w-md w-full text-center border border-slate-200">
+        <div className="bg-white rounded-none p-8 max-w-md w-full text-center border border-slate-300">
           <h2 className="text-xl font-bold text-slate-900">Booking Confirmation</h2>
           <p className="text-xs text-slate-500 mt-2">
             Loading your booking details...
           </p>
           <Link
-            to="/bookings"
-            className="mt-5 inline-block px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold"
+            to="/my-bookings"
+            className="mt-5 inline-block px-5 py-2.5 rounded-none bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold"
           >
             Go to My Bookings
           </Link>
@@ -46,16 +46,16 @@ export const BookingSuccessPage: React.FC = () => {
     <div className="min-h-screen bg-slate-50 py-12">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         
-        {/* Success Card */}
-        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xl p-6 sm:p-10 text-center relative overflow-hidden">
+        {/* Success Card - Crisp Rectangular */}
+        <div className="bg-white rounded-none border border-slate-300 shadow-2xs p-6 sm:p-10 text-center relative overflow-hidden">
           
-          {/* Top Decorative Sparkle Ring */}
-          <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center mb-6 shadow-inner ring-8 ring-emerald-50 animate-bounce">
-            <CheckCircle2 size={42} strokeWidth={2.5} />
+          {/* Top Status Icon - Crisp Rectangle */}
+          <div className="w-16 h-16 rounded-none bg-emerald-50 text-emerald-800 border border-emerald-300 mx-auto flex items-center justify-center mb-5">
+            <CheckCircle2 size={36} strokeWidth={2.5} />
           </div>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-2">
-            <Sparkles size={12} />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-none bg-slate-100 text-slate-800 text-xs font-bold mb-2 border border-slate-200">
+            <Sparkles size={12} className="text-[#176B52]" />
             <span>Booking Confirmed</span>
           </div>
 
@@ -64,17 +64,17 @@ export const BookingSuccessPage: React.FC = () => {
           </h1>
 
           <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-2 leading-relaxed">
-            Booking reference code: <strong className="text-slate-900 font-mono tracking-wider text-sm bg-slate-100 px-2 py-0.5 rounded">{booking.bookingCode}</strong>.
+            Booking reference code: <strong className="text-slate-900 font-mono tracking-wider text-sm bg-slate-100 px-2 py-0.5 rounded-none border border-slate-200">{booking.bookingCode}</strong>.
             A confirmation SMS & email have been dispatched to <strong>{booking.customerPhone}</strong>.
           </p>
 
-          {/* Booking Summary Box */}
-          <div className="mt-8 bg-slate-50 rounded-2xl p-6 border border-slate-200/80 text-left space-y-5">
+          {/* Booking Summary Box - Crisp Rectangular */}
+          <div className="mt-8 bg-slate-50 rounded-none p-5 sm:p-6 border border-slate-200 text-left space-y-5">
             
             {/* Date and Time Slot */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-4 border-b border-slate-200">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-none bg-slate-900 text-white flex items-center justify-center shrink-0">
                   <Calendar size={18} />
                 </div>
                 <div>
@@ -91,7 +91,7 @@ export const BookingSuccessPage: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-none bg-slate-900 text-white flex items-center justify-center shrink-0">
                   <Clock size={18} />
                 </div>
                 <div>
@@ -103,7 +103,7 @@ export const BookingSuccessPage: React.FC = () => {
 
             {/* Address */}
             <div className="flex items-start gap-3 pb-4 border-b border-slate-200">
-              <div className="w-10 h-10 rounded-xl bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-10 h-10 rounded-none bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 mt-0.5">
                 <MapPin size={18} />
               </div>
               <div className="text-xs">
@@ -120,15 +120,15 @@ export const BookingSuccessPage: React.FC = () => {
 
             {/* Assigned Professional */}
             {booking.assignedProfessional && (
-              <div className="flex items-center justify-between p-3.5 rounded-xl bg-white border border-slate-200">
+              <div className="flex items-center justify-between p-3.5 rounded-none bg-white border border-slate-200">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-emerald-700 text-white font-bold flex items-center justify-center text-xs">
+                  <div className="w-10 h-10 rounded-none bg-slate-900 text-white font-bold flex items-center justify-center text-xs">
                     {booking.assignedProfessional.name.charAt(0)}
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
                       <span>{booking.assignedProfessional.name}</span>
-                      <ShieldCheck size={14} className="text-emerald-600" />
+                      <ShieldCheck size={14} className="text-[#176B52]" />
                     </div>
                     <div className="text-[11px] text-slate-500">
                       ★ {booking.assignedProfessional.rating} • {booking.assignedProfessional.completedJobs} jobs done
@@ -138,7 +138,7 @@ export const BookingSuccessPage: React.FC = () => {
 
                 <a
                   href={`tel:${booking.assignedProfessional.phone}`}
-                  className="px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-semibold hover:bg-emerald-100 flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-none bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold flex items-center gap-1.5 border border-slate-200"
                 >
                   <Phone size={13} />
                   <span>Call Pro</span>
@@ -154,32 +154,32 @@ export const BookingSuccessPage: React.FC = () => {
                   {booking.paymentStatus === 'paid' ? 'Paid Online' : 'Pay After Service (Cash/UPI)'}
                 </span>
               </div>
-              <div className="text-sm font-extrabold text-emerald-700">
+              <div className="text-sm font-extrabold text-slate-900">
                 Total: {BRAND_CONFIG.currency.symbol}{booking.totalAmount}
               </div>
             </div>
 
           </div>
 
-          {/* Action CTAs */}
+          {/* Action CTAs - Crisp Rectangles */}
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
             <button
               type="button"
               onClick={() => openWhatsApp({
                 customMessage: `Hello HomeEase! 👋 I have booked a service. Booking Ref: ${booking.bookingCode}. Scheduled: ${new Date(booking.scheduledDate).toLocaleDateString()} (${booking.scheduledTimeSlot}). Address: ${booking.address.houseNumber}, ${booking.address.street}, ${booking.address.city}. Please confirm dispatch!`,
               })}
-              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs shadow-md shadow-[#25D366]/30 flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-none bg-[#111827] hover:bg-[#1f2937] text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer border border-slate-800"
             >
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 fill-current text-emerald-400" viewBox="0 0 24 24">
                 <path d="M17.472 14.382c-.301-.15-1.783-.879-2.06-.979-.277-.1-.479-.15-.68.15-.202.301-.78 1.002-.956 1.203-.176.201-.353.226-.653.075s-1.27-.468-2.42-1.493c-.896-.799-1.501-1.787-1.677-2.088-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.151-.176.201-.301.302-.502.1-.201.05-.376-.025-.526-.075-.15-.68-1.639-.93-2.242-.244-.588-.493-.508-.68-.518-.176-.008-.377-.01-.578-.01-.201 0-.528.075-.804.376-.276.301-1.055 1.03-1.055 2.511s1.08 2.912 1.231 3.113c.151.201 2.126 3.245 5.15 4.552.72.311 1.282.497 1.72.636.724.23 1.383.198 1.904.12.58-.087 1.783-.728 2.034-1.43.251-.703.251-1.305.176-1.43-.075-.126-.276-.201-.577-.351z"/>
                 <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.981-1.408A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2c-1.642 0-3.167-.487-4.453-1.326l-.32-.208-2.955.836.84-2.882-.218-.337A8.17 8.17 0 013.8 12c0-4.522 3.678-8.2 8.2-8.2s8.2 3.678 8.2 8.2-3.678 8.2-8.2 8.2z"/>
               </svg>
-              <span>Get WhatsApp Updates ({WHATSAPP_DISPLAY})</span>
+              <span>Get WhatsApp Updates</span>
             </button>
 
             <Link
               to="/bookings"
-              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/30 flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-none bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>View My Bookings</span>
               <ArrowRight size={14} />
@@ -187,7 +187,7 @@ export const BookingSuccessPage: React.FC = () => {
 
             <button
               onClick={() => window.print()}
-              className="w-full sm:w-auto px-4 py-3 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 font-semibold text-xs flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-4 py-2.5 rounded-none border border-slate-300 text-slate-800 hover:bg-slate-50 font-semibold text-xs flex items-center justify-center gap-2 cursor-pointer"
             >
               <Printer size={14} />
               <span>Print Invoice</span>
@@ -195,7 +195,7 @@ export const BookingSuccessPage: React.FC = () => {
 
             <Link
               to="/services"
-              className="w-full sm:w-auto px-5 py-3 rounded-xl text-slate-500 hover:text-slate-800 text-xs font-semibold"
+              className="w-full sm:w-auto px-4 py-2.5 rounded-none text-slate-600 hover:text-slate-900 text-xs font-semibold border border-transparent hover:border-slate-300"
             >
               Book Another Service
             </Link>

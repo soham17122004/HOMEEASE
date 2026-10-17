@@ -123,7 +123,7 @@ export const AdminTechniciansPage: React.FC = () => {
         <button
           type="button"
           onClick={() => setIsAddModalOpen(true)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#176B52] hover:bg-[#125742] text-white text-xs sm:text-sm font-bold shadow-xs transition-all active:scale-98 cursor-pointer"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-none bg-[#176B52] hover:bg-[#125742] text-white text-xs sm:text-sm font-bold shadow-xs transition-all active:scale-98 cursor-pointer"
         >
           <Plus size={16} />
           <span>Add Technician</span>
@@ -139,7 +139,7 @@ export const AdminTechniciansPage: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search technician by name, phone, or Junagadh locality..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#176B52] focus:ring-1 focus:ring-[#176B52]"
+            className="w-full pl-10 pr-4 py-2.5 rounded-none border border-slate-200 bg-white text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#176B52] focus:ring-1 focus:ring-[#176B52]"
           />
         </div>
 
@@ -148,7 +148,7 @@ export const AdminTechniciansPage: React.FC = () => {
           <select
             value={specialtyFilter}
             onChange={(e) => setSpecialtyFilter(e.target.value)}
-            className="py-2.5 px-3 rounded-xl border border-slate-200 bg-white text-xs text-slate-700 focus:outline-none focus:border-[#176B52]"
+            className="py-2.5 px-3 rounded-none border border-slate-200 bg-white text-xs text-slate-700 focus:outline-none focus:border-[#176B52]"
           >
             <option value="all">All Specialties</option>
             {categories.map((c) => (
@@ -165,20 +165,20 @@ export const AdminTechniciansPage: React.FC = () => {
         {filteredTechnicians.map((tech) => (
           <div
             key={tech.id}
-            className={`p-5 rounded-2xl border bg-white shadow-xs flex flex-col justify-between transition-all ${
+            className={`p-5 rounded-none border bg-white shadow-xs flex flex-col justify-between transition-all ${
               tech.isActive ? 'border-slate-200' : 'border-slate-200/60 opacity-60 bg-slate-50/50'
             }`}
           >
             <div>
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-900 text-white font-bold text-sm flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-none bg-slate-900 text-white font-bold text-sm flex items-center justify-center shrink-0">
                     {tech.fullName.charAt(0)}
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-slate-900">{tech.fullName}</h3>
                     <div className="flex items-center gap-1.5 mt-0.5">
-                      <span className="flex items-center gap-1 text-[11px] font-semibold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">
+                      <span className="flex items-center gap-1 text-[11px] font-semibold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-none">
                         <Star size={11} className="fill-amber-500 text-amber-500" />
                         {tech.rating}
                       </span>
@@ -190,7 +190,7 @@ export const AdminTechniciansPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => DataStore.toggleTechnician(tech.id)}
-                  className={`text-[10px] font-bold px-2 py-1 rounded-full cursor-pointer transition-colors ${
+                  className={`text-[10px] font-bold px-2 py-1 rounded-none cursor-pointer transition-colors ${
                     tech.isActive
                       ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
                       : 'bg-slate-200 text-slate-600 hover:bg-slate-300'
@@ -228,7 +228,7 @@ export const AdminTechniciansPage: React.FC = () => {
                   {tech.assignedAreas.map((area) => (
                     <span
                       key={area}
-                      className="text-[10px] font-medium bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md"
+                      className="text-[10px] font-medium bg-slate-100 text-slate-700 px-2 py-0.5 rounded-none"
                     >
                       {area}
                     </span>
@@ -265,13 +265,13 @@ export const AdminTechniciansPage: React.FC = () => {
       {/* Add Technician Modal */}
       {isAddModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl w-full max-w-lg p-6 shadow-xl border border-slate-200 animate-scaleIn max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-none w-full max-w-lg p-6 shadow-xl border border-slate-200 animate-scaleIn max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <h3 className="text-base font-bold text-slate-900">Add Field Technician</h3>
               <button
                 type="button"
                 onClick={() => setIsAddModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 p-1 rounded-lg"
+                className="text-slate-400 hover:text-slate-600 p-1 rounded-none"
               >
                 <X size={18} />
               </button>
@@ -288,7 +288,7 @@ export const AdminTechniciansPage: React.FC = () => {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="e.g. Mukesh Vaghela"
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs text-slate-900"
+                  className="w-full p-2.5 rounded-none border border-slate-200 text-xs text-slate-900"
                 />
               </div>
 
@@ -303,7 +303,7 @@ export const AdminTechniciansPage: React.FC = () => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 98250 12345"
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs text-slate-900"
+                    className="w-full p-2.5 rounded-none border border-slate-200 text-xs text-slate-900"
                   />
                 </div>
                 <div>
@@ -317,7 +317,7 @@ export const AdminTechniciansPage: React.FC = () => {
                     required
                     value={experienceYears}
                     onChange={(e) => setExperienceYears(Number(e.target.value))}
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs text-slate-900"
+                    className="w-full p-2.5 rounded-none border border-slate-200 text-xs text-slate-900"
                   />
                 </div>
               </div>
@@ -331,7 +331,7 @@ export const AdminTechniciansPage: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="tech@homeease.in"
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs text-slate-900"
+                  className="w-full p-2.5 rounded-none border border-slate-200 text-xs text-slate-900"
                 />
               </div>
 
@@ -348,7 +348,7 @@ export const AdminTechniciansPage: React.FC = () => {
                         type="button"
                         key={c.id}
                         onClick={() => handleToggleSpecialty(c.id)}
-                        className={`text-xs px-2.5 py-1 rounded-lg border transition-all ${
+                        className={`text-xs px-2.5 py-1 rounded-none border transition-all ${
                           isSelected
                             ? 'bg-[#176B52] text-white border-[#176B52] font-semibold'
                             : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
@@ -366,7 +366,7 @@ export const AdminTechniciansPage: React.FC = () => {
                 <label className="text-xs font-semibold text-slate-700 block mb-1.5">
                   Operating Junagadh Localities:
                 </label>
-                <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto p-2 bg-slate-50 rounded-xl border border-slate-200">
+                <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto p-2 bg-slate-50 rounded-none border border-slate-200">
                   {junagadhLocalities.map((area) => {
                     const isSelected = assignedAreas.includes(area);
                     return (
@@ -374,7 +374,7 @@ export const AdminTechniciansPage: React.FC = () => {
                         type="button"
                         key={area}
                         onClick={() => handleToggleArea(area)}
-                        className={`text-[11px] px-2 py-0.5 rounded-md border transition-all ${
+                        className={`text-[11px] px-2 py-0.5 rounded-none border transition-all ${
                           isSelected
                             ? 'bg-emerald-600 text-white border-emerald-600 font-semibold'
                             : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
@@ -391,13 +391,13 @@ export const AdminTechniciansPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100"
+                  className="px-4 py-2 rounded-none text-xs font-semibold text-slate-600 hover:bg-slate-100"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl text-xs font-bold bg-[#176B52] hover:bg-[#125742] text-white"
+                  className="px-4 py-2 rounded-none text-xs font-bold bg-[#176B52] hover:bg-[#125742] text-white"
                 >
                   Save Technician
                 </button>
@@ -410,7 +410,7 @@ export const AdminTechniciansPage: React.FC = () => {
       {/* Assign Technician Modal */}
       {selectedTechForAssign && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-xl border border-slate-200 animate-scaleIn">
+          <div className="bg-white rounded-none w-full max-w-md p-6 shadow-xl border border-slate-200 animate-scaleIn">
             <h3 className="text-sm font-bold text-slate-900 mb-1">
               Assign {selectedTechForAssign.fullName}
             </h3>
@@ -427,7 +427,7 @@ export const AdminTechniciansPage: React.FC = () => {
                   <select
                     value={assignBookingId}
                     onChange={(e) => setAssignBookingId(e.target.value)}
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-xs text-slate-900 bg-white"
+                    className="w-full p-2.5 rounded-none border border-slate-200 text-xs text-slate-900 bg-white"
                   >
                     <option value="">-- Choose active booking --</option>
                     {activeBookings.map((b) => (
@@ -442,7 +442,7 @@ export const AdminTechniciansPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setSelectedTechForAssign(null)}
-                    className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100"
+                    className="px-3 py-1.5 rounded-none text-xs font-semibold text-slate-600 hover:bg-slate-100"
                   >
                     Cancel
                   </button>
@@ -450,7 +450,7 @@ export const AdminTechniciansPage: React.FC = () => {
                     type="button"
                     disabled={!assignBookingId}
                     onClick={handleAssignToBooking}
-                    className="px-4 py-2 rounded-xl text-xs font-bold bg-[#176B52] hover:bg-[#125742] text-white disabled:opacity-50"
+                    className="px-4 py-2 rounded-none text-xs font-bold bg-[#176B52] hover:bg-[#125742] text-white disabled:opacity-50"
                   >
                     Confirm Assignment
                   </button>
@@ -462,7 +462,7 @@ export const AdminTechniciansPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setSelectedTechForAssign(null)}
-                  className="mt-3 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700"
+                  className="mt-3 px-3 py-1.5 rounded-none text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700"
                 >
                   Close
                 </button>

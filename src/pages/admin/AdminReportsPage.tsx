@@ -151,10 +151,10 @@ export const AdminReportsPage: React.FC = () => {
   if (loading) {
     return (
       <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto animate-pulse">
-        <div className="h-8 bg-slate-200 rounded-lg w-1/4" />
+        <div className="h-8 bg-slate-200 rounded-none w-1/4" />
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-28 bg-slate-100 rounded-xl border border-slate-200" />
+            <div key={i} className="h-28 bg-slate-100 rounded-none border border-slate-200" />
           ))}
         </div>
       </div>
@@ -164,13 +164,13 @@ export const AdminReportsPage: React.FC = () => {
   if (error || !data) {
     return (
       <div className="p-6 sm:p-8 max-w-2xl mx-auto my-12 text-center">
-        <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 space-y-4">
+        <div className="bg-rose-50 border border-rose-200 rounded-none p-6 space-y-4">
           <AlertCircle size={24} className="text-rose-600 mx-auto" />
           <h2 className="text-base font-bold text-slate-900">Failed to load reports</h2>
           <p className="text-xs text-rose-800">{error || 'Database unavailable'}</p>
           <button
             onClick={handleRefresh}
-            className="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-bold hover:bg-slate-800"
+            className="px-4 py-2 bg-slate-900 text-white rounded-none text-xs font-bold hover:bg-slate-800"
           >
             Retry
           </button>
@@ -190,8 +190,8 @@ export const AdminReportsPage: React.FC = () => {
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
               Operations & Audited Revenue Reports
             </h1>
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-none text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+              <span className="w-1.5 h-1.5 rounded-none bg-emerald-500 animate-pulse" />
               Live DB
             </span>
           </div>
@@ -205,7 +205,7 @@ export const AdminReportsPage: React.FC = () => {
             type="button"
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            className="px-3 py-2 rounded-none bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
           >
             <RefreshCw size={13} className={isRefreshing ? 'animate-spin text-emerald-600' : 'text-slate-500'} />
             <span>Sync</span>
@@ -214,7 +214,7 @@ export const AdminReportsPage: React.FC = () => {
           <button
             type="button"
             onClick={handleExportCSV}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#176B52] hover:bg-[#125742] text-white text-xs font-bold shadow-xs transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-none bg-[#176B52] hover:bg-[#125742] text-white text-xs font-bold shadow-xs transition-all cursor-pointer"
           >
             <Download size={14} />
             <span>Export Audited CSV</span>
@@ -225,10 +225,10 @@ export const AdminReportsPage: React.FC = () => {
       {/* REVENUE AUDIT CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Realized Revenue */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 space-y-2 shadow-2xs">
+        <div className="bg-white p-5 rounded-none border border-slate-200 space-y-2 shadow-2xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
             <span>Eligible Completed Revenue</span>
-            <div className="p-1.5 rounded-md bg-emerald-50 text-emerald-700">
+            <div className="p-1.5 rounded-none bg-emerald-50 text-emerald-700">
               <TrendingUp size={15} />
             </div>
           </div>
@@ -241,10 +241,10 @@ export const AdminReportsPage: React.FC = () => {
         </div>
 
         {/* Gross Order Value */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 space-y-2 shadow-2xs">
+        <div className="bg-white p-5 rounded-none border border-slate-200 space-y-2 shadow-2xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
             <span>Gross Order Value</span>
-            <div className="p-1.5 rounded-md bg-blue-50 text-blue-700">
+            <div className="p-1.5 rounded-none bg-blue-50 text-blue-700">
               <IndianRupee size={15} />
             </div>
           </div>
@@ -257,10 +257,10 @@ export const AdminReportsPage: React.FC = () => {
         </div>
 
         {/* Pending Collections */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 space-y-2 shadow-2xs">
+        <div className="bg-white p-5 rounded-none border border-slate-200 space-y-2 shadow-2xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
             <span>Pending Collections</span>
-            <div className="p-1.5 rounded-md bg-amber-50 text-amber-700">
+            <div className="p-1.5 rounded-none bg-amber-50 text-amber-700">
               <Clock size={15} />
             </div>
           </div>
@@ -273,10 +273,10 @@ export const AdminReportsPage: React.FC = () => {
         </div>
 
         {/* Cancelled Bookings Value */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 space-y-2 shadow-2xs">
+        <div className="bg-white p-5 rounded-none border border-slate-200 space-y-2 shadow-2xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
             <span>Cancelled (Excluded)</span>
-            <div className="p-1.5 rounded-md bg-rose-50 text-rose-700">
+            <div className="p-1.5 rounded-none bg-rose-50 text-rose-700">
               <XCircle size={15} />
             </div>
           </div>
@@ -290,7 +290,7 @@ export const AdminReportsPage: React.FC = () => {
       </div>
 
       {/* Accounting Definition Banner */}
-      <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-2.5 text-xs text-slate-700">
+      <div className="p-4 rounded-none bg-slate-50 border border-slate-200 flex items-start gap-2.5 text-xs text-slate-700">
         <HelpCircle size={16} className="text-slate-400 shrink-0 mt-0.5" />
         <div className="space-y-0.5">
           <span className="font-bold text-slate-900">Strict Financial Integrity Rule: </span>
@@ -299,7 +299,7 @@ export const AdminReportsPage: React.FC = () => {
       </div>
 
       {/* SERVICE BREAKDOWN TABLE */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs">
+      <div className="bg-white rounded-none border border-slate-200 overflow-hidden shadow-2xs">
         <div className="p-5 border-b border-slate-100 flex items-center justify-between">
           <div>
             <h3 className="font-bold text-slate-900 text-sm">Service Performance Breakdown</h3>
@@ -340,7 +340,7 @@ export const AdminReportsPage: React.FC = () => {
                       {svc.total_bookings}
                     </td>
                     <td className="py-3.5 px-4">
-                      <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold text-[10px]">
+                      <span className="px-2 py-0.5 rounded-none bg-emerald-50 text-emerald-800 font-bold text-[10px]">
                         {svc.completed_bookings}
                       </span>
                     </td>
@@ -359,7 +359,7 @@ export const AdminReportsPage: React.FC = () => {
       </div>
 
       {/* FILTER & REAL BOOKING EXPORT PREVIEW */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs">
+      <div className="bg-white rounded-none border border-slate-200 overflow-hidden shadow-2xs">
         <div className="p-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h3 className="font-bold text-slate-900 text-sm">All Recorded Bookings in Database</h3>
@@ -371,7 +371,7 @@ export const AdminReportsPage: React.FC = () => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white cursor-pointer"
+              className="text-xs font-semibold px-2.5 py-1.5 rounded-none border border-slate-200 bg-white cursor-pointer"
             >
               <option value="all">All Bookings ({export_rows.length})</option>
               <option value="pending">Pending ({summary.pending_bookings})</option>
@@ -424,7 +424,7 @@ export const AdminReportsPage: React.FC = () => {
                     </td>
                     <td className="py-3 px-4">
                       <span
-                        className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        className={`px-2 py-0.5 rounded-none text-[10px] font-bold ${
                           row.status === 'completed'
                             ? 'bg-emerald-50 text-emerald-800'
                             : row.status === 'confirmed'
@@ -441,7 +441,7 @@ export const AdminReportsPage: React.FC = () => {
                     </td>
                     <td className="py-3 px-4">
                       <span
-                        className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                        className={`px-1.5 py-0.5 rounded-none text-[10px] font-bold ${
                           row.payment_status === 'completed' || row.payment_status === 'paid'
                             ? 'bg-emerald-50 text-emerald-800'
                             : 'bg-amber-50 text-amber-800'

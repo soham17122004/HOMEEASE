@@ -16,12 +16,14 @@ import {
 import { BRAND_CONFIG } from '../config/brand';
 import { useStoreData, DataStore } from '../lib/store';
 import { BookingStatus } from '../types';
+import { LoginModal } from '../components/common/LoginModal';
 
 export const MyBookingsPage: React.FC = () => {
-  const { bookings } = useStoreData();
+  const { bookings, currentUser } = useStoreData();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'all' | 'pending' | 'confirmed' | 'completed'>('all');
   const [cancelModalBookingId, setCancelModalBookingId] = useState<string | null>(null);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   useEffect(() => {
     DataStore.syncWithBackend();
@@ -31,12 +33,20 @@ export const MyBookingsPage: React.FC = () => {
   const trimmed = searchQuery.trim().toLowerCase();
 
   const searchedBookings = bookings.filter((b) => {
-    if (!trimmed) return true;
-    const codeMatch = b.bookingCode?.toLowerCase().includes(trimmed);
-    const phoneMatch = b.customerPhone?.replace(/\D/g, '').includes(trimmed.replace(/\D/g, ''));
-    const nameMatch = b.customerName?.toLowerCase().includes(trimmed);
-    const idMatch = b.id.toLowerCase().includes(trimmed);
-    return codeMatch || phoneMatch || nameMatch || idMatch;
+    if (trimmed) {
+      const codeMatch = b.bookingCode?.toLowerCase().includes(trimmed);
+      const phoneMatch = b.customerPhone?.replace(/\D/g, '').includes(trimmed.replace(/\D/g, ''));
+      const nameMatch = b.customerName?.toLowerCase().includes(trimmed);
+      const idMatch = b.id.toLowerCase().includes(trimmed);
+      return codeMatch || phoneMatch || nameMatch || idMatch;
+    }
+    // If user is logged in, prioritize showing their bookings!
+    if (currentUser?.phone) {
+      const userPhoneClean = currentUser.phone.replace(/\D/g, '');
+      const bookingPhoneClean = b.customerPhone?.replace(/\D/g, '') || '';
+      return bookingPhoneClean.includes(userPhoneClean) || b.userId === currentUser.id;
+    }
+    return true;
   });
 
   const displayBookings = searchedBookings.filter((b) => {
@@ -51,42 +61,42 @@ export const MyBookingsPage: React.FC = () => {
     switch (status) {
       case 'pending':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-            Pending Admin Confirmation
+          <span className="px-2 py-0.5 rounded-none text-[11px] font-bold bg-amber-50 text-amber-900 border border-amber-300 flex items-center gap-1.5 uppercase">
+            <span className="w-1.5 h-1.5 rounded-none bg-amber-600 animate-pulse" />
+            Pending Confirmation
           </span>
         );
       case 'confirmed':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200 flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
+          <span className="px-2 py-0.5 rounded-none text-[11px] font-bold bg-blue-50 text-blue-900 border border-blue-300 flex items-center gap-1.5 uppercase">
+            <span className="w-1.5 h-1.5 rounded-none bg-blue-600" />
             Confirmed
           </span>
         );
       case 'in_progress':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200 flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-600 animate-ping" />
-            Technician In Progress
+          <span className="px-2 py-0.5 rounded-none text-[11px] font-bold bg-purple-50 text-purple-900 border border-purple-300 flex items-center gap-1.5 uppercase">
+            <span className="w-1.5 h-1.5 rounded-none bg-purple-600 animate-ping" />
+            Technician Dispatched
           </span>
         );
       case 'completed':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+          <span className="px-2 py-0.5 rounded-none text-[11px] font-bold bg-emerald-50 text-emerald-900 border border-emerald-300 flex items-center gap-1 uppercase">
             <CheckCircle2 size={12} />
             Completed
           </span>
         );
       case 'cancelled':
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1">
+          <span className="px-2 py-0.5 rounded-none text-[11px] font-bold bg-rose-50 text-rose-900 border border-rose-300 flex items-center gap-1 uppercase">
             <XCircle size={12} />
             Cancelled
           </span>
         );
       default:
         return (
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">
+          <span className="px-2 py-0.5 rounded-none text-[11px] font-bold bg-slate-100 text-slate-700 uppercase">
             {status}
           </span>
         );
@@ -101,30 +111,80 @@ export const MyBookingsPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] py-8 sm:py-12">
+    <div className="min-h-screen bg-white py-8 sm:py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Header - Crisp Urban Company Layout */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#22252B] tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               Track Your Booking
             </h1>
-            <p className="text-xs text-[#666D78] mt-1">
+            <p className="text-xs text-slate-500 mt-1">
               Look up scheduled appointments in Junagadh without requiring an account.
             </p>
           </div>
           <Link
             to="/services"
-            className="self-start sm:self-auto px-4 py-2.5 rounded-lg bg-[#176B52] hover:bg-[#135742] text-white font-semibold text-xs shadow-xs transition-colors"
+            className="self-start sm:self-auto px-4 py-2 rounded-none bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors"
           >
             + Book a Service
           </Link>
         </div>
 
-        {/* Search Bar for Lookup */}
-        <div className="bg-white p-4 rounded-xl border border-[#E6E8EC] shadow-xs">
-          <label className="text-xs font-semibold text-[#22252B] block mb-2">
+        {/* Customer Account Status Banner */}
+        {currentUser ? (
+          <div className="p-4 bg-emerald-50/70 border border-emerald-200 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-[#176B52] text-white flex items-center justify-center font-extrabold text-sm shadow-xs shrink-0">
+                {currentUser.fullName ? currentUser.fullName.charAt(0).toUpperCase() : 'U'}
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-extrabold text-xs text-slate-900">{currentUser.fullName}</span>
+                  <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded">
+                    Active Customer
+                  </span>
+                </div>
+                <div className="text-[11px] text-slate-500 font-mono mt-0.5">
+                  Mobile: {currentUser.phone}
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setIsLoginOpen(true)}
+                className="text-xs font-bold text-[#176B52] bg-white hover:bg-emerald-100/50 px-3 py-1.5 rounded-lg border border-emerald-200 transition-colors cursor-pointer"
+              >
+                Switch Account
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-700 shadow-2xs shrink-0">
+                <User size={18} />
+              </div>
+              <div>
+                <div className="font-bold text-xs text-slate-900">Want all your bookings automatically tracked?</div>
+                <div className="text-[11px] text-slate-500">Log in with your name & mobile number (no password or OTP required).</div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsLoginOpen(true)}
+              className="self-start sm:self-auto px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-lg transition-colors shadow-xs cursor-pointer"
+            >
+              Log In with Mobile
+            </button>
+          </div>
+        )}
+
+        {/* Search Bar for Lookup - Crisp Rectangular */}
+        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <label className="text-xs font-bold text-slate-900 block mb-2 uppercase tracking-wider">
             Search by Booking ID or Mobile Number
           </label>
           <div className="relative">
@@ -134,16 +194,16 @@ export const MyBookingsPage: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="e.g. JND-2026-1042 or 9820154321"
-              className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-[#176B52] transition-colors"
+              className="w-full pl-10 pr-4 py-2.5 rounded-none bg-white border border-slate-300 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 transition-colors"
             />
           </div>
-          <p className="text-[11px] text-slate-400 mt-1.5">
+          <p className="text-[11px] text-slate-500 mt-1.5 font-medium">
             Your booking reference code was provided on your booking confirmation page.
           </p>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex items-center gap-2 border-b border-[#E6E8EC] pb-2 overflow-x-auto">
+        {/* Filter Tabs - Crisp Rectangular */}
+        <div className="flex items-center gap-1.5 border-b border-slate-200 pb-2 overflow-x-auto">
           {[
             { id: 'all', label: `All (${searchedBookings.length})` },
             { id: 'pending', label: `Pending (${searchedBookings.filter((b) => b.status === 'pending').length})` },
@@ -153,10 +213,10 @@ export const MyBookingsPage: React.FC = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
+              className={`px-3 py-1.5 rounded-none text-xs font-bold whitespace-nowrap transition-colors border ${
                 activeTab === tab.id
-                  ? 'bg-slate-900 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  ? 'bg-slate-900 text-white border-slate-900'
+                  : 'text-slate-700 bg-white border-slate-300 hover:border-slate-900'
               }`}
             >
               {tab.label}
@@ -164,9 +224,9 @@ export const MyBookingsPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Bookings List */}
+        {/* Bookings List - Crisp Rectangles */}
         {displayBookings.length > 0 ? (
-          <div className="space-y-3.5">
+          <div className="space-y-3">
             {displayBookings.map((b) => {
               const primaryItem = b.items[0];
               const isCancellable = b.status === 'pending' || b.status === 'confirmed';
@@ -174,36 +234,36 @@ export const MyBookingsPage: React.FC = () => {
               return (
                 <div
                   key={b.id}
-                  className="bg-white rounded-xl border border-[#E6E8EC] p-5 shadow-xs hover:border-slate-300 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
+                  className="bg-white rounded-none border border-slate-200 hover:border-slate-800 p-4 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
                 >
                   {/* Left: Service Image & Details */}
-                  <div className="flex items-start sm:items-center gap-4">
+                  <div className="flex items-start sm:items-center gap-3.5">
                     {primaryItem?.imageUrl ? (
                       <img
                         src={primaryItem.imageUrl}
                         alt={primaryItem.serviceTitle}
-                        className="w-16 h-16 rounded-lg object-cover shrink-0 bg-slate-100 border border-slate-200"
+                        className="w-16 h-16 rounded-none object-cover shrink-0 bg-slate-100 border border-slate-200"
                       />
                     ) : (
-                      <div className="w-16 h-16 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-sm shrink-0 border border-emerald-200">
+                      <div className="w-16 h-16 rounded-none bg-slate-100 text-slate-800 flex items-center justify-center font-bold text-sm shrink-0 border border-slate-200">
                         JND
                       </div>
                     )}
 
                     <div className="space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-xs font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">
+                        <span className="font-mono text-xs font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-none border border-slate-200">
                           {b.bookingCode || b.id}
                         </span>
                         {getStatusBadge(b.status)}
                       </div>
 
-                      <h3 className="font-bold text-sm text-[#22252B]">
+                      <h3 className="font-bold text-sm text-slate-900">
                         {primaryItem?.serviceTitle || 'Home Service'}
                       </h3>
 
-                      <div className="flex flex-wrap items-center gap-3 text-xs text-[#666D78] pt-0.5">
-                        <span className="flex items-center gap-1 font-medium text-slate-700">
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600 pt-0.5">
+                        <span className="flex items-center gap-1 font-semibold text-slate-800">
                           <Calendar size={13} className="text-[#176B52]" />
                           {new Date(b.scheduledDate).toLocaleDateString('en-US', {
                             weekday: 'short',
@@ -222,7 +282,7 @@ export const MyBookingsPage: React.FC = () => {
                       </div>
 
                       <div className="text-[11px] text-slate-500 pt-0.5">
-                        Customer: <strong className="text-slate-700">{b.customerName}</strong> ({b.customerPhone})
+                        Customer: <strong className="text-slate-800">{b.customerName}</strong> ({b.customerPhone})
                       </div>
                     </div>
                   </div>
@@ -243,7 +303,7 @@ export const MyBookingsPage: React.FC = () => {
                       {isCancellable && (
                         <button
                           onClick={() => setCancelModalBookingId(b.id)}
-                          className="px-3 py-1.5 rounded-lg border border-slate-200 text-rose-600 hover:bg-rose-50 text-xs font-semibold transition-colors"
+                          className="px-3 py-1.5 rounded-none border border-slate-200 text-rose-600 hover:bg-rose-50 text-xs font-semibold transition-colors cursor-pointer"
                         >
                           Cancel
                         </button>
@@ -251,7 +311,7 @@ export const MyBookingsPage: React.FC = () => {
 
                       <Link
                         to={`/bookings/${b.id}`}
-                        className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-colors flex items-center gap-1"
+                        className="px-3.5 py-1.5 rounded-none bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-colors flex items-center gap-1"
                       >
                         <span>Details</span>
                         <ChevronRight size={13} />
@@ -263,8 +323,8 @@ export const MyBookingsPage: React.FC = () => {
             })}
           </div>
         ) : (
-          <div className="bg-white rounded-xl border border-[#E6E8EC] p-10 text-center max-w-md mx-auto">
-            <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-400 mx-auto flex items-center justify-center mb-3">
+          <div className="bg-white rounded-none border border-slate-200 p-10 text-center max-w-md mx-auto">
+            <div className="w-12 h-12 rounded-none bg-slate-100 text-slate-400 mx-auto flex items-center justify-center mb-3">
               <Calendar size={20} />
             </div>
             <h3 className="font-bold text-slate-900 text-base">No Bookings Found</h3>
@@ -275,7 +335,7 @@ export const MyBookingsPage: React.FC = () => {
             </p>
             <Link
               to="/services"
-              className="mt-4 inline-block px-4 py-2 rounded-lg bg-[#176B52] hover:bg-[#135742] text-white text-xs font-semibold"
+              className="mt-4 inline-block px-4 py-2 rounded-none bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold"
             >
               Browse Services
             </Link>
@@ -284,11 +344,11 @@ export const MyBookingsPage: React.FC = () => {
 
       </div>
 
-      {/* Cancel Confirmation Modal */}
+      {/* Cancel Confirmation Modal - Crisp Rectangular */}
       {cancelModalBookingId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-fadeIn">
-          <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl border border-slate-200 text-center">
-            <div className="w-10 h-10 rounded-full bg-rose-100 text-rose-600 mx-auto flex items-center justify-center mb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+          <div className="bg-white rounded-none p-6 max-w-sm w-full border border-slate-300 text-center shadow-xl">
+            <div className="w-10 h-10 rounded-none bg-rose-100 text-rose-600 mx-auto flex items-center justify-center mb-3">
               <AlertCircle size={20} />
             </div>
             <h3 className="font-bold text-slate-900 text-sm">Cancel Booking?</h3>
@@ -299,13 +359,13 @@ export const MyBookingsPage: React.FC = () => {
             <div className="mt-5 flex items-center justify-center gap-2.5">
               <button
                 onClick={() => setCancelModalBookingId(null)}
-                className="px-3.5 py-2 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                className="px-3.5 py-2 rounded-none border border-slate-300 text-xs font-semibold text-slate-600 hover:bg-slate-50 cursor-pointer"
               >
                 Keep Booking
               </button>
               <button
                 onClick={handleConfirmCancel}
-                className="px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-xs"
+                className="px-4 py-2 rounded-none bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold cursor-pointer"
               >
                 Yes, Cancel
               </button>
@@ -313,6 +373,8 @@ export const MyBookingsPage: React.FC = () => {
           </div>
         </div>
       )}
+      {/* Customer Login Modal */}
+      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </div>
   );
 };

@@ -59,8 +59,8 @@ export const AdminCustomersPage: React.FC = () => {
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
               Customer Directory & Lifetime Value
             </h1>
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-none text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+              <span className="w-1.5 h-1.5 rounded-none bg-emerald-500 animate-pulse" />
               Live DB
             </span>
           </div>
@@ -73,7 +73,7 @@ export const AdminCustomersPage: React.FC = () => {
           type="button"
           onClick={handleRefresh}
           disabled={isRefreshing}
-          className="px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 self-start sm:self-auto"
+          className="px-3 py-2 rounded-none bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50 self-start sm:self-auto"
         >
           <RefreshCw size={13} className={isRefreshing ? 'animate-spin text-emerald-600' : 'text-slate-500'} />
           <span>Sync Customers</span>
@@ -81,7 +81,7 @@ export const AdminCustomersPage: React.FC = () => {
       </div>
 
       {/* Search Input & Total Stats */}
-      <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="bg-white p-3.5 rounded-none border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="relative w-full max-w-md">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
@@ -89,7 +89,7 @@ export const AdminCustomersPage: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by customer name, mobile number, locality..."
-            className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-900"
+            className="w-full pl-8 pr-3 py-1.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-900"
           />
         </div>
         <div className="text-xs text-slate-500 font-medium">
@@ -99,14 +99,14 @@ export const AdminCustomersPage: React.FC = () => {
 
       {/* Error Banner */}
       {error && (
-        <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 flex items-center gap-3 text-xs text-rose-800">
+        <div className="bg-rose-50 border border-rose-200 rounded-none p-4 flex items-center gap-3 text-xs text-rose-800">
           <AlertCircle size={16} className="text-rose-600 shrink-0" />
           <span>{error}</span>
         </div>
       )}
 
       {/* Customers Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs">
+      <div className="bg-white rounded-none border border-slate-200 overflow-hidden shadow-2xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
@@ -164,11 +164,11 @@ export const AdminCustomersPage: React.FC = () => {
 
                     <td className="py-3.5 px-4">
                       <div className="flex items-center gap-1.5">
-                        <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-800 font-semibold text-[11px] border border-slate-200">
+                        <span className="px-2 py-0.5 rounded-none bg-slate-100 text-slate-800 font-semibold text-[11px] border border-slate-200">
                           {customer.booking_count} order(s)
                         </span>
                         {customer.completed_count > 0 && (
-                          <span className="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[10px] font-bold">
+                          <span className="px-1.5 py-0.5 rounded-none bg-emerald-50 text-emerald-700 text-[10px] font-bold">
                             {customer.completed_count} completed
                           </span>
                         )}

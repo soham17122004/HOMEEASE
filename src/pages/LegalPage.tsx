@@ -55,8 +55,8 @@ export const LegalPage: React.FC = () => {
           </button>
         </div>
 
-        {/* Content Box */}
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm text-slate-700 text-xs sm:text-sm leading-relaxed space-y-6">
+        {/* Content Box - Crisp Rectangular */}
+        <div className="bg-white rounded-none p-6 sm:p-10 border border-slate-300 shadow-2xs text-slate-700 text-xs sm:text-sm leading-relaxed space-y-6">
           {tab === 'privacy' && (
             <div className="space-y-4">
               <h2 className="text-lg font-bold text-slate-900">1. Information We Collect</h2>

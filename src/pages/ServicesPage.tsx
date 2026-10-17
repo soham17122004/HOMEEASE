@@ -70,11 +70,11 @@ export const ServicesPage: React.FC = () => {
     <div className="min-h-screen bg-slate-50/50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Realistic Verified Service Banner */}
-        <div className="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 mb-8 text-white shadow-sm">
+        {/* Realistic Verified Service Banner - Crisp Rectangle */}
+        <div className="relative rounded-none overflow-hidden bg-slate-900 border border-slate-800 mb-8 text-white shadow-sm">
           <div className="absolute inset-0">
             <img
-              src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1600&q=80"
+              src="/images/services/home-cleaning.jpg"
               alt="HomeEase Junagadh Verified Service Specialists"
               className="w-full h-full object-cover opacity-25"
             />
@@ -82,7 +82,7 @@ export const ServicesPage: React.FC = () => {
           </div>
 
           <div className="relative p-6 sm:p-8 max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] font-bold mb-3">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] font-bold mb-3">
               <ShieldCheck size={13} />
               <span>100% Background-Verified Professionals in Junagadh</span>
             </div>
@@ -95,8 +95,8 @@ export const ServicesPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Search & Sort Controls Bar */}
-        <div className="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 mb-6 flex flex-col md:flex-row items-center justify-between gap-3">
+        {/* Search & Sort Controls Bar - Crisp Rectangle */}
+        <div className="bg-white rounded-none p-3 sm:p-4 border border-slate-200 mb-6 flex flex-col md:flex-row items-center justify-between gap-3">
           {/* Search Box */}
           <div className="relative w-full md:w-96">
             <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -105,7 +105,7 @@ export const ServicesPage: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by service name or keyword..."
-              className="w-full pl-9 pr-8 py-2 rounded-lg border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-slate-400 placeholder-slate-400"
+              className="w-full pl-9 pr-8 py-2 rounded-none border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-slate-900 placeholder-slate-400"
             />
             {searchQuery && (
               <button
@@ -127,7 +127,7 @@ export const ServicesPage: React.FC = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-xs font-semibold text-slate-700 focus:outline-none focus:border-slate-400 cursor-pointer"
+              className="px-2.5 py-1.5 rounded-none border border-slate-300 bg-white text-xs font-semibold text-slate-700 focus:outline-none focus:border-slate-900 cursor-pointer"
             >
               <option value="popular">Most Popular</option>
               <option value="rating">Highest Rated</option>
@@ -137,15 +137,15 @@ export const ServicesPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Category Filter Pills Bar */}
+        {/* Category Filter Pills Bar - Crisp Rectangle */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-3 mb-6">
           <button
             type="button"
             onClick={() => handleCategoryClick('all')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border ${
+            className={`px-3.5 py-1.5 rounded-none text-xs font-semibold whitespace-nowrap transition-all border ${
               selectedCategory === 'all'
                 ? 'bg-slate-900 text-white border-slate-900'
-                : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                : 'bg-white text-slate-700 border-slate-300 hover:border-slate-900'
             }`}
           >
             All Services ({services.length})
@@ -157,10 +157,10 @@ export const ServicesPage: React.FC = () => {
                 key={cat.id}
                 type="button"
                 onClick={() => handleCategoryClick(cat.slug)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border ${
+                className={`px-3.5 py-1.5 rounded-none text-xs font-semibold whitespace-nowrap transition-all border ${
                   isSelected
                     ? 'bg-slate-900 text-white border-slate-900'
-                    : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                    : 'bg-white text-slate-700 border-slate-300 hover:border-slate-900'
                 }`}
               >
                 {cat.name}
@@ -188,15 +188,15 @@ export const ServicesPage: React.FC = () => {
 
         {/* Services Grid */}
         {filteredServices.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {filteredServices.map((service) => (
               <ServiceCard key={service.id} service={service} />
             ))}
           </div>
         ) : (
-          /* Empty State */
-          <div className="bg-white rounded-xl border border-slate-200 p-10 text-center max-w-md mx-auto">
-            <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-400 mx-auto flex items-center justify-center mb-3">
+          /* Empty State - Crisp Rectangle */
+          <div className="bg-white rounded-none border border-slate-200 p-10 text-center max-w-md mx-auto">
+            <div className="w-12 h-12 rounded-none bg-slate-100 text-slate-400 mx-auto flex items-center justify-center mb-3">
               <Filter size={20} />
             </div>
             <h3 className="font-bold text-slate-900 text-sm">No services match your criteria</h3>
@@ -206,7 +206,7 @@ export const ServicesPage: React.FC = () => {
             <button
               type="button"
               onClick={handleClearFilters}
-              className="mt-4 px-4 py-2 rounded-lg bg-slate-900 text-white font-semibold text-xs hover:bg-slate-800 transition-colors"
+              className="mt-4 px-4 py-2 rounded-none bg-slate-900 text-white font-semibold text-xs hover:bg-slate-800 transition-colors"
             >
               Reset Filters
             </button>

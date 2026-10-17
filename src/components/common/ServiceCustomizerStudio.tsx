@@ -42,7 +42,7 @@ const OptionCard: React.FC<OptionCardProps> = ({ label, desc, selected, onClick 
   <button
     type="button"
     onClick={onClick}
-    className={`p-3 rounded-xl border text-left transition-all ${
+    className={`p-3 rounded-none border text-left transition-all ${
       selected
         ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
         : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200'
@@ -67,14 +67,14 @@ const AddonRow: React.FC<AddonRowProps> = ({ label, price, checked, onToggle }) 
   <button
     type="button"
     onClick={onToggle}
-    className={`w-full p-2.5 rounded-lg border text-xs flex items-center justify-between transition-colors ${
+    className={`w-full p-2.5 rounded-none border text-xs flex items-center justify-between transition-colors ${
       checked
         ? 'border-emerald-700 bg-emerald-50/50 text-slate-900 font-semibold'
         : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
     }`}
   >
     <div className="flex items-center gap-2">
-      <div className={`w-4 h-4 rounded flex items-center justify-center ${checked ? 'bg-emerald-700 text-white' : 'border border-slate-300'}`}>
+      <div className={`w-4 h-4 rounded-none flex items-center justify-center ${checked ? 'bg-emerald-700 text-white' : 'border border-slate-300'}`}>
         {checked && <Check size={11} strokeWidth={3} />}
       </div>
       <span>{label}</span>
@@ -92,16 +92,16 @@ interface CounterRowProps {
   onChange: (v: number) => void;
 }
 const CounterRow: React.FC<CounterRowProps> = ({ label, subtitle, value, min = 1, max = 20, onChange }) => (
-  <div className="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50/50">
+  <div className="flex items-center justify-between p-3 rounded-none border border-slate-200 bg-slate-50/50">
     <div>
       <div className="text-xs font-bold text-slate-900">{label}</div>
       {subtitle && <div className="text-[10px] text-slate-500">{subtitle}</div>}
     </div>
-    <div className="flex items-center gap-2 bg-white px-2 py-1 rounded-lg border border-slate-200">
+    <div className="flex items-center gap-2 bg-white px-2 py-1 rounded-none border border-slate-200">
       <button
         type="button"
         onClick={() => onChange(Math.max(min, value - 1))}
-        className="w-6 h-6 flex items-center justify-center text-slate-700 hover:bg-slate-100 rounded"
+        className="w-6 h-6 flex items-center justify-center text-slate-700 hover:bg-slate-100 rounded-none"
       >
         <Minus size={12} />
       </button>
@@ -109,7 +109,7 @@ const CounterRow: React.FC<CounterRowProps> = ({ label, subtitle, value, min = 1
       <button
         type="button"
         onClick={() => onChange(Math.min(max, value + 1))}
-        className="w-6 h-6 flex items-center justify-center text-slate-700 hover:bg-slate-100 rounded"
+        className="w-6 h-6 flex items-center justify-center text-slate-700 hover:bg-slate-100 rounded-none"
       >
         <Plus size={12} />
       </button>
@@ -130,7 +130,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({ step, title, subtitle, 
       {subtitle && <p className="text-xs text-slate-500 mt-0.5">{subtitle}</p>}
     </div>
     {badge && (
-      <span className="text-xs font-bold bg-slate-100 text-slate-800 px-2 py-0.5 rounded">{badge}</span>
+      <span className="text-xs font-bold bg-slate-100 text-slate-800 px-2 py-0.5 rounded-none">{badge}</span>
     )}
   </div>
 );
@@ -168,7 +168,7 @@ const SofaCustomizer: React.FC<{ basePrice: number; onCalc: (p: number, op: numb
       <div className="grid grid-cols-5 sm:grid-cols-10 gap-1.5">
         {Array.from({ length: 10 }, (_, i) => i + 1).map(n => (
           <button key={n} type="button" onClick={() => setSeats(n)}
-            className={`py-2 text-xs font-bold rounded-lg border transition-all text-center ${seats === n ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'}`}>
+            className={`py-2 text-xs font-bold rounded-none border transition-all text-center ${seats === n ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'}`}>
             {n}S
           </button>
         ))}
@@ -287,7 +287,7 @@ const AcCustomizer: React.FC<{ onCalc: (p: number, op: number, label: string, d:
             { id: 'uninstall', label: 'Safe AC Uninstallation & Gas Lock', extra: '+₹499' },
           ].map(opt => (
             <button key={opt.id} type="button" onClick={() => setServiceType(opt.id as AcServiceType)}
-              className={`w-full p-2.5 rounded-lg border text-xs flex items-center justify-between transition-colors ${serviceType === opt.id ? 'border-slate-900 bg-slate-900 text-white font-bold' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}>
+              className={`w-full p-2.5 rounded-none border text-xs flex items-center justify-between transition-colors ${serviceType === opt.id ? 'border-slate-900 bg-slate-900 text-white font-bold' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}>
               <span>{opt.label}</span>
               <span className={`text-[11px] font-semibold ${serviceType === opt.id ? 'text-emerald-400' : 'text-slate-500'}`}>{opt.extra}</span>
             </button>
@@ -336,7 +336,7 @@ const WashingMachineCustomizer: React.FC<{ onCalc: (p: number, op: number, label
             { id: 'pcb', label: 'Machine Not Powering On / PCB Error Code', extra: '+₹349' },
           ].map(opt => (
             <button key={opt.id} type="button" onClick={() => setScope(opt.id as WmScope)}
-              className={`w-full p-2.5 rounded-lg border text-xs flex items-center justify-between transition-colors ${scope === opt.id ? 'border-slate-900 bg-slate-900 text-white font-bold' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}>
+              className={`w-full p-2.5 rounded-none border text-xs flex items-center justify-between transition-colors ${scope === opt.id ? 'border-slate-900 bg-slate-900 text-white font-bold' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}>
               <span>{opt.label}</span>
               <span className={`text-[11px] font-semibold ${scope === opt.id ? 'text-emerald-400' : 'text-slate-500'}`}>{opt.extra}</span>
             </button>
@@ -371,7 +371,7 @@ const PestCustomizer: React.FC<{ basePrice: number; onCalc: (p: number, op: numb
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center gap-2 p-3 rounded-lg bg-amber-50 border border-amber-200">
+      <div className="flex items-center gap-2 p-3 rounded-none bg-amber-50 border border-amber-200">
         <Bug size={15} className="text-amber-700 shrink-0" />
         <p className="text-xs text-amber-800 font-medium">100% odorless Bayer Maxforce gel. No need to vacate or empty kitchen cupboards.</p>
       </div>
@@ -432,7 +432,7 @@ const PlumbingCustomizer: React.FC<{ basePrice: number; onCalc: (p: number, op: 
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center gap-2 p-3 rounded-lg bg-blue-50 border border-blue-200">
+      <div className="flex items-center gap-2 p-3 rounded-none bg-blue-50 border border-blue-200">
         <Droplets size={15} className="text-blue-700 shrink-0" />
         <p className="text-xs text-blue-800 font-medium">Includes up to 60 minutes of certified plumber labor. Parts cost extra if required.</p>
       </div>
@@ -440,7 +440,7 @@ const PlumbingCustomizer: React.FC<{ basePrice: number; onCalc: (p: number, op: 
       <div className="space-y-1.5">
         {(Object.keys(issueLabel) as PlumbIssue[]).map(k => (
           <button key={k} type="button" onClick={() => setIssue(k)}
-            className={`w-full p-2.5 rounded-lg border text-xs flex items-center justify-between transition-colors ${issue === k ? 'border-slate-900 bg-slate-900 text-white font-bold' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}>
+            className={`w-full p-2.5 rounded-none border text-xs flex items-center justify-between transition-colors ${issue === k ? 'border-slate-900 bg-slate-900 text-white font-bold' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}>
             <span>{issueLabel[k]}</span>
             <span className={`text-[11px] font-semibold ${issue === k ? 'text-emerald-400' : 'text-slate-500'}`}>
               {issueExtra[k] > 0 ? `+₹${issueExtra[k]}` : 'Base Rate'}
@@ -478,7 +478,7 @@ const ElectricianCustomizer: React.FC<{ basePrice: number; onCalc: (p: number, o
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center gap-2 p-3 rounded-lg bg-yellow-50 border border-yellow-200">
+      <div className="flex items-center gap-2 p-3 rounded-none bg-yellow-50 border border-yellow-200">
         <Zap size={15} className="text-yellow-700 shrink-0" />
         <p className="text-xs text-yellow-800 font-medium">State-licensed wireman. Includes up to 2 installations or 60 minutes of labor.</p>
       </div>
@@ -486,7 +486,7 @@ const ElectricianCustomizer: React.FC<{ basePrice: number; onCalc: (p: number, o
       <div className="space-y-1.5">
         {(Object.keys(issueLabel) as ElecIssue[]).map(k => (
           <button key={k} type="button" onClick={() => setIssue(k)}
-            className={`w-full p-2.5 rounded-lg border text-xs flex items-center justify-between transition-colors ${issue === k ? 'border-slate-900 bg-slate-900 text-white font-bold' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}>
+            className={`w-full p-2.5 rounded-none border text-xs flex items-center justify-between transition-colors ${issue === k ? 'border-slate-900 bg-slate-900 text-white font-bold' : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'}`}>
             <span>{issueLabel[k]}</span>
             <span className={`text-[11px] font-semibold ${issue === k ? 'text-emerald-400' : 'text-slate-500'}`}>
               {issueExtra[k] > 0 ? `+₹${issueExtra[k]}` : 'Base Rate'}
@@ -521,7 +521,7 @@ const BathroomCustomizer: React.FC<{ basePrice: number; onCalc: (p: number, op: 
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center gap-2 p-3 rounded-lg bg-cyan-50 border border-cyan-200">
+      <div className="flex items-center gap-2 p-3 rounded-none bg-cyan-50 border border-cyan-200">
         <Bath size={15} className="text-cyan-700 shrink-0" />
         <p className="text-xs text-cyan-800 font-medium">pH-controlled eco descalers. Safe for marble, chrome, and glass shower partitions.</p>
       </div>
@@ -549,11 +549,11 @@ const BathroomCustomizer: React.FC<{ basePrice: number; onCalc: (p: number, op: 
 // ── 9. GENERIC FIXED PRICE (no customization) ─────────────────────────────────
 const FixedPriceDisplay: React.FC<{ basePrice: number; serviceTitle: string }> = ({ basePrice, serviceTitle }) => (
   <div className="space-y-4">
-    <div className="flex items-center gap-2 p-3 rounded-lg bg-slate-50 border border-slate-200">
+    <div className="flex items-center gap-2 p-3 rounded-none bg-slate-50 border border-slate-200">
       <ShieldCheck size={15} className="text-emerald-700 shrink-0" />
       <p className="text-xs text-slate-700 font-medium">This is a fixed-price service. No additional customization required — the price shown includes everything.</p>
     </div>
-    <div className="p-4 rounded-xl border border-slate-200 bg-white">
+    <div className="p-4 rounded-none border border-slate-200 bg-white">
       <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">What You Get</div>
       <div className="mt-2 text-sm font-bold text-slate-900">{serviceTitle}</div>
       <div className="mt-1 text-2xl font-extrabold text-[#176B52]">{BRAND_CONFIG.currency.symbol}{basePrice}</div>
@@ -637,18 +637,18 @@ export const ServiceCustomizerStudio: React.FC<ServiceCustomizerStudioProps> = (
   const discountPct = Math.round(((originalPrice - price) / originalPrice) * 100);
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5 space-y-6">
+    <div className="bg-white rounded-none border border-slate-200 p-5 space-y-6">
       {renderCustomizer()}
 
       {/* Dynamic Price & Booking Confirmation Bar */}
-      <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+      <div className="p-4 rounded-none bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <div>
           <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Total Fixed Price</div>
           <div className="flex items-baseline gap-2 mt-0.5">
             <span className="text-2xl font-extrabold text-slate-900">{BRAND_CONFIG.currency.symbol}{price}</span>
             <span className="text-xs text-slate-400 line-through">{BRAND_CONFIG.currency.symbol}{originalPrice}</span>
             {discountPct > 0 && (
-              <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100/60 px-1.5 py-0.5 rounded">{discountPct}% OFF</span>
+              <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100/60 px-1.5 py-0.5 rounded-none">{discountPct}% OFF</span>
             )}
           </div>
           <div className="text-[11px] text-slate-600 mt-1">{defaultLabel}</div>
@@ -656,7 +656,7 @@ export const ServiceCustomizerStudio: React.FC<ServiceCustomizerStudioProps> = (
         <button
           type="button"
           onClick={handleProceed}
-          className="px-6 py-3 rounded-xl bg-[#176B52] hover:bg-[#135742] text-white text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-2 shrink-0"
+          className="px-6 py-3 rounded-none bg-[#176B52] hover:bg-[#135742] text-white text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-2 shrink-0"
         >
           <span>Continue with this Package</span>
           <Check size={14} strokeWidth={2.5} />

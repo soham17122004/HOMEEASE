@@ -88,15 +88,15 @@ export const AdminSettingsPage: React.FC = () => {
       </div>
 
       {/* Admin Authorization Security Status */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white p-5 rounded-none border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-none bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
             <Lock size={20} />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-semibold text-slate-900 text-sm">Authorized Admin Access Control</h3>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <span className="px-2 py-0.5 rounded-none text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
                 Active & Enforced
               </span>
             </div>
@@ -105,14 +105,14 @@ export const AdminSettingsPage: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="text-[11px] text-slate-500 bg-slate-50 px-3 py-2 rounded-lg border border-slate-200 shrink-0">
+        <div className="text-[11px] text-slate-500 bg-slate-50 px-3 py-2 rounded-none border border-slate-200 shrink-0">
           Configured via <code className="text-slate-800 font-semibold font-mono">ADMIN_EMAIL</code> env
         </div>
       </div>
 
       <form onSubmit={handleSave} className="space-y-6">
         {/* Contact Information */}
-        <div className="bg-white p-6 sm:p-7 rounded-xl border border-slate-200 shadow-xs space-y-4">
+        <div className="bg-white p-6 sm:p-7 rounded-none border border-slate-200 shadow-xs space-y-4">
           <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
             <Phone size={16} className="text-[#176B52]" />
             <h3 className="text-sm font-bold text-slate-900">Customer Support & Contact Lines (Junagadh)</h3>
@@ -126,7 +126,7 @@ export const AdminSettingsPage: React.FC = () => {
                 required
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
-                className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
               />
             </div>
 
@@ -137,7 +137,7 @@ export const AdminSettingsPage: React.FC = () => {
                 required
                 value={supportPhone}
                 onChange={(e) => setSupportPhone(e.target.value)}
-                className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
               />
             </div>
 
@@ -148,7 +148,7 @@ export const AdminSettingsPage: React.FC = () => {
                 required
                 value={whatsappNumber}
                 onChange={(e) => setWhatsappNumber(e.target.value)}
-                className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
               />
             </div>
 
@@ -159,7 +159,7 @@ export const AdminSettingsPage: React.FC = () => {
                 required
                 value={supportEmail}
                 onChange={(e) => setSupportEmail(e.target.value)}
-                className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
               />
             </div>
 
@@ -170,14 +170,14 @@ export const AdminSettingsPage: React.FC = () => {
                 required
                 value={officeAddress}
                 onChange={(e) => setOfficeAddress(e.target.value)}
-                className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
               />
             </div>
           </div>
         </div>
 
         {/* Operating Hours and Slots */}
-        <div className="bg-white p-6 sm:p-7 rounded-xl border border-slate-200 shadow-xs space-y-4">
+        <div className="bg-white p-6 sm:p-7 rounded-none border border-slate-200 shadow-xs space-y-4">
           <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
             <Clock size={16} className="text-[#176B52]" />
             <h3 className="text-sm font-bold text-slate-900">Operating Hours & Booking Time Slots</h3>
@@ -190,7 +190,7 @@ export const AdminSettingsPage: React.FC = () => {
                 type="text"
                 value={operatingHours}
                 onChange={(e) => setOperatingHours(e.target.value)}
-                className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
               />
             </div>
 
@@ -206,7 +206,7 @@ export const AdminSettingsPage: React.FC = () => {
                       key={slot}
                       type="button"
                       onClick={() => toggleSlot(slot)}
-                      className={`p-2.5 rounded-lg border text-left text-xs font-semibold flex items-center justify-between transition-colors ${
+                      className={`p-2.5 rounded-none border text-left text-xs font-semibold flex items-center justify-between transition-colors ${
                         isActive
                           ? 'bg-[#176B52] text-white border-[#176B52]'
                           : 'bg-slate-50 text-slate-400 border-slate-200 line-through'
@@ -225,7 +225,7 @@ export const AdminSettingsPage: React.FC = () => {
         </div>
 
         {/* Customer-Facing Content */}
-        <div className="bg-white p-6 sm:p-7 rounded-xl border border-slate-200 shadow-xs space-y-4">
+        <div className="bg-white p-6 sm:p-7 rounded-none border border-slate-200 shadow-xs space-y-4">
           <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
             <Building size={16} className="text-[#176B52]" />
             <h3 className="text-sm font-bold text-slate-900">Customer-Facing Branding & Content</h3>
@@ -238,11 +238,11 @@ export const AdminSettingsPage: React.FC = () => {
                 type="text"
                 value={tagline}
                 onChange={(e) => setTagline(e.target.value)}
-                className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
               />
             </div>
 
-            <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-slate-600 space-y-1 text-[11px]">
+            <div className="p-3 bg-slate-50 rounded-none border border-slate-200 text-slate-600 space-y-1 text-[11px]">
               <div className="font-semibold text-slate-900">Junagadh Service City Coverage:</div>
               <div>Operating exclusively in Junagadh, Gujarat. Localities: Zanzarda Road, Joshipura, Moti Baug, Kalva Chowk, Timbavadi, College Road, Dolatpara (Pincodes 362001–362015).</div>
             </div>
@@ -250,14 +250,14 @@ export const AdminSettingsPage: React.FC = () => {
         </div>
 
         {/* Notification Settings */}
-        <div className="bg-white p-6 sm:p-7 rounded-xl border border-slate-200 shadow-xs space-y-4">
+        <div className="bg-white p-6 sm:p-7 rounded-none border border-slate-200 shadow-xs space-y-4">
           <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
             <Bell size={16} className="text-[#176B52]" />
             <h3 className="text-sm font-bold text-slate-900">Automated Dispatch & Notification Settings</h3>
           </div>
 
           <div className="space-y-3 text-xs">
-            <label className="flex items-center justify-between p-3 rounded-lg border border-slate-200 bg-slate-50 cursor-pointer">
+            <label className="flex items-center justify-between p-3 rounded-none border border-slate-200 bg-slate-50 cursor-pointer">
               <div>
                 <div className="font-semibold text-slate-900">Instant Admin Email Notifications</div>
                 <div className="text-[11px] text-slate-500">Send an immediate alert email to {authorizedEmail} whenever a customer books a service.</div>
@@ -266,11 +266,11 @@ export const AdminSettingsPage: React.FC = () => {
                 type="checkbox"
                 checked={adminEmailAlerts}
                 onChange={(e) => setAdminEmailAlerts(e.target.checked)}
-                className="w-4 h-4 rounded text-[#176B52] focus:ring-0"
+                className="w-4 h-4 rounded-none text-[#176B52] focus:ring-0"
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-lg border border-slate-200 bg-slate-50 cursor-pointer">
+            <label className="flex items-center justify-between p-3 rounded-none border border-slate-200 bg-slate-50 cursor-pointer">
               <div>
                 <div className="font-semibold text-slate-900">Customer SMS Confirmation Dispatch</div>
                 <div className="text-[11px] text-slate-500">Send confirmation SMS with booking reference code (JND-2026-XXXX) to the customer's phone number.</div>
@@ -279,11 +279,11 @@ export const AdminSettingsPage: React.FC = () => {
                 type="checkbox"
                 checked={smsAlerts}
                 onChange={(e) => setSmsAlerts(e.target.checked)}
-                className="w-4 h-4 rounded text-[#176B52] focus:ring-0"
+                className="w-4 h-4 rounded-none text-[#176B52] focus:ring-0"
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-lg border border-slate-200 bg-slate-50 cursor-pointer">
+            <label className="flex items-center justify-between p-3 rounded-none border border-slate-200 bg-slate-50 cursor-pointer">
               <div>
                 <div className="font-semibold text-slate-900">WhatsApp Dispatch Link Activation</div>
                 <div className="text-[11px] text-slate-500">Enable direct 1-click WhatsApp customer support and pro assignment updates.</div>
@@ -292,7 +292,7 @@ export const AdminSettingsPage: React.FC = () => {
                 type="checkbox"
                 checked={whatsappAlerts}
                 onChange={(e) => setWhatsappAlerts(e.target.checked)}
-                className="w-4 h-4 rounded text-[#176B52] focus:ring-0"
+                className="w-4 h-4 rounded-none text-[#176B52] focus:ring-0"
               />
             </label>
           </div>
@@ -313,7 +313,7 @@ export const AdminSettingsPage: React.FC = () => {
 
           <button
             type="submit"
-            className="px-6 py-2.5 rounded-lg bg-[#176B52] hover:bg-[#135742] text-white font-semibold text-xs shadow-xs flex items-center gap-2 transition-colors"
+            className="px-6 py-2.5 rounded-none bg-[#176B52] hover:bg-[#135742] text-white font-semibold text-xs shadow-xs flex items-center gap-2 transition-colors"
           >
             <Save size={15} />
             <span>Save Settings</span>

@@ -33,9 +33,7 @@ export const AdminServicesPage: React.FC = () => {
     durationMinutes: 60,
     shortDescription: '',
     description: '',
-    imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80',
-    videoUrl: '',
-    videoTitle: '',
+    imageUrl: '/images/services/home-cleaning.jpg',
     isPopular: false,
     isActive: true,
     includedItems: 'Thorough inspection\nDeep vacuuming\nHygiene mist spray',
@@ -57,9 +55,7 @@ export const AdminServicesPage: React.FC = () => {
       durationMinutes: 60,
       shortDescription: '',
       description: '',
-      imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80',
-      videoUrl: '',
-      videoTitle: '',
+      imageUrl: '/images/services/home-cleaning.jpg',
       isPopular: false,
       isActive: true,
       includedItems: 'Thorough inspection\nDeep vacuuming\nHygiene mist spray',
@@ -79,8 +75,6 @@ export const AdminServicesPage: React.FC = () => {
       shortDescription: service.shortDescription,
       description: service.description,
       imageUrl: service.imageUrl,
-      videoUrl: service.videoUrl || '',
-      videoTitle: service.videoTitle || '',
       isPopular: service.isPopular || false,
       isActive: service.isActive !== false,
       includedItems: service.includedItems?.join('\n') || '',
@@ -122,8 +116,6 @@ export const AdminServicesPage: React.FC = () => {
         shortDescription: formData.shortDescription,
         description: formData.description,
         imageUrl: formData.imageUrl,
-        videoUrl: formData.videoUrl.trim() || undefined,
-        videoTitle: formData.videoTitle.trim() || undefined,
         isPopular: formData.isPopular,
         isActive: formData.isActive,
         includedItems: includedList,
@@ -140,8 +132,6 @@ export const AdminServicesPage: React.FC = () => {
         shortDescription: formData.shortDescription,
         description: formData.description,
         imageUrl: formData.imageUrl,
-        videoUrl: formData.videoUrl.trim() || undefined,
-        videoTitle: formData.videoTitle.trim() || undefined,
         rating: 4.85,
         reviewCount: 0,
         isPopular: formData.isPopular,
@@ -171,7 +161,7 @@ export const AdminServicesPage: React.FC = () => {
 
         <button
           onClick={handleOpenAddModal}
-          className="px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs shadow-sm flex items-center gap-1.5 self-start sm:self-auto transition-colors"
+          className="px-4 py-2 rounded-none bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs shadow-sm flex items-center gap-1.5 self-start sm:self-auto transition-colors"
         >
           <Plus size={15} />
           <span>Add New Service</span>
@@ -179,7 +169,7 @@ export const AdminServicesPage: React.FC = () => {
       </div>
 
       {/* Search Input */}
-      <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+      <div className="bg-white p-3.5 rounded-none border border-slate-200 shadow-sm flex items-center justify-between">
         <div className="relative w-full max-w-sm">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
@@ -187,7 +177,7 @@ export const AdminServicesPage: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search catalog services..."
-            className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-900"
+            className="w-full pl-8 pr-3 py-1.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-900"
           />
         </div>
         <div className="text-xs text-slate-500 font-medium">
@@ -196,7 +186,7 @@ export const AdminServicesPage: React.FC = () => {
       </div>
 
       {/* Services Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+      <div className="bg-white rounded-none border border-slate-200 overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
@@ -220,13 +210,13 @@ export const AdminServicesPage: React.FC = () => {
                         <img
                           src={service.imageUrl}
                           alt={service.title}
-                          className="w-12 h-12 rounded-lg object-cover bg-slate-100 shrink-0 border border-slate-200"
+                          className="w-12 h-12 rounded-none object-cover bg-slate-100 shrink-0 border border-slate-200"
                         />
                         <div className="max-w-xs">
                           <div className="font-semibold text-slate-900 line-clamp-1">{service.title}</div>
                           <div className="text-[11px] text-slate-500 line-clamp-1">{service.shortDescription}</div>
                           {service.isPopular && (
-                            <span className="inline-block px-1.5 py-0.2 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200 mt-1">
+                            <span className="inline-block px-1.5 py-0.2 rounded-none text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200 mt-1">
                               Bestseller
                             </span>
                           )}
@@ -235,7 +225,7 @@ export const AdminServicesPage: React.FC = () => {
                     </td>
 
                     <td className="py-3.5 px-4">
-                      <span className="px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">
+                      <span className="px-2 py-0.5 rounded-none bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">
                         {category?.name || 'General'}
                       </span>
                     </td>
@@ -260,7 +250,7 @@ export const AdminServicesPage: React.FC = () => {
                     <td className="py-3.5 px-4">
                       <button
                         onClick={() => handleToggleActive(service)}
-                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold transition-colors ${
+                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-none text-[11px] font-semibold transition-colors ${
                           service.isActive
                             ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                             : 'bg-slate-100 text-slate-500 border border-slate-200'
@@ -275,14 +265,14 @@ export const AdminServicesPage: React.FC = () => {
                       <div className="flex items-center justify-end gap-1.5">
                         <button
                           onClick={() => handleOpenEditModal(service)}
-                          className="p-1.5 rounded-md hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition-colors"
+                          className="p-1.5 rounded-none hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition-colors"
                           title="Edit Service"
                         >
                           <Pencil size={13} />
                         </button>
                         <button
                           onClick={() => handleDeleteService(service.id, service.title)}
-                          className="p-1.5 rounded-md hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-colors"
+                          className="p-1.5 rounded-none hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-colors"
                           title="Delete Service"
                         >
                           <Trash2 size={13} />
@@ -300,7 +290,7 @@ export const AdminServicesPage: React.FC = () => {
       {/* ADD / EDIT SERVICE MODAL */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-fadeIn">
-          <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-2xl w-full border border-slate-200 text-slate-800 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-none p-6 sm:p-8 max-w-2xl w-full border border-slate-300 text-slate-800 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setIsModalOpen(false)}
               className="absolute top-6 right-6 text-slate-400 hover:text-slate-700"
@@ -325,7 +315,7 @@ export const AdminServicesPage: React.FC = () => {
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     placeholder="e.g. Chimney & Hob Deep Cleaning"
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                    className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   />
                 </div>
 
@@ -334,7 +324,7 @@ export const AdminServicesPage: React.FC = () => {
                   <select
                     value={formData.categoryId}
                     onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                    className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   >
                     {categories.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -351,7 +341,7 @@ export const AdminServicesPage: React.FC = () => {
                     value={formData.slug}
                     onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
                     placeholder="e.g. chimney-deep-cleaning"
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                    className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   />
                 </div>
 
@@ -363,7 +353,7 @@ export const AdminServicesPage: React.FC = () => {
                     min={1}
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                    className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   />
                 </div>
 
@@ -374,7 +364,7 @@ export const AdminServicesPage: React.FC = () => {
                     min={1}
                     value={formData.originalPrice}
                     onChange={(e) => setFormData({ ...formData, originalPrice: Number(e.target.value) })}
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                    className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   />
                 </div>
 
@@ -386,7 +376,7 @@ export const AdminServicesPage: React.FC = () => {
                     min={10}
                     value={formData.durationMinutes}
                     onChange={(e) => setFormData({ ...formData, durationMinutes: Number(e.target.value) })}
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                    className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   />
                 </div>
 
@@ -397,34 +387,7 @@ export const AdminServicesPage: React.FC = () => {
                     required
                     value={formData.imageUrl}
                     onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
-                  />
-                </div>
-
-                <div className="sm:col-span-2">
-                  <label className="font-semibold text-slate-700 block mb-1">
-                    Real Service Video URL (MP4, WebM, or YouTube)
-                  </label>
-                  <input
-                    type="url"
-                    value={formData.videoUrl}
-                    onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
-                    placeholder="e.g. https://upload.wikimedia.org/...webm or https://youtube.com/watch?v=..."
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
-                  />
-                  <span className="text-[10px] text-slate-400 mt-0.5 block">
-                    Real video showing the technician actively cleaning the sofa, servicing the AC, or doing maintenance.
-                  </span>
-                </div>
-
-                <div className="sm:col-span-2">
-                  <label className="font-semibold text-slate-700 block mb-1">Video Title / Action Description</label>
-                  <input
-                    type="text"
-                    value={formData.videoTitle}
-                    onChange={(e) => setFormData({ ...formData, videoTitle: e.target.value })}
-                    placeholder="e.g. Certified Specialist performing sofa deep foam wash & extraction"
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                    className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   />
                 </div>
 
@@ -436,7 +399,7 @@ export const AdminServicesPage: React.FC = () => {
                     value={formData.shortDescription}
                     onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
                     placeholder="Brief 1-sentence synopsis"
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                    className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   />
                 </div>
 
@@ -447,7 +410,7 @@ export const AdminServicesPage: React.FC = () => {
                     required
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                    className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   />
                 </div>
 
@@ -459,7 +422,7 @@ export const AdminServicesPage: React.FC = () => {
                     rows={3}
                     value={formData.includedItems}
                     onChange={(e) => setFormData({ ...formData, includedItems: e.target.value })}
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                    className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   />
                 </div>
 
@@ -469,7 +432,7 @@ export const AdminServicesPage: React.FC = () => {
                       type="checkbox"
                       checked={formData.isPopular}
                       onChange={(e) => setFormData({ ...formData, isPopular: e.target.checked })}
-                      className="rounded border-slate-300 text-slate-900 focus:ring-0"
+                      className="rounded-none border-slate-300 text-slate-900 focus:ring-0"
                     />
                     <span>Highlight as Bestseller</span>
                   </label>
@@ -479,7 +442,7 @@ export const AdminServicesPage: React.FC = () => {
                       type="checkbox"
                       checked={formData.isActive}
                       onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                      className="rounded border-slate-300 text-slate-900 focus:ring-0"
+                      className="rounded-none border-slate-300 text-slate-900 focus:ring-0"
                     />
                     <span>Active in Public Catalog</span>
                   </label>
@@ -490,13 +453,13 @@ export const AdminServicesPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                  className="px-4 py-2 rounded-none border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs"
+                  className="px-5 py-2 rounded-none bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs cursor-pointer"
                 >
                   {editingServiceId ? 'Save Changes' : 'Publish Service'}
                 </button>

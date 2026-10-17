@@ -21,11 +21,13 @@ import {
   Lock,
   RefreshCw,
   AlertTriangle,
+  User,
 } from 'lucide-react';
 import { BRAND_CONFIG } from '../config/brand';
 import { useStoreData, DataStore } from '../lib/store';
 import { BookingItem, PaymentMethod } from '../types';
 import { LocationPicker, LocationPickerValue } from '../components/common/LocationPicker';
+import { LoginModal } from '../components/common/LoginModal';
 import { openWhatsApp, WHATSAPP_DISPLAY } from '../lib/whatsapp';
 import { api } from '../lib/api';
 
@@ -116,21 +118,35 @@ export const BookingPage: React.FC = () => {
     return 3;
   });
 
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
   // React Hook Form for Customer Info
   const {
     register,
     handleSubmit,
     formState: { errors },
     trigger,
+    setValue,
   } = useForm<BookingFormData>({
     resolver: zodResolver(bookingFormSchema),
     defaultValues: {
-      fullName: '',
-      phone: '',
-      email: '',
+      fullName: currentUser?.fullName || '',
+      phone: currentUser?.phone ? currentUser.phone.replace('+91', '').trim() : '',
+      email: currentUser?.email || '',
       addressType: 'home',
     },
   });
+
+  // Auto-sync customer form fields whenever logged-in user changes
+  useEffect(() => {
+    if (currentUser) {
+      if (currentUser.fullName) setValue('fullName', currentUser.fullName);
+      if (currentUser.phone) {
+        setValue('phone', currentUser.phone.replace('+91', '').trim());
+      }
+      if (currentUser.email) setValue('email', currentUser.email);
+    }
+  }, [currentUser, setValue]);
 
   // Precise Doorstep Location Snapshot state (Junagadh, Gujarat Coverage)
   const [pickedLocation, setPickedLocation] = useState<LocationPickerValue>({
@@ -579,7 +595,7 @@ export const BookingPage: React.FC = () => {
                 onClick={() => {
                   if (isPassed) setCurrentStep(step.num);
                 }}
-                className={`p-3 rounded-xl border transition-all text-center flex flex-col items-center justify-center ${
+                className={`p-3 rounded-none border transition-all text-center flex flex-col items-center justify-center ${
                   isCurrent
                     ? 'border-slate-900 bg-white shadow-xs ring-1 ring-slate-900'
                     : isPassed
@@ -588,7 +604,7 @@ export const BookingPage: React.FC = () => {
                 }`}
               >
                 <div
-                  className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold mb-1 ${
+                  className={`w-5 h-5 rounded-none flex items-center justify-center text-[11px] font-bold mb-1 ${
                     isCurrent
                       ? 'bg-slate-900 text-white'
                       : isPassed
@@ -613,7 +629,7 @@ export const BookingPage: React.FC = () => {
               
               {/* STEP 1: SERVICE & ADD-ONS */}
               {currentStep === 1 && (
-                <div className="bg-white rounded-xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-6 animate-fadeIn">
+                <div className="bg-white rounded-none p-6 sm:p-7 border border-slate-200 shadow-sm space-y-6 animate-fadeIn">
                   <div>
                     <h2 className="text-lg font-bold text-slate-900">1. Confirm Service Package</h2>
                     <p className="text-xs text-slate-500 mt-0.5">Customize service units and add-ons.</p>
@@ -621,12 +637,12 @@ export const BookingPage: React.FC = () => {
 
                   {/* Sofa Seater Variant Selector (2 to 10 Seater, ₹149/seater) */}
                   {isSofaService && (
-                    <div className="p-4 sm:p-5 rounded-xl border border-slate-200 bg-white space-y-4">
+                    <div className="p-4 sm:p-5 rounded-none border border-slate-200 bg-white space-y-4">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
                         <div>
                           <div className="flex items-center gap-2">
                             <h3 className="font-bold text-sm text-slate-900">Select Sofa Variant (2 to 10 Seater)</h3>
-                            <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                            <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded-none">
                               ₹{SOFA_RATE_PER_SEAT} / Seater Fixed Rate
                             </span>
                           </div>
@@ -634,7 +650,7 @@ export const BookingPage: React.FC = () => {
                             Flat transparent rate of ₹149 per seat. Choose your exact sofa seating setup below.
                           </p>
                         </div>
-                        <div className="text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200 shrink-0">
+                        <div className="text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-1.5 rounded-none border border-slate-200 shrink-0">
                           Selected: <strong className="text-slate-900">{sofaSeats} Seater</strong> ({BRAND_CONFIG.currency.symbol}{unitRate})
                         </div>
                       </div>
@@ -649,7 +665,7 @@ export const BookingPage: React.FC = () => {
                               key={variant.seats}
                               type="button"
                               onClick={() => setSofaSeats(variant.seats)}
-                              className={`p-3 rounded-xl border text-left transition-all relative flex flex-col justify-between ${
+                              className={`p-3 rounded-none border text-left transition-all relative flex flex-col justify-between ${
                                 isSelected
                                   ? 'border-slate-900 bg-slate-900 text-white shadow-sm ring-1 ring-slate-900'
                                   : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/70 text-slate-800'
@@ -661,7 +677,7 @@ export const BookingPage: React.FC = () => {
                                     {variant.label}
                                   </span>
                                   {variant.popular && (
-                                    <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
+                                    <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-none ${
                                       isSelected ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-800'
                                     }`}>
                                       Popular
@@ -688,12 +704,12 @@ export const BookingPage: React.FC = () => {
                   )}
 
                   {/* Main Selected Service Card */}
-                  <div className="p-4 sm:p-5 rounded-xl border border-slate-200 bg-slate-50/70 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="p-4 sm:p-5 rounded-none border border-slate-200 bg-slate-50/70 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
                       <img
                         src={activeService.imageUrl}
                         alt={currentServiceTitle}
-                        className="w-16 h-16 rounded-lg object-cover shrink-0 border border-slate-200"
+                        className="w-16 h-16 rounded-none object-cover shrink-0 border border-slate-200"
                       />
                       <div>
                         <h3 className="font-semibold text-sm text-slate-900">{currentServiceTitle}</h3>
@@ -710,11 +726,11 @@ export const BookingPage: React.FC = () => {
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-3 bg-white p-1 rounded-lg border border-slate-200">
+                    <div className="flex items-center gap-3 bg-white p-1 rounded-none border border-slate-200">
                       <button
                         type="button"
                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="w-8 h-8 rounded hover:bg-slate-100 flex items-center justify-center text-slate-600 disabled:opacity-40"
+                        className="w-8 h-8 rounded-none hover:bg-slate-100 flex items-center justify-center text-slate-600 disabled:opacity-40"
                         disabled={quantity <= 1}
                       >
                         <Minus size={14} />
@@ -723,7 +739,7 @@ export const BookingPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setQuantity(quantity + 1)}
-                        className="w-8 h-8 rounded hover:bg-slate-100 flex items-center justify-center text-slate-600"
+                        className="w-8 h-8 rounded-none hover:bg-slate-100 flex items-center justify-center text-slate-600"
                       >
                         <Plus size={14} />
                       </button>
@@ -749,7 +765,7 @@ export const BookingPage: React.FC = () => {
                                     : [...prev, addon.id]
                                 );
                               }}
-                              className={`flex items-center justify-between p-3.5 rounded-lg border cursor-pointer transition-all ${
+                              className={`flex items-center justify-between p-3.5 rounded-none border cursor-pointer transition-all ${
                                 isSelected
                                   ? 'border-slate-900 bg-slate-50'
                                   : 'border-slate-200 hover:bg-slate-50/50'
@@ -757,7 +773,7 @@ export const BookingPage: React.FC = () => {
                             >
                               <div className="flex items-center gap-3">
                                 <div
-                                  className={`w-4 h-4 rounded flex items-center justify-center text-xs ${
+                                  className={`w-4 h-4 rounded-none flex items-center justify-center text-xs ${
                                     isSelected ? 'bg-slate-900 text-white' : 'border border-slate-300'
                                   }`}
                                 >
@@ -779,7 +795,7 @@ export const BookingPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setCurrentStep(2)}
-                      className="px-6 py-2.5 rounded-lg bg-[#176B52] hover:bg-[#135742] text-white font-semibold text-xs flex items-center gap-2 transition-colors shadow-xs"
+                      className="px-6 py-2.5 rounded-none bg-[#176B52] hover:bg-[#135742] text-white font-semibold text-xs flex items-center gap-2 transition-colors shadow-xs"
                     >
                       <span>Proceed to Date & Slot</span>
                       <ArrowRight size={14} />
@@ -790,7 +806,7 @@ export const BookingPage: React.FC = () => {
 
               {/* STEP 2: DATE & TIME SLOT PICKER (Smart IST Past Slot & Real-Time Blocking) */}
               {currentStep === 2 && (
-                <div className="bg-white rounded-xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-6 animate-fadeIn">
+                <div className="bg-white rounded-none p-6 sm:p-7 border border-slate-200 shadow-sm space-y-6 animate-fadeIn">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
                       <h2 className="text-lg font-bold text-slate-900">2. Choose Service Date & Slot</h2>
@@ -798,10 +814,10 @@ export const BookingPage: React.FC = () => {
                     </div>
 
                     {/* Live IST Sync Indicator */}
-                    <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200 text-[11px] text-slate-600">
+                    <div className="flex items-center gap-2 px-2.5 py-1 rounded-none bg-slate-50 border border-slate-200 text-[11px] text-slate-600">
                       <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-none bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-none h-2 w-2 bg-emerald-500"></span>
                       </span>
                       <span>Live Availability (Asia/Kolkata)</span>
                       {serverTimeIST && (
@@ -814,7 +830,7 @@ export const BookingPage: React.FC = () => {
 
                   {/* Slot Error Banner */}
                   {slotError && (
-                    <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-2.5 text-rose-800 text-xs font-semibold animate-fadeIn">
+                    <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-none flex items-start gap-2.5 text-rose-800 text-xs font-semibold animate-fadeIn">
                       <AlertCircle size={16} className="text-rose-600 shrink-0 mt-0.5" />
                       <div>
                         <span>{slotError}</span>
@@ -829,19 +845,19 @@ export const BookingPage: React.FC = () => {
                   <div className="flex flex-wrap items-center gap-3 pt-1 text-[11px] text-slate-600 pb-1 border-b border-slate-100">
                     <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider text-[10px]">Legend:</span>
                     <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                      <span className="w-2.5 h-2.5 rounded-none bg-emerald-500"></span>
                       <span>Available</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full border-2 border-emerald-600 bg-emerald-100"></span>
+                      <span className="w-2.5 h-2.5 rounded-none border-2 border-emerald-600 bg-emerald-100"></span>
                       <span className="font-semibold text-slate-800">Selected</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                      <span className="w-2.5 h-2.5 rounded-none bg-rose-500"></span>
                       <span>Booked (Full)</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
+                      <span className="w-2.5 h-2.5 rounded-none bg-slate-300"></span>
                       <span>Unavailable (Passed)</span>
                     </div>
                   </div>
@@ -861,7 +877,7 @@ export const BookingPage: React.FC = () => {
                               setSlotError('');
                               fetchAvailability(item.formattedDate);
                             }}
-                            className={`p-3 rounded-lg border text-center transition-all flex flex-col items-center justify-center cursor-pointer ${
+                            className={`p-3 rounded-none border text-center transition-all flex flex-col items-center justify-center cursor-pointer ${
                               isSelected
                                 ? 'border-[#176B52] bg-[#176B52] text-white font-semibold shadow-xs ring-2 ring-[#176B52]/20'
                                 : 'border-slate-200 hover:border-slate-300 text-slate-600 hover:bg-slate-50'
@@ -900,23 +916,23 @@ export const BookingPage: React.FC = () => {
                         Array.from({ length: 6 }).map((_, i) => (
                           <div
                             key={`skel-${i}`}
-                            className="p-3.5 rounded-xl border border-slate-200 bg-slate-100 animate-pulse flex items-center justify-between"
+                            className="p-3.5 rounded-none border border-slate-200 bg-slate-100 animate-pulse flex items-center justify-between"
                           >
                             <div className="flex items-center gap-2.5">
-                              <div className="w-4 h-4 rounded-full bg-slate-200" />
+                              <div className="w-4 h-4 rounded-none bg-slate-200" />
                               <div className="space-y-1.5">
-                                <div className="h-2.5 w-32 rounded bg-slate-200" />
-                                <div className="h-2 w-20 rounded bg-slate-200" />
+                                <div className="h-2.5 w-32 rounded-none bg-slate-200" />
+                                <div className="h-2 w-20 rounded-none bg-slate-200" />
                               </div>
                             </div>
-                            <div className="h-5 w-14 rounded-full bg-slate-200" />
+                            <div className="h-5 w-14 rounded-none bg-slate-200" />
                           </div>
                         ))
                       )}
                       {/* Subtle refresh shimmer on top of existing slots */}
                       {isLoadingSlots && slotList.length > 0 && (
-                        <div className="absolute inset-0 rounded-xl bg-white/40 backdrop-blur-[1px] pointer-events-none z-10 flex items-center justify-center">
-                          <div className="flex items-center gap-1.5 bg-white/80 px-3 py-1.5 rounded-full border border-slate-200 shadow-xs">
+                        <div className="absolute inset-0 rounded-none bg-white/40 backdrop-blur-[1px] pointer-events-none z-10 flex items-center justify-center">
+                          <div className="flex items-center gap-1.5 bg-white/80 px-3 py-1.5 rounded-none border border-slate-200 shadow-xs">
                             <RefreshCw size={11} className="animate-spin text-emerald-600" />
                             <span className="text-[10px] text-slate-500 font-medium">Updating…</span>
                           </div>
@@ -933,7 +949,7 @@ export const BookingPage: React.FC = () => {
                           return (
                             <div
                               key={slotItem.id}
-                              className="p-3.5 rounded-xl border border-slate-200/80 bg-slate-100/60 text-slate-400 cursor-not-allowed flex items-center justify-between select-none opacity-60"
+                              className="p-3.5 rounded-none border border-slate-200/80 bg-slate-100/60 text-slate-400 cursor-not-allowed flex items-center justify-between select-none opacity-60"
                               title={slotItem.reason || 'This time slot has already passed'}
                             >
                               <div className="flex items-center gap-2.5">
@@ -943,7 +959,7 @@ export const BookingPage: React.FC = () => {
                                   <div className="text-[10px] text-slate-400">Time Passed</div>
                                 </div>
                               </div>
-                              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-200/80 text-slate-500">
+                              <span className="px-2 py-0.5 rounded-none text-[10px] font-bold bg-slate-200/80 text-slate-500">
                                 Unavailable
                               </span>
                             </div>
@@ -955,7 +971,7 @@ export const BookingPage: React.FC = () => {
                           return (
                             <div
                               key={slotItem.id}
-                              className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-400 cursor-not-allowed flex items-center justify-between select-none opacity-80"
+                              className="p-3.5 rounded-none border border-slate-200 bg-slate-50 text-slate-400 cursor-not-allowed flex items-center justify-between select-none opacity-80"
                               title="This slot has already been booked by another customer"
                             >
                               <div className="flex items-center gap-2.5">
@@ -965,7 +981,7 @@ export const BookingPage: React.FC = () => {
                                   <div className="text-[10px] text-slate-400">{slotItem.timeOfDay} Arrival</div>
                                 </div>
                               </div>
-                              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-600 border border-rose-200 flex items-center gap-1">
+                              <span className="px-2 py-0.5 rounded-none text-[10px] font-bold bg-rose-50 text-rose-600 border border-rose-200 flex items-center gap-1">
                                 <Lock size={10} />
                                 <span>Booked</span>
                               </span>
@@ -982,7 +998,7 @@ export const BookingPage: React.FC = () => {
                               setSelectedSlot(slotItem.slot);
                               setSlotError('');
                             }}
-                            className={`p-3.5 rounded-xl border flex items-center justify-between text-left transition-all cursor-pointer ${
+                            className={`p-3.5 rounded-none border flex items-center justify-between text-left transition-all cursor-pointer ${
                               isSelected
                                 ? 'border-2 border-[#176B52] bg-emerald-50/80 text-[#176B52] font-semibold ring-2 ring-[#176B52]/20 shadow-xs'
                                 : 'border-slate-200 hover:border-emerald-500 bg-white hover:bg-emerald-50/20 text-slate-800'
@@ -997,11 +1013,11 @@ export const BookingPage: React.FC = () => {
                             </div>
 
                             {isSelected ? (
-                              <div className="w-5 h-5 rounded-full bg-[#176B52] text-white flex items-center justify-center shadow-xs">
+                              <div className="w-5 h-5 rounded-none bg-[#176B52] text-white flex items-center justify-center shadow-xs">
                                 <Check size={12} strokeWidth={3} />
                               </div>
                             ) : (
-                              <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                              <span className="px-2 py-0.5 rounded-none text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                                 Available
                               </span>
                             )}
@@ -1015,7 +1031,7 @@ export const BookingPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setCurrentStep(1)}
-                      className="px-4 py-2 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 cursor-pointer"
+                      className="px-4 py-2 rounded-none border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 cursor-pointer"
                     >
                       Back
                     </button>
@@ -1034,7 +1050,7 @@ export const BookingPage: React.FC = () => {
                         setSlotError('');
                         setCurrentStep(3);
                       }}
-                      className="px-6 py-2.5 rounded-lg bg-[#176B52] hover:bg-[#135742] text-white font-semibold text-xs flex items-center gap-2 transition-colors shadow-xs cursor-pointer"
+                      className="px-6 py-2.5 rounded-none bg-[#176B52] hover:bg-[#135742] text-white font-semibold text-xs flex items-center gap-2 transition-colors shadow-xs cursor-pointer"
                     >
                       <span>Proceed to Address</span>
                       <ArrowRight size={14} />
@@ -1045,7 +1061,7 @@ export const BookingPage: React.FC = () => {
 
               {/* STEP 3: ADDRESS & CONTACT DETAILS */}
               {currentStep === 3 && (
-                <div className="bg-white rounded-xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-6 animate-fadeIn">
+                <div className="bg-white rounded-none p-6 sm:p-7 border border-slate-200 shadow-sm space-y-6 animate-fadeIn">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
                       <h2 className="text-lg font-bold text-slate-900">3. Service Address & Contact Details</h2>
@@ -1057,7 +1073,7 @@ export const BookingPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={handleWhatsAppDirectBooking}
-                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold shadow-xs transition-all active:scale-95 cursor-pointer self-start sm:self-auto"
+                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-none bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold shadow-xs transition-all active:scale-95 cursor-pointer self-start sm:self-auto"
                       title={`Book directly on WhatsApp: ${WHATSAPP_DISPLAY}`}
                     >
                       <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -1069,7 +1085,7 @@ export const BookingPage: React.FC = () => {
                   </div>
 
                   {locationError && (
-                    <div className="p-3.5 rounded-lg bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-start gap-2.5 animate-fadeIn">
+                    <div className="p-3.5 rounded-none bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-start gap-2.5 animate-fadeIn">
                       <AlertCircle size={16} className="shrink-0 mt-0.5 text-rose-600" />
                       <div>
                         <span className="font-semibold block">Location Verification Required</span>
@@ -1078,14 +1094,49 @@ export const BookingPage: React.FC = () => {
                     </div>
                   )}
 
+                  {/* Customer Quick Login / Auto-fill status banner */}
+                  {currentUser ? (
+                    <div className="p-3 bg-emerald-50/80 border border-emerald-200 rounded-xl flex items-center justify-between text-xs animate-fadeIn">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 size={16} className="text-[#176B52] shrink-0" />
+                        <span className="text-slate-800">
+                          Logged in as <strong>{currentUser.fullName}</strong> ({currentUser.phone}) — details auto-filled!
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setIsLoginModalOpen(true)}
+                        className="text-[11px] font-bold text-[#176B52] hover:underline shrink-0 ml-2 cursor-pointer"
+                      >
+                        Change
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2">
+                        <User size={15} className="text-slate-500 shrink-0" />
+                        <span className="text-slate-700">
+                          Have an account? <strong>Log in with mobile number</strong> (No OTP required) to auto-fill details!
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setIsLoginModalOpen(true)}
+                        className="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-lg text-xs shadow-xs shrink-0 ml-2 cursor-pointer transition-colors"
+                      >
+                        Log In
+                      </button>
+                    </div>
+                  )}
+
                   {/* Customer Contact Details */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 p-4 rounded-lg bg-slate-50/70 border border-slate-200">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 p-4 rounded-xl bg-slate-50/70 border border-slate-200">
                     <div>
                       <label className="text-[11px] font-semibold text-slate-700 block mb-1">Full Name *</label>
                       <input
                         {...register('fullName')}
                         type="text"
-                        className="w-full p-2.5 rounded-lg border border-slate-200 text-xs bg-white focus:outline-none focus:border-slate-900"
+                        className="w-full p-2.5 rounded-none border border-slate-200 text-xs bg-white focus:outline-none focus:border-slate-900"
                         placeholder="e.g. Aditya Verma"
                       />
                       {errors.fullName && (
@@ -1098,7 +1149,7 @@ export const BookingPage: React.FC = () => {
                       <input
                         {...register('phone')}
                         type="tel"
-                        className="w-full p-2.5 rounded-lg border border-slate-200 text-xs bg-white focus:outline-none focus:border-slate-900"
+                        className="w-full p-2.5 rounded-none border border-slate-200 text-xs bg-white focus:outline-none focus:border-slate-900"
                         placeholder="e.g. 9820154321"
                       />
                       {errors.phone && (
@@ -1111,7 +1162,7 @@ export const BookingPage: React.FC = () => {
                       <input
                         {...register('email')}
                         type="email"
-                        className="w-full p-2.5 rounded-lg border border-slate-200 text-xs bg-white focus:outline-none focus:border-slate-900"
+                        className="w-full p-2.5 rounded-none border border-slate-200 text-xs bg-white focus:outline-none focus:border-slate-900"
                         placeholder="e.g. name@example.com"
                       />
                       {errors.email && (
@@ -1137,14 +1188,14 @@ export const BookingPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setCurrentStep(2)}
-                      className="px-4 py-2 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                      className="px-4 py-2 rounded-none border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50"
                     >
                       Back
                     </button>
                     <button
                       type="button"
                       onClick={handleProceedFromAddress}
-                      className="px-6 py-2.5 rounded-lg bg-[#176B52] hover:bg-[#135742] text-white font-semibold text-xs flex items-center gap-2 transition-colors shadow-xs"
+                      className="px-6 py-2.5 rounded-none bg-[#176B52] hover:bg-[#135742] text-white font-semibold text-xs flex items-center gap-2 transition-colors shadow-xs"
                     >
                       <span>Proceed to Payment Review</span>
                       <ArrowRight size={14} />
@@ -1155,16 +1206,16 @@ export const BookingPage: React.FC = () => {
 
               {/* STEP 4: REVIEW & PAYMENT METHOD */}
               {currentStep === 4 && (
-                <div className="bg-white rounded-xl p-6 sm:p-7 border border-slate-200 shadow-sm space-y-6 animate-fadeIn">
+                <div className="bg-white rounded-none p-6 sm:p-7 border border-slate-200 shadow-sm space-y-6 animate-fadeIn">
                   <div>
                     <h2 className="text-lg font-bold text-slate-900">4. Review & Payment Method</h2>
                     <p className="text-xs text-slate-500 mt-0.5">Inspect your schedule and doorstep location snapshot before confirming.</p>
                   </div>
 
                   {/* Schedule Recap Card */}
-                  <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                  <div className="p-4 rounded-none bg-slate-50 border border-slate-200 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-slate-900 text-white">
+                      <div className="p-2 rounded-none bg-slate-900 text-white">
                         <CalendarIcon size={16} />
                       </div>
                       <div>
@@ -1188,9 +1239,9 @@ export const BookingPage: React.FC = () => {
                   </div>
 
                   {/* Doorstep Address Recap Card */}
-                  <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="p-4 rounded-none bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-slate-900 text-white shrink-0 mt-0.5">
+                      <div className="p-2 rounded-none bg-slate-900 text-white shrink-0 mt-0.5">
                         <MapPin size={16} />
                       </div>
                       <div className="space-y-1">
@@ -1198,7 +1249,7 @@ export const BookingPage: React.FC = () => {
                           <span className="text-xs font-bold text-slate-900">
                             Service Delivery Address
                           </span>
-                          <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold">
+                          <span className="px-2 py-0.5 rounded-none bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold">
                             Gujarat ✓
                           </span>
                         </div>
@@ -1229,7 +1280,7 @@ export const BookingPage: React.FC = () => {
                       {/* Option 1: Cash After Service (Default & Recommended) */}
                       <div
                         onClick={() => setPaymentMethod('cash')}
-                        className={`p-3.5 rounded-lg border cursor-pointer transition-all ${
+                        className={`p-3.5 rounded-none border cursor-pointer transition-all ${
                           paymentMethod === 'cash'
                             ? 'border-slate-900 bg-slate-50'
                             : 'border-slate-200 hover:bg-slate-50'
@@ -1247,7 +1298,7 @@ export const BookingPage: React.FC = () => {
                       {/* Option 2: Instant UPI */}
                       <div
                         onClick={() => setPaymentMethod('upi')}
-                        className={`p-3.5 rounded-lg border cursor-pointer transition-all ${
+                        className={`p-3.5 rounded-none border cursor-pointer transition-all ${
                           paymentMethod === 'upi'
                             ? 'border-slate-900 bg-slate-50'
                             : 'border-slate-200 hover:bg-slate-50'
@@ -1265,7 +1316,7 @@ export const BookingPage: React.FC = () => {
                       {/* Option 3: Credit/Debit Card */}
                       <div
                         onClick={() => setPaymentMethod('card')}
-                        className={`p-3.5 rounded-lg border cursor-pointer transition-all ${
+                        className={`p-3.5 rounded-none border cursor-pointer transition-all ${
                           paymentMethod === 'card'
                             ? 'border-slate-900 bg-slate-50'
                             : 'border-slate-200 hover:bg-slate-50'
@@ -1288,7 +1339,7 @@ export const BookingPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setCurrentStep(3)}
-                      className="px-4 py-2.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 w-full sm:w-auto"
+                      className="px-4 py-2.5 rounded-none border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 w-full sm:w-auto"
                     >
                       Back
                     </button>
@@ -1296,7 +1347,7 @@ export const BookingPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={handleWhatsAppDirectBooking}
-                        className="w-full sm:w-auto px-5 py-3 rounded-lg bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs shadow-xs flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
+                        className="w-full sm:w-auto px-5 py-3 rounded-none bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs shadow-xs flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
                         title={`Send booking directly to WhatsApp: ${WHATSAPP_DISPLAY}`}
                       >
                         <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -1309,7 +1360,7 @@ export const BookingPage: React.FC = () => {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full sm:w-auto px-7 py-3 rounded-lg bg-[#176B52] hover:bg-[#135742] text-white font-semibold text-sm shadow-sm flex items-center justify-center gap-2 disabled:opacity-50 transition-colors"
+                        className="w-full sm:w-auto px-7 py-3 rounded-none bg-[#176B52] hover:bg-[#135742] text-white font-semibold text-sm shadow-sm flex items-center justify-center gap-2 disabled:opacity-50 transition-colors"
                       >
                         {isSubmitting ? (
                           <span>Confirming Booking...</span>
@@ -1331,7 +1382,7 @@ export const BookingPage: React.FC = () => {
             <div className="lg:col-span-4 space-y-4 lg:sticky lg:top-24">
               
               {/* Order Breakdown Box */}
-              <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-5">
+              <div className="bg-white rounded-none p-6 border border-slate-200 shadow-sm space-y-5">
                 <h3 className="font-bold text-slate-900 text-base border-b border-slate-100 pb-3">
                   Booking Summary
                 </h3>
@@ -1371,13 +1422,13 @@ export const BookingPage: React.FC = () => {
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                       placeholder="Coupon (e.g. FIRST50)"
-                      className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-mono uppercase focus:ring-1 focus:ring-emerald-500 focus:outline-none"
+                      className="w-full px-3 py-2 rounded-none border border-slate-200 text-xs font-mono uppercase focus:ring-1 focus:ring-emerald-500 focus:outline-none"
                     />
                     {appliedCoupon ? (
                       <button
                         type="button"
                         onClick={handleRemoveCoupon}
-                        className="px-3 py-2 rounded-xl bg-slate-100 text-rose-600 text-xs font-bold hover:bg-rose-50"
+                        className="px-3 py-2 rounded-none bg-slate-100 text-rose-600 text-xs font-bold hover:bg-rose-50"
                       >
                         Remove
                       </button>
@@ -1385,7 +1436,7 @@ export const BookingPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={handleApplyCoupon}
-                        className="px-3.5 py-2 rounded-xl bg-[#176B52] text-white text-xs font-bold hover:bg-[#135742] shadow-xs"
+                        className="px-3.5 py-2 rounded-none bg-[#176B52] text-white text-xs font-bold hover:bg-[#135742] shadow-xs"
                       >
                         Apply
                       </button>
@@ -1448,7 +1499,7 @@ export const BookingPage: React.FC = () => {
                 </div>
 
                 {/* Safety Guarantee Footnote */}
-                <div className="p-3 rounded-xl bg-slate-50 text-[11px] text-slate-500 space-y-1">
+                <div className="p-3 rounded-none bg-slate-50 text-[11px] text-slate-500 space-y-1">
                   <div className="flex items-center gap-1.5 font-semibold text-slate-700">
                     <ShieldCheck size={14} className="text-emerald-600" />
                     <span>HomeEase Standard of Safety</span>
@@ -1457,7 +1508,7 @@ export const BookingPage: React.FC = () => {
                 </div>
 
                 {/* Direct WhatsApp Assistance Card */}
-                <div className="p-3.5 rounded-xl bg-emerald-50/80 border border-emerald-200 text-center space-y-2">
+                <div className="p-3.5 rounded-none bg-emerald-50/80 border border-emerald-200 text-center space-y-2">
                   <div className="text-xs font-bold text-slate-900 flex items-center justify-center gap-1.5">
                     <span>Quick Booking via WhatsApp</span>
                   </div>
@@ -1467,7 +1518,7 @@ export const BookingPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleWhatsAppDirectBooking}
-                    className="w-full py-2.5 px-3 rounded-lg bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition-all active:scale-95 cursor-pointer"
+                    className="w-full py-2.5 px-3 rounded-none bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition-all active:scale-95 cursor-pointer"
                   >
                     <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                       <path d="M17.472 14.382c-.301-.15-1.783-.879-2.06-.979-.277-.1-.479-.15-.68.15-.202.301-.78 1.002-.956 1.203-.176.201-.353.226-.653.075s-1.27-.468-2.42-1.493c-.896-.799-1.501-1.787-1.677-2.088-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.151-.176.201-.301.302-.502.1-.201.05-.376-.025-.526-.075-.15-.68-1.639-.93-2.242-.244-.588-.493-.508-.68-.518-.176-.008-.377-.01-.578-.01-.201 0-.528.075-.804.376-.276.301-1.055 1.03-1.055 2.511s1.08 2.912 1.231 3.113c.151.201 2.126 3.245 5.15 4.552.72.311 1.282.497 1.72.636.724.23 1.383.198 1.904.12.58-.087 1.783-.728 2.034-1.43.251-.703.251-1.305.176-1.43-.075-.126-.276-.201-.577-.351z"/>
@@ -1498,7 +1549,7 @@ export const BookingPage: React.FC = () => {
                     setCurrentStep(2);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className="px-5 py-2.5 rounded-xl bg-[#176B52] hover:bg-[#135742] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all"
+                  className="px-5 py-2.5 rounded-none bg-[#176B52] hover:bg-[#135742] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all"
                 >
                   <span>Select Slot</span>
                   <ArrowRight size={14} />
@@ -1511,7 +1562,7 @@ export const BookingPage: React.FC = () => {
                     setCurrentStep(3);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className="px-5 py-2.5 rounded-xl bg-[#176B52] hover:bg-[#135742] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all"
+                  className="px-5 py-2.5 rounded-none bg-[#176B52] hover:bg-[#135742] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all"
                 >
                   <span>Add Address</span>
                   <ArrowRight size={14} />
@@ -1521,7 +1572,7 @@ export const BookingPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleProceedFromAddress}
-                  className="px-5 py-2.5 rounded-xl bg-[#176B52] hover:bg-[#135742] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all"
+                  className="px-5 py-2.5 rounded-none bg-[#176B52] hover:bg-[#135742] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all"
                 >
                   <span>Review & Pay</span>
                   <ArrowRight size={14} />
@@ -1531,7 +1582,7 @@ export const BookingPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-5 py-2.5 rounded-xl bg-[#176B52] hover:bg-[#135742] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-none bg-[#176B52] hover:bg-[#135742] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all disabled:opacity-50"
                 >
                   <span>{isSubmitting ? 'Confirming...' : 'Book Now'}</span>
                   <CheckCircle2 size={14} />
@@ -1542,6 +1593,9 @@ export const BookingPage: React.FC = () => {
         </form>
 
       </div>
+
+      {/* Customer Quick Login Modal */}
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </div>
   );
 };

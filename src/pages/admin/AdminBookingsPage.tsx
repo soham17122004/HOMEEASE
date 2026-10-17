@@ -235,10 +235,10 @@ export const AdminBookingsPage: React.FC = () => {
 
         <div className="flex items-center gap-2.5">
           {/* View Toggle */}
-          <div className="bg-slate-100 p-1 rounded-lg border border-slate-200 flex items-center">
+          <div className="bg-slate-100 p-1 rounded-none border border-slate-200 flex items-center">
             <button
               onClick={() => setViewMode('table')}
-              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-none text-xs font-semibold transition-all flex items-center gap-1.5 ${
                 viewMode === 'table' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -247,7 +247,7 @@ export const AdminBookingsPage: React.FC = () => {
             </button>
             <button
               onClick={() => setViewMode('map')}
-              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-none text-xs font-semibold transition-all flex items-center gap-1.5 ${
                 viewMode === 'map' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -259,7 +259,7 @@ export const AdminBookingsPage: React.FC = () => {
           {/* Export CSV button */}
           <button
             onClick={handleExportCSV}
-            className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold border border-slate-200 flex items-center gap-2 transition-colors shadow-sm"
+            className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-none text-xs font-semibold border border-slate-200 flex items-center gap-2 transition-colors shadow-sm"
             title="Export filtered booking addresses and coordinates to CSV"
           >
             <Download size={14} className="text-slate-500" />
@@ -269,7 +269,7 @@ export const AdminBookingsPage: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3">
+      <div className="bg-white p-4 rounded-none border border-slate-200 shadow-sm space-y-3">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
           {/* Text Search */}
           <div className="relative">
@@ -279,7 +279,7 @@ export const AdminBookingsPage: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search code, customer, pro..."
-              className="w-full pl-8 pr-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-900"
+              className="w-full pl-8 pr-3 py-2 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-900"
             />
           </div>
 
@@ -288,7 +288,7 @@ export const AdminBookingsPage: React.FC = () => {
             <select
               value={cityFilter}
               onChange={(e) => setCityFilter(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 focus:outline-none focus:bg-white focus:border-slate-900"
+              className="w-full px-3 py-2 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-700 focus:outline-none focus:bg-white focus:border-slate-900"
             >
               <option value="all">All Gujarat Cities</option>
               {bookingCities.map((c) => (
@@ -304,7 +304,7 @@ export const AdminBookingsPage: React.FC = () => {
               value={pincodeFilter}
               onChange={(e) => setPincodeFilter(e.target.value.replace(/\D/g, '').slice(0, 6))}
               placeholder="Filter by PIN (e.g. 395007)..."
-              className="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 font-mono focus:outline-none focus:bg-white focus:border-slate-900"
+              className="w-full px-3 py-2 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 font-mono focus:outline-none focus:bg-white focus:border-slate-900"
             />
           </div>
 
@@ -313,7 +313,7 @@ export const AdminBookingsPage: React.FC = () => {
             <select
               value={serviceAreaFilter}
               onChange={(e) => setServiceAreaFilter(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 focus:outline-none focus:bg-white focus:border-slate-900"
+              className="w-full px-3 py-2 rounded-none bg-slate-50 border border-slate-200 text-xs text-slate-700 focus:outline-none focus:bg-white focus:border-slate-900"
             >
               <option value="all">All Service Localities</option>
               {serviceAreas.map((sa) => (
@@ -339,7 +339,7 @@ export const AdminBookingsPage: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setStatusFilter(tab.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                className={`px-3 py-1.5 rounded-none text-xs font-semibold whitespace-nowrap transition-all ${
                   statusFilter === tab.id
                     ? 'bg-slate-900 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200'
@@ -358,7 +358,7 @@ export const AdminBookingsPage: React.FC = () => {
 
       {/* VIEW 1: TABLE VIEW */}
       {viewMode === 'table' && (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+        <div className="bg-white rounded-none border border-slate-200 overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
@@ -451,7 +451,7 @@ export const AdminBookingsPage: React.FC = () => {
                           ) : (
                             <button
                               onClick={() => handleOpenAssignModal(b)}
-                              className="px-2.5 py-1 rounded-md bg-amber-50 text-amber-700 hover:bg-amber-100 text-xs font-semibold border border-amber-200"
+                              className="px-2.5 py-1 rounded-none bg-amber-50 text-amber-700 hover:bg-amber-100 text-xs font-semibold border border-amber-200"
                             >
                               Assign Pro
                             </button>
@@ -472,7 +472,7 @@ export const AdminBookingsPage: React.FC = () => {
                             <select
                               value={b.status}
                               onChange={(e) => handleStatusChange(b.id, e.target.value as BookingStatus)}
-                              className={`border text-xs rounded-md px-2.5 py-1 font-medium focus:outline-none ${getStatusBadge(b.status)}`}
+                              className={`border text-xs rounded-none px-2.5 py-1 font-medium focus:outline-none ${getStatusBadge(b.status)}`}
                             >
                               <option value="pending">Pending</option>
                               <option value="confirmed">Confirmed</option>
@@ -486,7 +486,7 @@ export const AdminBookingsPage: React.FC = () => {
                                 <button
                                   type="button"
                                   onClick={() => handleStatusChange(b.id, 'confirmed')}
-                                  className="px-2 py-0.5 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold shadow-xs"
+                                  className="px-2 py-0.5 rounded-none bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold shadow-xs"
                                   title="Accept Booking"
                                 >
                                   Accept
@@ -494,7 +494,7 @@ export const AdminBookingsPage: React.FC = () => {
                                 <button
                                   type="button"
                                   onClick={() => handleStatusChange(b.id, 'cancelled')}
-                                  className="px-2 py-0.5 rounded bg-rose-50 hover:bg-rose-100 text-rose-700 text-[10px] font-bold border border-rose-200"
+                                  className="px-2 py-0.5 rounded-none bg-rose-50 hover:bg-rose-100 text-rose-700 text-[10px] font-bold border border-rose-200"
                                   title="Reject Booking"
                                 >
                                   Reject
@@ -509,7 +509,7 @@ export const AdminBookingsPage: React.FC = () => {
                           <div className="flex items-center justify-end gap-1.5">
                             <button
                               onClick={() => handleOpenAssignModal(b)}
-                              className="px-2.5 py-1.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold transition-colors"
+                              className="px-2.5 py-1.5 rounded-none bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold transition-colors"
                               title="Assign Technician"
                             >
                               Assign Pro
@@ -521,7 +521,7 @@ export const AdminBookingsPage: React.FC = () => {
                                 setRescheduleSlot(b.scheduledTimeSlot);
                                 setShowReschedule(false);
                               }}
-                              className="px-3 py-1.5 rounded-md bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 transition-colors shadow-xs"
+                              className="px-3 py-1.5 rounded-none bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 transition-colors shadow-xs"
                             >
                               Details
                             </button>
@@ -539,7 +539,7 @@ export const AdminBookingsPage: React.FC = () => {
 
       {/* VIEW 2: INTERACTIVE GUJARAT BOOKINGS MAP */}
       {viewMode === 'map' && (
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div className="bg-white p-6 rounded-none border border-slate-200 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-bold text-slate-900 text-base">Booking Locations Across Gujarat</h3>
@@ -547,7 +547,7 @@ export const AdminBookingsPage: React.FC = () => {
                 Geographic coordinates snapshot for each active customer booking.
               </p>
             </div>
-            <span className="text-xs font-medium text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            <span className="text-xs font-medium text-emerald-700 bg-emerald-50 px-3 py-1 rounded-none border border-emerald-200">
               {filteredBookings.length} Pinned Customer Locations
             </span>
           </div>
@@ -561,7 +561,7 @@ export const AdminBookingsPage: React.FC = () => {
               return (
                 <div
                   key={b.id}
-                  className="p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all space-y-3"
+                  className="p-4 rounded-none bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all space-y-3"
                 >
                   <div className="flex items-start justify-between">
                     <div>
@@ -570,13 +570,13 @@ export const AdminBookingsPage: React.FC = () => {
                       <p className="text-[11px] text-slate-500">{b.customerPhone}</p>
                     </div>
                     <span
-                      className={`px-2 py-0.5 rounded text-[10px] font-bold border ${getStatusBadge(b.status)}`}
+                      className={`px-2 py-0.5 rounded-none text-[10px] font-bold border ${getStatusBadge(b.status)}`}
                     >
                       {b.status}
                     </span>
                   </div>
 
-                  <div className="p-3 rounded-lg bg-white border border-slate-200 space-y-1 text-xs">
+                  <div className="p-3 rounded-none bg-white border border-slate-200 space-y-1 text-xs">
                     <div className="text-slate-800 font-medium">
                       {b.address_line || `${b.address.houseNumber}, ${b.address.street}, ${b.address.city}`}
                     </div>
@@ -594,7 +594,7 @@ export const AdminBookingsPage: React.FC = () => {
                       href={gmapsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5"
+                      className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-none text-xs font-semibold transition-colors flex items-center gap-1.5"
                     >
                       <Navigation size={12} />
                       <span>Directions</span>
@@ -610,7 +610,7 @@ export const AdminBookingsPage: React.FC = () => {
       {/* INSPECT BOOKING DETAILS MODAL */}
       {selectedBookingForDetails && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-fadeIn">
-          <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-lg w-full border border-slate-200 text-slate-800 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-none p-6 sm:p-8 max-w-lg w-full border border-slate-200 text-slate-800 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setSelectedBookingForDetails(null)}
               className="absolute top-6 right-6 text-slate-400 hover:text-slate-700"
@@ -619,7 +619,7 @@ export const AdminBookingsPage: React.FC = () => {
             </button>
 
             <div className="flex items-center gap-2 mb-3">
-              <span className="font-mono text-xs font-bold bg-slate-100 text-slate-800 px-2 py-0.5 rounded border border-slate-200">
+              <span className="font-mono text-xs font-bold bg-slate-100 text-slate-800 px-2 py-0.5 rounded-none border border-slate-200">
                 {selectedBookingForDetails.bookingCode}
               </span>
               <span className="text-xs text-slate-400">Order ID: {selectedBookingForDetails.id}</span>
@@ -634,13 +634,13 @@ export const AdminBookingsPage: React.FC = () => {
 
             <div className="mt-5 space-y-4 text-xs">
               {/* Confirmed Location Snapshot Box */}
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div className="p-4 rounded-none bg-slate-50 border border-slate-200 space-y-2">
                 <div className="font-semibold text-slate-900 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <MapPin size={14} className="text-emerald-600" />
                     <span>Gujarat Doorstep Snapshot (Confirmed)</span>
                   </div>
-                  <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                  <span className="px-2 py-0.5 rounded-none bg-emerald-100 text-emerald-800 text-[10px] font-bold">
                     GPS Locked
                   </span>
                 </div>
@@ -667,7 +667,7 @@ export const AdminBookingsPage: React.FC = () => {
                   <div className="text-slate-500 pt-1">Landmark: {selectedBookingForDetails.landmark}</div>
                 )}
                 {(selectedBookingForDetails.location_instructions || selectedBookingForDetails.address.notesForPro) && (
-                  <div className="text-amber-700 bg-amber-50 p-2 rounded-md border border-amber-200 mt-1">
+                  <div className="text-amber-700 bg-amber-50 p-2 rounded-none border border-amber-200 mt-1">
                     Entry Note: "{selectedBookingForDetails.location_instructions || selectedBookingForDetails.address.notesForPro}"
                   </div>
                 )}
@@ -678,7 +678,7 @@ export const AdminBookingsPage: React.FC = () => {
                     href={`https://www.google.com/maps/dir/?api=1&destination=${selectedBookingForDetails.latitude ?? selectedBookingForDetails.address.latitude},${selectedBookingForDetails.longitude ?? selectedBookingForDetails.address.longitude}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                    className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-none text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <Navigation size={13} />
                     <span>Open in Google Maps Navigation</span>
@@ -687,7 +687,7 @@ export const AdminBookingsPage: React.FC = () => {
               </div>
 
               {/* Service & Schedule Breakdown */}
-              <div className="p-4 rounded-xl bg-white border border-slate-200 space-y-2">
+              <div className="p-4 rounded-none bg-white border border-slate-200 space-y-2">
                 <div className="flex justify-between items-center font-semibold text-slate-900">
                   <span>Scheduled Date & Slot</span>
                   <div className="flex items-center gap-2">
@@ -703,7 +703,7 @@ export const AdminBookingsPage: React.FC = () => {
                 </div>
 
                 {showReschedule && (
-                  <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 mt-2 space-y-2.5">
+                  <div className="p-3 bg-slate-50 rounded-none border border-slate-200 mt-2 space-y-2.5">
                     <div className="font-semibold text-slate-800 text-[11px]">Reschedule Appointment</div>
                     <div className="grid grid-cols-2 gap-2">
                       <div>
@@ -712,7 +712,7 @@ export const AdminBookingsPage: React.FC = () => {
                           type="date"
                           value={rescheduleDate}
                           onChange={(e) => setRescheduleDate(e.target.value)}
-                          className="w-full p-2 rounded border border-slate-200 text-xs bg-white text-slate-900"
+                          className="w-full p-2 rounded-none border border-slate-200 text-xs bg-white text-slate-900"
                         />
                       </div>
                       <div>
@@ -720,7 +720,7 @@ export const AdminBookingsPage: React.FC = () => {
                         <select
                           value={rescheduleSlot}
                           onChange={(e) => setRescheduleSlot(e.target.value)}
-                          className="w-full p-2 rounded border border-slate-200 text-xs bg-white text-slate-900"
+                          className="w-full p-2 rounded-none border border-slate-200 text-xs bg-white text-slate-900"
                         >
                           <option value="08:00 AM - 10:00 AM">08:00 AM - 10:00 AM</option>
                           <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
@@ -734,7 +734,7 @@ export const AdminBookingsPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleRescheduleSubmit(selectedBookingForDetails.id)}
-                      className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white rounded text-xs font-semibold"
+                      className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-none text-xs font-semibold"
                     >
                       Confirm Rescheduled Time
                     </button>
@@ -753,7 +753,7 @@ export const AdminBookingsPage: React.FC = () => {
 
               {/* Status Actions: Accept / Reject for Pending */}
               {selectedBookingForDetails.status === 'pending' && (
-                <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-between gap-2">
+                <div className="p-3 rounded-none bg-amber-50 border border-amber-200 flex items-center justify-between gap-2">
                   <div className="text-xs text-amber-900 font-medium">
                     This booking request is pending admin confirmation.
                   </div>
@@ -764,7 +764,7 @@ export const AdminBookingsPage: React.FC = () => {
                         handleStatusChange(selectedBookingForDetails.id, 'confirmed');
                         setSelectedBookingForDetails({ ...selectedBookingForDetails, status: 'confirmed' });
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold"
+                      className="px-3 py-1.5 rounded-none bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold"
                     >
                       Accept
                     </button>
@@ -774,7 +774,7 @@ export const AdminBookingsPage: React.FC = () => {
                         handleStatusChange(selectedBookingForDetails.id, 'cancelled');
                         setSelectedBookingForDetails({ ...selectedBookingForDetails, status: 'cancelled' });
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs font-bold border border-rose-300"
+                      className="px-3 py-1.5 rounded-none bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs font-bold border border-rose-300"
                     >
                       Reject
                     </button>
@@ -784,7 +784,7 @@ export const AdminBookingsPage: React.FC = () => {
 
               {/* Assigned Technician Card */}
               {selectedBookingForDetails.assignedProfessional ? (
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+                <div className="p-4 rounded-none bg-slate-50 border border-slate-200 flex items-center justify-between">
                   <div>
                     <span className="text-[10px] uppercase font-bold text-slate-400 block">Assigned Technician</span>
                     <div className="font-semibold text-slate-900">{selectedBookingForDetails.assignedProfessional.name}</div>
@@ -808,7 +808,7 @@ export const AdminBookingsPage: React.FC = () => {
                     setSelectedBookingForDetails(null);
                     handleOpenAssignModal(b);
                   }}
-                  className="w-full py-2.5 rounded-lg bg-amber-50 text-amber-800 font-semibold text-xs border border-amber-200 hover:bg-amber-100"
+                  className="w-full py-2.5 rounded-none bg-amber-50 text-amber-800 font-semibold text-xs border border-amber-200 hover:bg-amber-100"
                 >
                   Assign Field Technician Now
                 </button>
@@ -821,7 +821,7 @@ export const AdminBookingsPage: React.FC = () => {
       {/* ASSIGN PROFESSIONAL MODAL */}
       {assignProBooking && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-fadeIn">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full border border-slate-200 text-slate-800 shadow-2xl relative">
+          <div className="bg-white rounded-none p-6 max-w-md w-full border border-slate-200 text-slate-800 shadow-2xl relative">
             <button
               onClick={() => setAssignProBooking(null)}
               className="absolute top-5 right-5 text-slate-400 hover:text-slate-700"
@@ -844,7 +844,7 @@ export const AdminBookingsPage: React.FC = () => {
                 <select
                   value={selectedTechId}
                   onChange={(e) => handleSelectTechnicianChange(e.target.value)}
-                  className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                  className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                 >
                   <option value="">-- Or enter custom details below --</option>
                   {technicians.map((t) => (
@@ -863,7 +863,7 @@ export const AdminBookingsPage: React.FC = () => {
                   onChange={(e) => setProName(e.target.value)}
                   required
                   placeholder="e.g. Suresh Patil"
-                  className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                  className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                 />
               </div>
 
@@ -875,7 +875,7 @@ export const AdminBookingsPage: React.FC = () => {
                   onChange={(e) => setProPhone(e.target.value)}
                   required
                   placeholder="e.g. +91 98450 11223"
-                  className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                  className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                 />
               </div>
 
@@ -889,7 +889,7 @@ export const AdminBookingsPage: React.FC = () => {
                     max="5.0"
                     value={proRating}
                     onChange={(e) => setProRating(e.target.value)}
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                    className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   />
                 </div>
                 <div>
@@ -898,7 +898,7 @@ export const AdminBookingsPage: React.FC = () => {
                     type="number"
                     value={proJobs}
                     onChange={(e) => setProJobs(e.target.value)}
-                    className="w-full p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
+                    className="w-full p-2.5 rounded-none bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:bg-white focus:border-slate-900"
                   />
                 </div>
               </div>
@@ -907,13 +907,13 @@ export const AdminBookingsPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setAssignProBooking(null)}
-                  className="px-4 py-2 rounded-lg border border-slate-200 text-slate-600 font-semibold hover:bg-slate-50"
+                  className="px-4 py-2 rounded-none border border-slate-200 text-slate-600 font-semibold hover:bg-slate-50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-lg bg-[#176B52] hover:bg-[#135742] text-white font-semibold shadow-xs"
+                  className="px-5 py-2 rounded-none bg-[#176B52] hover:bg-[#135742] text-white font-semibold shadow-xs"
                 >
                   Confirm Assignment
                 </button>
